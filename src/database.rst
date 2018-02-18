@@ -2,200 +2,204 @@
 
 .. _database:
 
-================
-Database Testing
-================
+=====================
+Probar Bases de Datos
+=====================
 
-Many beginner and intermediate unit testing examples in any programming
-language suggest that it is perfectly easy to test your application's logic with
-simple tests. For database-centric applications this is far away from the
-reality. Start using WordPress, TYPO3 or Symfony with Doctrine or Propel,
-for example, and you will easily experience considerable problems with
-PHPUnit: just because the database is so tightly coupled to these libraries.
+Muchos ejemplos, para principiantes y usuarios intermedios, de pruebas unitarias
+en cualquier lenguaje de programación sugieren que es absolutamente fácil
+probar la lógica de la aplicación con pruebas simples. Pero para aplicaciones
+centradas en base de datos esto está muy lejos de la realidad. Basta comenzar
+a usar WordPress, TYPO3 o Symfony con Doctrine o Propel, por ejemplo, para
+experimentar rápidamente considerables problemas con PHPUnit
+porque la base de datos está estrechamente vinculada con estas bibliotecas.
 
-.. admonition:: Note
 
-   Make sure you have the PHP extension ``pdo`` and database
-   specific extensions such as ``pdo_mysql`` installed.
-   Otherwise the examples shown below will not work.
+.. admonition:: Nota
 
-You probably know this scenario from your daily work and projects,
-where you want to put your fresh or experienced PHPUnit skills to
-work and get stuck by one of the following problems:
+   Debemos asegurarnos de tener instalada la extensión de PHP ``pdo`` y la
+   extensión específica para la base de datos tal como ``pdo_mysql``. De lo
+   contrario los ejemplos que se muestran abajo no van a funcionar.
 
-#.
-
-   The method you want to test executes a rather large JOIN operation and
-   uses the data to calculate some important results.
+Probablemente conoces el escenario, por tu trabajo diario y por tus proyectos,
+en el que queremos colocar en acción nuestras habilidades (nuevas o no) con
+PHPUnit y quedamos atrapados con uno de los siguientes problemas:
 
 #.
 
-   Your business logic performs a mix of SELECT, INSERT, UPDATE and
-   DELETE statements.
+   El método que queremos probar ejecuta una operación JOIN muy grande y
+   usa los datos para calcular algunos resultados importantes.
 
 #.
 
-   You need to setup test data in (possibly much) more than two tables
-   to get reasonable initial data for the methods you want to test.
+   Nuestra lógica de negocio ejecuta una mezcla de sentencias SELECT,
+   INSERT, UPDATE y DELETE
 
-The DbUnit extension considerably simplifies the setup of a database for
-testing purposes and allows you to verify the contents of a database after
-performing a series of operations.
+#.
+
+   Necesitamos asignar datos de prueba a (muy probablemente) más de dos tablas
+   con el objeto de tener datos iniciales razonables para los métodos que queremos
+   probar.
+
+La extensión DbUnit simplifica considerablemente la configuración de la base
+de datos para las pruebas y permite verificar el contenido de una base de datos
+después de ejecutar una serie de operaciones.
 
 .. _database.supported-vendors-for-database-testing:
 
-Supported Vendors for Database Testing
-######################################
+Proveedores Soportados para las Pruebas de la Base de Datos
+###########################################################
 
-DbUnit currently supports MySQL, PostgreSQL, Oracle and SQLite. Through
-`Zend Framework <http://framework.zend.com>`_ or
+Actualmente DbUnit soporta MySQL, PostgreSQL, Oracle y SQLite. Si se integra
+`Zend Framework <http://framework.zend.com>`_ o
 `Doctrine 2 <http://www.doctrine-project.org>`_
-integrations it has access to other database systems such as IBM DB2 or
+DbUnit puede acceder a otros sistemas de base de datos como IBM DB2 o
 Microsoft SQL Server.
 
 .. _database.difficulties-in-database-testing:
 
-Difficulties in Database Testing
-################################
+Dificultades al Probar Bases de Datos
+#####################################
 
-There is a good reason why all the examples on unit testing do not include
-interactions with the database: these kind of tests are both complex to
-setup and maintain. While testing against your database you need to take
-care of the following variables:
-
--
-
-  The database schema and tables
+Existe una buena razón para que todos los ejemplos de pruebas unitarias
+no incluyan interacciones con la base de datos: esos tipos de pruebas son
+tanto complejas de configurar como de mantener. Mientras se prueba contra
+la base de datos necesitamos tener cuidado con las siguientes variables:
 
 -
 
-  Inserting the rows required for the test into these tables
+  El esquema y las tablas de la base de datos.
 
 -
 
-  Verifying the state of the database after your test has run
+  Insertar las filas necesarias para las pruebas en esas tablas.
 
 -
 
-  Cleanup the database for each new test
-
-Because many database APIs such as PDO, MySQLi or OCI8 are cumbersome to
-use and verbose in writing doing these steps manually is an absolute
-nightmare.
-
-Test code should be as short and precise as possible for several reasons:
+  Verificar el estado de la base de datos después de ejecutar las pruebas.
 
 -
 
-  You do not want to modify considerable amount of test code for little
-  changes in your production code.
+  Limpiar la base de datos para cada nueva prueba.
+
+Como muchas APIs de base de datos, como PDO, MySQLi o ICI8, son incomodas
+de usar y de escritura verbosa, hacer estos pasos manualmente es
+definitivamente una pesadilla.
+
+Probar el código debe ser lo más corto y preciso posible por varias razones:
 
 -
 
-  You want to be able to read and understand the test code easily,
-  even months after writing it.
+  No queremos modificar una considerable cantidad de código de prueba
+  por pequeños cambios en el código de producción.
 
-Additionally you have to realize that the database is essentially a
-global input variable to your code. Two tests in your test suite
-could run against the same database, possibly reusing data multiple
-times. Failures in one test can easily affect the result of the
-following tests making your testing experience very difficult. The
-previously mentioned cleanup step is of major importance
-to solve the “database is a global input“ problem.
+-
 
-DbUnit helps to simplify all these problems with database testing in an
-elegant way.
+  Queremos ser capaces de leer y entender el código de prueba fácilmente,
+  incluso meses después de escribirlo.
 
-What PHPUnit cannot help you with is the fact that database tests
-are very slow compared to tests not using the database. Depending
-on how large the interactions with your database are your tests
-could run a considerable amount of time. However, if you keep the amount of
-data used for each test small and try to test as much code using
-non-database tests you can easily get away in under a minute even
-for large test suites.
+Además, no debemos olvidar que la base de datos es esencialmente una variable
+global de entrada para nuestro código. Dos pruebas de nuestro conjunto de pruebas
+se pueden ejecutar contra la misma base de datos, posiblemente usando los datos
+varias veces. Fallas en la primera prueba puede fácilmente afectar el resultado
+de las siguientes pruebas haciendo nuestra experiencia con las pruebas muy
+difícil. La limpieza, uno de los paso anteriores, tiene mucha
+importancia para resolver el problema de «una base de datos como una
+entrada global».
 
-The `Doctrine 2
-project <http://www.doctrine-project.org>`_'s test suite, for example, currently has a test suite of
-about 1000 tests where nearly half of them accesses the database
-and still runs in 15 seconds against a MySQL database on a standard
-desktop computer.
+Cuando se prueban bases de datos, DbUnit ayuda a simplificar todos estos
+problemas de una manera elegante
+
+En lo que PHPUnit no puede ayudar es con el hecho de que las pruebas a bases
+de datos son mucho más lentas comparadas con las pruebas que no usan bases
+de datos. Dependiendo del cantidad de las interacciones con la base de datos
+las pruebas podrían demorar una cantidad de tiempo considerable. Sin embargo,
+si la cantidad de datos usados para cada prueba se mantiene pequeña y probamos
+tanto código como sea posible con pruebas que no interactuaran con la
+base de datos, podemos fácilmente terminar en menos de un minuto un conjunto
+grande de pruebas.
+
+El conjunto de pruebas del proyecto `Doctrine 2 <http://www.doctrine-project.org>`_',
+por ejemplo, tiene actualmente cerca de 1000 pruebas
+donde casi la mitad de ellas acceden a la base de datos, su ejecución contra
+una base de datos MySQL en una computadora de escritorio estándar es de 15
+segundos.
 
 .. _database.the-four-stages-of-a-database-test:
 
-The four stages of a database test
-##################################
+Las cuatro etapas de las pruebas con base de datos
+##################################################
 
-In his book on xUnit Test Patterns Gerard Meszaros lists the four
-stages of a unit-test:
-
-#.
-
-   Set up fixture
+En su libro sobre Patrones de Prueba xUnit Gerard Meszaros lista las cuatro
+etapas de una prueba unitaria:
 
 #.
 
-   Exercise System Under Test
+   Configurar el ambiente (fixture).
 
 #.
 
-   Verify outcome
+   Ejercitar el Sistema Bajo Prueba.
 
 #.
 
-   Teardown
+   Verificar los resultados.
 
-    *What is a Fixture?*
+#.
 
-    A fixture describes the initial state your application and database
-    are in when you execute a test.
+   Desmontar (Teardown).
 
-Testing the database requires you to hook into at least the
-setup and teardown to clean-up and write the required fixture data
-into your tables. However, the database extension has good reason to
-revert the four stages in a database test to resemble the following
-workflow that is executed for each single test:
+    *¿Que es un ambiente (Fixture)?*
+
+    Un ambiente describe el estado inicial en que está nuestra aplicación y
+    su base de datos cuando se ejecuta la prueba.
+
+Probar la base de datos exige que se utilice al menos una configuración
+y un desmontaje para limpiar y escribir los datos iniciales dentro de las
+tablas. La extensión de base de datos tiene una buena razón para revertir
+los cuatro etapas de una prueba de base de datos, el siguiente flujo de
+trabajo se ejecuta en cada prueba:
 
 .. _database.clean-up-database:
 
-1. Clean-Up Database
-====================
+1. Limpiar la Base de Datos
+===========================
 
-Since there is always a first test that runs against the database
-you do not know exactly if there is already data in the tables.
-PHPUnit will execute a TRUNCATE against all the tables you
-specified to reset their status to empty.
+Como siempre existe una primera prueba que se ejecuta contra la base de
+datos y no sabemos exactamente si ya existen datos en las tablas.
+PHPUnit va a ejecutar un TRUNCATE contra todas las tablas especificadas
+para redefinir sus estados a vacío.
 
 .. _database.set-up-fixture:
 
-2. Set up fixture
-=================
+2. Configurar el ambiente
+=========================
 
-PHPUnit will then iterate over all the fixture rows specified and
-insert them into their respective tables.
+PHPUnit va a iterar sobre todas las filas de ambientación especificadas y las
+insertará en sus respectivas tablas.
 
 .. _database.run-test-verify-outcome-and-teardown:
 
-3–5. Run Test, Verify outcome and Teardown
-==========================================
+3–5. Ejecutar la Prueba, Verificar el resultado y Desmontar
+===========================================================
 
-After the database is reset and loaded with its initial state the
-actual test is executed by PHPUnit. This part of the test code does
-not require awareness of the Database Extension at all, you can
-go on and test whatever you like with your code.
+Después de redefinir la base de datos y cargarla con su estado inicial
+la verdadera prueba es ejecutada por PHPUnit. Esta parte de la prueba
+no necesita de ningún conocimiento sobre la Extensión de Base de Datos
+por lo que podemos seguir y probar cualquier cosa que queramos con nuestro
+código.
 
-In your test use a special assertion called
-``assertDataSetsEqual()`` for verification purposes,
-however, this is entirely optional. This feature will be explained
-in the section “Database Assertions“.
+Nuestras pruebas usan una aserción especial llamada ``assertDataSetsEqual()``
+para fines de verificación, sin embargo es totalmente opcional. Esta
+característica se explica en la sección «Aserciones en Bases de Datos».
 
 .. _database.configuration-of-a-phpunit-database-testcase:
 
-Configuration of a PHPUnit Database TestCase
-############################################
+Configuración de un Caso de Prueba de una Base de Datos
+#######################################################
 
-Usually when using PHPUnit your testcases would extend the
-``PHPUnit\Framework\TestCase`` class in the
-following way:
+Generalmente cuando se usa PHPUnit nuestros casos de prueba extenderán de
+la clase ``PHPUnit\Framework\TestCase`` de la siguiente manera:
 
 .. code-block:: php
 
@@ -211,11 +215,10 @@ following way:
     }
     ?>
 
-If you want to test code that works with the Database Extension the
-setup is a bit more complex and you have to extend a different
-abstract TestCase requiring you to implement two abstract methods
-``getConnection()`` and
-``getDataSet()``:
+Si queremos probar código que trabaja con la Extensión de Base de Datos
+la configuración es un poco más compleja y debemos extender de una *TestCase*
+abstracta diferente e implementando los métodos abstractos
+``getConnection()`` y ``getDataSet()``:
 
 .. code-block:: php
 
@@ -248,89 +251,87 @@ abstract TestCase requiring you to implement two abstract methods
 
 .. _database.implementing-getconnection:
 
-Implementing getConnection()
-============================
+Implementando getConnection()
+=============================
 
-To allow the clean-up and fixture loading functionalities to work
-the PHPUnit Database Extension requires access to a database
-connection abstracted across vendors through the PDO library. It
-is important to note that your application does not need to be
-based on PDO to use PHPUnit's database extension, the connection is
-merely used for the clean-up and fixture setup.
+Para permitir que las funcionalidades de limpieza y carga de datos funcione,
+la Extensión de Base de Datos de PHPUnit necesita acceder a una conexión
+de base de datos abstraída del proveedor a través de la biblioteca PDO.
+Es importante notar que nuestra aplicación no necesita estar basada en
+PDO para usar la extensión de base de datos de PHPUnit, la conexión
+solo se usa para limpiar y aplicar la configuración.
 
-In the previous example we create an in-memory Sqlite connection
-and pass it to the ``createDefaultDBConnection``
-method which wraps the PDO instance and the second parameter (the
-database-name) in a very simple abstraction layer for database
-connections of the type
+En el ejemplo anterior creamos una conexión SQL en memoria que
+y le pasamos el método ``createDefaultDBConnection`` que envuelve
+la instancia PDO y un segundo parámetro (el nombre de la base de datos)
+en una capa de abstracción muy simple para conexiones de base de datos del tipo
 ``PHPUnit_Extensions_Database_DB_IDatabaseConnection``.
 
-The section “Using the Database Connection API“ explains
-the API of this interface and how you can make the best use of it.
+La sección «Usar la API de Conexión de Base de Data» explica la API de esta
+interfaz y como podemos hacer el mejor uso de ella.
 
 .. _database.implementing-getdataset:
 
-Implementing getDataSet()
-=========================
+Implementando getDataSet()
+==========================
 
-The ``getDataSet()`` method defines how the initial
-state of the database should look before each test is
-executed. The state of a database is abstracted through the
-concepts DataSet and DataTable both being represented by the
-interfaces
-``PHPUnit_Extensions_Database_DataSet_IDataSet`` and
-``PHPUnit_Extensions_Database_DataSet_IDataTable``.
-The next section will describe in detail how these concepts work
-and what the benefits are for using them in database testing.
+El método ``getDataSet()`` define como debe ser el estado inicial de la base de
+datos antes de que cada prueba sea ejecutada. El estado de la base de datos es
+abstraído a través de los concepto DataSet (Conjunto de Datos) y DataTable (Tabla
+de Datos) que son representados por las interfaces
+``PHPUnit_Extensions_Database_DataSet_IDataSet`` y
+``PHPUnit_Extensions_Database_DataSet_IDataTable``. La siguiente sección describe
+en detalles como estos conceptos trabajan y que beneficios trae su uso en las
+pruebas de base de datos.
 
-For the implementation we only need to know that the
-``getDataSet()`` method is called once during
-``setUp()`` to retrieve the fixture data-set and
-insert it into the database. In the example we are using a factory
-method ``createFlatXMLDataSet($filename)`` that
-represents a data-set through an XML representation.
+Para la implementación solo necesitamos saber que el método ``getDataSet()``
+se llama una vez durante el ``setUp()`` para traer el conjunto de datos de la
+ambientación e insertarlos en la base de datos. En el ejemplo estamos usando
+el método de fábrica ``createFlatXMLDataSet($filename)`` que representa un
+conjunto de datos por medio de una representación XML.
 
 .. _database.what-about-the-database-schema-ddl:
 
-What about the Database Schema (DDL)?
-=====================================
+¿Y que pasa con el Esquema de Base de Datos (DDL)?
+==================================================
 
-PHPUnit assumes that the database schema with all its tables,
-triggers, sequences and views is created before a test is run. This
-means you as developer have to make sure that the database is
-correctly setup before running the suite.
+PHPUnit asume que el esquema de base de datos con todas sus tablas, lanzadores,
+secuencias y vistas están creadas antes de que la prueba sea ejecutada. Esto
+significa que como desarrolladores debemos asegurar que la base de datos está
+correctamente configurada antes de ejecutar el paquete de pruebas.
 
-There are several means to achieve this pre-condition to database
-testing.
-
-#.
-
-   If you are using a persistent database (not Sqlite Memory) you can
-   easily setup the database once with tools such as phpMyAdmin for
-   MySQL and re-use the database for every test-run.
+Existen varias maneras para alcanzar esta pre-condición de las pruebas con bases
+de datos.
 
 #.
 
-   If you are using libraries such as
-   `Doctrine 2 <http://www.doctrine-project.org>`_ or
+   Si estamos usando una base de datos persistente (no SQLite en memoria) podemos
+   con facilidad configurar la base de datos una solo vez con herramientas
+   como phpMyAdmin para MySQL y reusar la base de datos en cada ejecución de
+   una prueba.
+
+#.
+
+   Si usamos bibliotecas como
+   `Doctrine 2 <http://www.doctrine-project.org>`_ o
    `Propel <http://www.propelorm.org/>`_
-   you can use their APIs to create the database schema you
-   need once before you run the tests. You can utilize
-   `PHPUnit's Bootstrap and Configuration <textui.html>`_
-   capabilities to execute this code whenever your tests are run.
+   podemos usar sus APIs para crear una sola vez el esquema de base de datos
+   que necesitamos antes de ejecutar las pruebas. Podemos usar las capacidades
+   de `Configuración y Bootstrap de PHPUnit's <textui.html>`_ para ejecutar ese
+   código cada vez que nuestras pruebas sean ejecutadas.
 
 .. _database.tip-use-your-own-abstract-database-testcase:
 
-Tip: Use your own Abstract Database TestCase
-============================================
+Consejo: Usemos nuestro propio Caso Abstracto de Prueba de Base de Datos
+========================================================================
 
-From the previous implementation example you can easily see that
-``getConnection()`` method is pretty static and
-could be re-used in different database test-cases. Additionally to
-keep performance of your tests good and database overhead low you
-can refactor the code a little bit to get a generic abstract test
-case for your application, which still allows you to specify a
-different data-fixture for each test case:
+Del ejemplo previo de implementación podemos ver fácilmente que el método
+``getConnection()`` es muy estático y podría usarse en diferentes casos de prueba
+de base de datos. Además, para mantener el buen rendimiento de nuestras pruebas
+y la carga sobre la base de datos baja podemos refactorizar un poco el código
+para obtener un caso de prueba abstracto genérico para nuestra aplicación, y que
+aún nos permita especificar datos de ambientación diferentes para cada
+caso de prueba:
 
 .. code-block:: php
 
@@ -362,13 +363,13 @@ different data-fixture for each test case:
     }
     ?>
 
-This has the database connection hardcoded in the PDO connection
-though. PHPUnit has another awesome feature that could make this
-testcase even more generic. If you use the
-`XML Configuration <appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables>`_
-you could make the database connection configurable per test-run.
-First let's create a “phpunit.xml“ file in our tests/
-directory of the application that looks like:
+Este código tiene la conexión a la base de datos incrustada en la conexión PDO.
+PHPUnit tiene otra característica importante que podría hacer este caso de
+prueba incluso más genérico. Si usamos la
+`Configuración XML <appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables>`_
+podemos hacer la conexión a base de datos configurable para cada ejecución de una prueba.
+Primero vamos a crear el archivo «phpunit.xml» en nuestra carpeta tests/ de
+la aplicación para que se vea de la siguiente manera:
 
 .. code-block:: bash
 
@@ -382,7 +383,7 @@ directory of the application that looks like:
         </php>
     </phpunit>
 
-We can now modify our test-case to look like:
+Ahora podemos modificar nuestro caso de prueba de la siguiente manera:
 
 .. code-block:: php
 
@@ -414,104 +415,105 @@ We can now modify our test-case to look like:
     }
     ?>
 
-We can now run the database test suite using different
-configurations from the command-line interface:
+Ahora podemos ejecutar el paquete de pruebas de base de datos usando diferentes
+configuraciones desde la interfaz de línea de comandos:
 
 .. code-block:: bash
 
     $ user@desktop> phpunit --configuration developer-a.xml MyTests/
     $ user@desktop> phpunit --configuration developer-b.xml MyTests/
 
-The possibility to run the database tests against different
-database targets easily is very important if you are developing on
-the development machine. If several developers run the database
-tests against the same database connection you can easily
-experience test-failures because of race-conditions.
+La posibilidad de ejecutar las pruebas de base de datos contra diferentes
+base de datos es muy importante si estamos programando en una computadora
+de desarrollo. Si varios desarrolladores ejecutan las pruebas de base de datos
+contra la misma conexión de base de datos podemos fácilmente experimentar
+fallas en las pruebas a causa de una condición de carrera.
 
 .. _database.understanding-datasets-and-datatables:
 
-Understanding DataSets and DataTables
-#####################################
+Entendiendo los Conjuntos de Datos y las Tablas de Datos
+########################################################
 
-A central concept of PHPUnit's Database Extension are DataSets and
-DataTables. You should try to understand this simple concept to
-master database testing with PHPUnit. The DataSet and DataTable are
-an abstraction layer around your database tables, rows and
-columns. A simple API hides the underlying database contents in an
-object structure, which can also be implemented by other
-non-database sources.
+Los Conjuntos de Datos (DataSets) y las Tablas de Datos (DataTables) son conceptos
+centrales de la Extensión de Base de Datos de PHPUnit. Deberías intentar entender
+estos conceptos simples para dominar las pruebas de base de datos con PHPUnit. Los
+DataSet y los DataTable son una capa de abstracción en torno a las tablas, filas
+y columnas de nuestra base de datos. Una API simple que oculta el contenido
+subyacente de la base de datos en una estructura de tipo objeto y que además permite
+implementar otras fuentes de datos que no son una base de datos.
 
-This abstraction is necessary to compare the actual contents of a
-database against the expected contents. Expectations can be
-represented as XML, YAML, CSV files or PHP array for example. The
-DataSet and DataTable interfaces enable the comparison of these
-conceptually different sources, emulating relational database
-storage in a semantically similar approach.
+Esta abstracción es necesaria para comparar el contenido actual de la base de
+datos con el contenido esperado. Por ejemplo, las expectativas se pueden
+representar con archivos XML, YAML o CSV; o con un arreglo PHP. Las interfaces
+DataSet (Conjunto de Datos) y DataTable (Tablas de Datos) permiten comparar
+estas fuentes conceptualmente diferentes, emulando el almacenamiento en una base
+de datos relacional y con un abordaje sistemáticamente similar.
 
-A workflow for database assertions in your tests then consists of
-three simple steps:
-
--
-
-  Specify one or more tables in your database by table name (actual
-  dataset)
+El flujo de trabajo para las aserciones de base de datos en nuestras pruebas consiste
+en tres simples pasos:
 
 -
 
-  Specify the expected dataset in your preferred format (YAML, XML,
-  ..)
+  Especificar una o más tablas de nuestra base de datos por el nombre de la tabla
+  (conjunto de datos real).
 
 -
 
-  Assert that both dataset representations equal each other.
-
-Assertions are not the only use-case for the DataSet and DataTable
-in PHPUnit's Database Extension. As shown in the previous section
-they also describe the initial contents of a database. You are
-forced to define a fixture dataset by the Database TestCase, which
-is then used to:
+  Especificar el conjunto de datos esperado en nuestro formato preferido
+  (YAML, XML, ...).
 
 -
 
-  Delete all the rows from the tables specified in the dataset.
+  Afirmar que ambas representaciones de datos son iguales.
+
+Las aserciones no son los únicos casos de uso para los Conjuntos de Datos y las
+Tablas de Datos de la Extensión para Bases de Datos de PHPUnit.
+Como se muestra en la sección anterior ellos además describen el contenido
+inicial de una base de datos. Estamos obligados a definir un conjunto de datos
+para la ambientación del Caso de Prueba de la Base de Datos, que luego
+se usa para:
 
 -
 
-  Write all the rows in the data-tables into the database.
+  Borrar todas las filas de las tablas especificadas en el conjunto de datos.
+
+-
+
+  Escribir todas las columnas en las tablas de datos de la base de datos.
 
 .. _database.available-implementations:
 
-Available Implementations
-=========================
+Implementaciones Disponibles
+============================
 
-There are three different types of datasets/datatables:
-
--
-
-  File-Based DataSets and DataTables
+Existen tres diferentes tipos de Conjunto de Datos y Tablas de Datos:
 
 -
 
-  Query-Based DataSet and DataTable
+  Conjuntos de Datos y Tablas de Datos basadas en archivo.
 
 -
 
-  Filter and Composition DataSets and DataTables
+  Conjuntos de Datos y Tablas de Datos basadas en consulta.
 
-The file-based datasets and tables are generally used for the
-initial fixture and to describe the expected state of the database.
+-
+
+  Filtros y Composición de Conjuntos de Datos y Tablas de Datos.
+
+Los Conjuntos de Datos y Tablas de Datos basados en archivo se usan generalmente
+para la ambientación inicial y para describir los estados esperados de la base
+de datos.
 
 .. _database.flat-xml-dataset:
 
-Flat XML DataSet
-----------------
+Conjunto de Datos con XML Plano
+-------------------------------
 
-The most common dataset is called Flat XML. It is a very simple xml
-format where a tag inside the root node
-``<dataset>`` represents exactly one row in the
-database. The tags name equals the table to insert the row into and
-an attribute represents the column. An example for a simple guestbook
-application could look like this:
+El conjunto de datos más común es el llamado XML Plano. Es un formato xml muy
+simple donde una etiqueta dentro del nodo raíz ``<dataset>`` representa exactamente
+una fila en la base de datos. El nombre de la etiqueta es igual a la tabla en la
+que se inserta la fila y un atributo representa una columna. Un ejemplo para una
+aplicación simple de libro de visitas podría ser el siguiente:
 
 .. code-block:: bash
 
@@ -521,18 +523,16 @@ application could look like this:
         <guestbook id="2" content="I like it!" user="nancy" created="2010-04-26 12:14:20" />
     </dataset>
 
-This is obviously easy to write. Here
-``<guestbook>`` is the table name where two rows
-are inserted into each with four columns “id“,
-“content“, “user“ and
-“created“ with their respective values.
+Es obviamente fácil de escribir. Aquí ``<guestbook>`` es el nombre de la tabla
+donde dos filas se insertan cada una con cuatro columnas «id», «content», «user»
+y «created» con sus respectivos valores.
 
-However, this simplicity comes at a cost.
+Sin embargo, esta simplicidad tiene un costo.
 
-From the previous example it isn't obvious how you would specify an
-empty table. You can insert a tag with no attributes with the name
-of the empty table. A flat xml file for an empty guestbook table
-would then look like:
+En el ejemplo anterior no es obvio como podríamos especificar una tabla vacía.
+Podemos insertar una etiqueta sin atributos con el nombre de la tabla vacía.
+Un archivo xml plano para una tabla que representa un libro de visitas vacío
+podría ser el siguiente:
 
 .. code-block:: bash
 
@@ -541,14 +541,13 @@ would then look like:
         <guestbook />
     </dataset>
 
-The handling of NULL values with the flat xml dataset is tedious. A
-NULL value is different than an empty string value in almost any
-database (Oracle being an exception), something that is difficult
-to describe in the flat xml format. You can represent a NULL's value
-by omitting the attribute from the row specification. If our
-guestbook would allow anonymous entries represented by a NULL value
-in the user column, a hypothetical state of the guestbook table
-could look like:
+La manipulación de valores NULL con xml plano es tedioso. En casi todas las bases
+de datos, excepto Oracle, un valor NULL es diferente a una cadena de caracteres
+con valor vacío, además, es algo que resulta difícil de describir en un formato
+xml plano. Podemos representar valores NULL omitiendo el atributo que especifica
+la fila. Si nuestro libro de visitas permite entradas anónimas representadas
+por el valor NULL en la columna de usuario, un estado hipotético de la tabla
+que representa el libro de visitas podría ser el siguiente:
 
 .. code-block:: bash
 
@@ -558,43 +557,39 @@ could look like:
         <guestbook id="2" content="I like it!" created="2010-04-26 12:14:20" />
     </dataset>
 
-In this case the second entry is posted anonymously. However, this
-leads to a serious problem with column recognition. During dataset
-equality assertions each dataset has to specify what columns a
-table holds. If an attribute is NULL for all the rows of a
-data-table, how would the Database Extension know that the column
-should be part of the table?
+En este caso la segunda entrada es publicada anónimamente. Sin embargo, esto
+deja un problema serio para el reconocimiento de columnas. Durante las aserciones
+de igualdad de conjunto de datos, cada conjunto de datos debe especificar que
+columnas pertenecen a una tabla. Si un atributo es NULL para todas las filas
+de la tabla de datos, ¿como podría saber la Extensión de Base de Datos que la
+columna debe ser parte de la tabla?
 
-The flat xml dataset makes a crucial assumption now, defining that
-the attributes on the first defined row of a table define the
-columns of this table. In the previous example this would mean
-“id“, “content“, “user“ and
-“created“ are columns of the guestbook table. For the
-second row where “user“ is not defined a NULL would be
-inserted into the database.
+El conjunto de datos en xml plano hace una suposición crucial, a partir del
+atributo de la primera fila definida de una tabla, se definen las columnas de
+esta tabla. En el ejemplo anterior esto significaría que «id», «content», «user»
+y «created» son columnas de la tabla del libro de visitas. Para la segunda fila
+donde «user» no se define, un NULL se insertaría en la base de datos.
 
-When the first guestbook entry is deleted from the dataset only
-“id“, “content“ and
-“created“ would be columns of the guestbook table,
-since “user“ is not specified.
+Cuando la primera entrada del libro de visitas se borra solo las columnas «id»,
+«content» y «created» serán columnas de la tabla del libro de visitas porque
+«user» no está especificado.
 
-To use the Flat XML dataset effectively when NULL values are
-relevant the first row of each table must not contain any NULL
-value and only successive rows are allowed to omit attributes. This
-can be awkward, since the order of the rows is a relevant factor
-for database assertions.
+Para usar eficazmente el conjunto de datos con un XML Plano cuando los valores
+NULL son importantes la primera columna de cada tabla no debe contener ningún
+valor nulo y solo las filas siguientes pueden omitir atributos. Esto puede ser
+molesto ya que el orden de las filas es un importante factor para las aserciones
+de base de datos.
 
-In turn, if you specify only a subset of the table columns in the
-Flat XML dataset all the omitted values are set to their default
-values. This will lead to errors if one of the omitted columns is
-defined as “NOT NULL DEFAULT NULL“.
+Además, si especificamos solo un subconjunto de columnas de la tabla en el conjunto
+de datos XML Plano todos los valores omitidos se colocarán en su valor por defecto.
+Esto puede traer errores si una de las columnas omitidas se define como
+«NOT NULL DEFAULT NULL».
 
-In conclusion I can only advise using the Flat XML datasets if you
-do not need NULL values.
+En conclusión podemos decir que los conjuntos de datos en XML Plano solo se pueden
+usar si no necesitamos valores NULL.
 
-You can create a flat xml dataset instance from within your
-Database TestCase by calling the
-``createFlatXmlDataSet($filename)`` method:
+Podemos crear una instancia del conjunto de datos xml plano dentro de nuestro
+Caso de Prueba de Base de Datos llamando al método ``createFlatXmlDataSet($filename)``:
 
 .. code-block:: php
 
@@ -615,17 +610,15 @@ Database TestCase by calling the
 
 .. _database.xml-dataset:
 
-XML DataSet
------------
+Conjunto de Datos XML
+---------------------
 
-There is another more structured XML dataset, which is a bit more
-verbose to write but avoids the NULL problems of the Flat XML
-dataset. Inside the root node ``<dataset>`` you
-can specify ``<table>``,
-``<column>``, ``<row>``,
-``<value>`` and
-``<null />`` tags. An equivalent dataset to the
-previously defined Guestbook Flat XML looks like:
+Existe otro conjunto de datos XML más estructurado, que es un poco más detallado
+de escribir pero evita los problemas con los valores NULL del conjunto de datos
+XML Plano. Dentro de la raíz ``<dataset>`` podemos especificar etiquetas ``<table>``,
+``<column>``, ``<row>``, ``<value>`` y ``<null />``. Un conjunto de datos equivalente
+al libro de visitas con XML plano definido anteriormente se ve de la siguiente
+manera:
 
 .. code-block:: bash
 
@@ -651,19 +644,15 @@ previously defined Guestbook Flat XML looks like:
         </table>
     </dataset>
 
-Any defined ``<table>`` has a name and requires
-a definition of all the columns with their names. It can contain zero
-or any positive number of nested ``<row>``
-elements. Defining no ``<row>`` element means
-the table is empty. The ``<value>`` and
-``<null />`` tags have to be specified in the
-order of the previously given ``<column>``
-elements. The ``<null />`` tag obviously means
-that the value is NULL.
+Toda ``<table>`` definida tiene un nombre y requiere una definición de todas las
+columnas con sus nombres. Esta puede contener cero o cualquier número de elementos
+``<row>`` anidados. No definir un elemento ``<row>`` significa que la tabla está
+vacía. Las etiquetas ``<value>`` y ``<null />`` se deben especificar en el orden
+en que se especificaron los elementos ``<column>``. La etiqueta ``<null />``
+obviamente significa que el valor es NULL.
 
-You can create a xml dataset instance from within your
-Database TestCase by calling the
-``createXmlDataSet($filename)`` method:
+Podemos crear una instancia del conjunto de datos xml desde dentro de nuestro
+Caso de Prueba de Base de Datos llamando al método ``createXmlDataSet($filename)``:
 
 .. code-block:: php
 
@@ -684,25 +673,24 @@ Database TestCase by calling the
 
 .. _database.mysql-xml-dataset:
 
-MySQL XML DataSet
------------------
+Conjunto de Datos XML MySQL
+---------------------------
 
-This new XML format is specific to the
-`MySQL database server <http://www.mysql.com>`_.
-Support for it was added in PHPUnit 3.5. Files in this format can
-be generated using the
-`mysqldump <http://dev.mysql.com/doc/refman/5.0/en/mysqldump.html>`_
-utility. Unlike CSV datasets, which ``mysqldump``
-also supports, a single file in this XML format can contain data
-for multiple tables. You can create a file in this format by
-invoking ``mysqldump`` like so:
+Este nuevo formato es específico para `servidor de base de datos MySQL <http://www.mysql.com>`_.
+El soporte para este formato se añadió en PHPUnit 3.5. Los archivos en este
+formato se pueden generar usando la herramiento
+`mysqldump <http://dev.mysql.com/doc/refman/5.0/en/mysqldump.html>`_.
+A diferencia de los conjuntos de datos CSV, que ``mysqldump`` también soporta,
+un solo archivo en este formato pueden contener datos de varias tablas. Podemos
+crear un archivo en este formato invocando el comando ``mysqldump`` de la
+siguiente forma:
 
 .. code-block:: bash
 
     $ mysqldump --xml -t -u [username] --password=[password] [database] > /path/to/file.xml
 
-This file can be used in your Database TestCase by calling the
-``createMySQLXMLDataSet($filename)`` method:
+Este archivo se puede usar en nuestro Caso de Prueba de Base de Datos llamando
+al método ``createMySQLXMLDataSet($filename)``:
 
 .. code-block:: php
 
@@ -723,10 +711,10 @@ This file can be used in your Database TestCase by calling the
 
 .. _database.yaml-dataset:
 
-YAML DataSet
-------------
+Conjunto de Datos YAML
+----------------------
 
-Alternatively, you can use YAML dataset for the guestbook example:
+También podemos usar el conjunto de datos YAML para el ejemplo del libro de visitas:
 
 .. code-block:: bash
 
@@ -742,13 +730,13 @@ Alternatively, you can use YAML dataset for the guestbook example:
         user:
         created: 2010-04-26 12:14:20
 
-This is simple, convient AND it solves the NULL issue that the
-similar Flat XML dataset has. A NULL in YAML is just the column
-name without no value specified. An empty string is specified as
-``column1: ""``.
+Este formato es simple, conveniente Y soluciona el problema de los valores NULL
+que tendría un conjunto de datos similar representado con un XML Plano. Un valor
+NULL en YAML es solamente el nombre de la columna sin ningún valor especificado.
+Una cadena de caracteres vacía se especifica como ``column1: ""``.
 
-The YAML Dataset has no factory method on the Database TestCase
-currently, so you have to instantiate it manually:
+El conjunto de datos YAML no tiene actualmente un método fábrica para el Caso de
+Prueba de Base de Datos, por lo que debemos instanciarlo manualmente:
 
 .. code-block:: php
 
@@ -770,12 +758,12 @@ currently, so you have to instantiate it manually:
 
 .. _database.csv-dataset:
 
-CSV DataSet
------------
+Conjunto de Datos CSV
+---------------------
 
-Another file-based dataset is based on CSV files. Each table of the
-dataset is represented as a single CSV file. For our guestbook
-example we would define a guestbook-table.csv file:
+Otro conjunto de datos basado en archivo se basa en archivos CSV. Cada tabla del
+conjunto de datos se representa con un archivo CSV. Para nuestro ejemplo de libro
+de visitas podemos definir el archivo guestbook-table.csv:
 
 .. code-block:: bash
 
@@ -783,12 +771,11 @@ example we would define a guestbook-table.csv file:
     1,"Hello buddy!","joe","2010-04-24 17:15:23"
     2,"I like it!","nancy","2010-04-26 12:14:20"
 
-While this is very convenient for editing with Excel or OpenOffice,
-you cannot specify NULL values with the CSV dataset. An empty
-column will lead to the database default empty value being inserted
-into the column.
+A pesar de ser muy conveniente para editar con Excel o LibreOffice, no podemos
+especificar valores NULL con el conjunto de datos CSV. Una columna vacía llevará
+a que el valor vacío por defecto de la base de datos se inserte en la columna.
 
-You can create a CSV DataSet by calling:
+Podemos crear un Conjunto de Datos CSV llamando:
 
 .. code-block:: php
 
@@ -812,12 +799,12 @@ You can create a CSV DataSet by calling:
 
 .. _database.array-dataset:
 
-Array DataSet
--------------
+Conjunto de Datos en Arreglo
+----------------------------
 
-There is no Array based DataSet in PHPUnit's Database Extension
-(yet), but we can implement our own easily. Our guestbook example
-should look like:
+No existe (aún) un Conjunto de Datos basado en Arreglos en la Extensión de Base
+de Datos de PHPUnit, pero podemos implementar con facilidad uno propio. Nuestro
+ejemplo de libro de visitas se vera de la siguiente manera:
 
 .. code-block:: php
 
@@ -853,26 +840,25 @@ should look like:
     }
     ?>
 
-A PHP DataSet has obvious advantages over all the other file-based
-datasets:
+Un Conjunto de Datos con PHP tiene obvias ventajas sobre todo los otros conjuntos
+de datos basados en archivos:
 
 -
 
-  PHP Arrays can obviously handle ``NULL`` values.
+  Los Arreglos de PHP pueden obviamente manejar valores ``NULL``.
 
 -
 
-  You won't need additional files for assertions and can specify them
-  directly in the TestCase.
+  No necesitaremos agregar archivos para las aserciones y podemos especificarlas
+  directamente en el Caso de Prueba.
 
-For this dataset like the Flat XML, CSV and YAML DataSets the keys
-of the first specified row define the table's column names, in the
-previous case this would be “id“,
-“content“, “user“ and
-“created“.
+Para este conjunto de datos; como para los anteriores Conjuntos de Datos XML Plano,
+CSV y YAML; las llaves de la primera fila especificada definen los nombres de las
+columnas de la tabla, en el caso anterior estas serán ser «id», «content»,
+«user» y «created».
 
-The implementation for this Array DataSet is simple and
-straightforward:
+La implementación para este Conjunto de Datos basado en Arreglos es simple y
+directo:
 
 .. code-block:: php
 
@@ -923,12 +909,13 @@ straightforward:
 
 .. _database.query-sql-dataset:
 
-Query (SQL) DataSet
--------------------
+Conjunto de Datos basados en Consultas SQL
+------------------------------------------
 
-For database assertions you do not only need the file-based datasets
-but also a Query/SQL based Dataset that contains the actual
-contents of the database. This is where the Query DataSet shines:
+Para las aserciones de base de datos no solo necesitamos conjuntos de datos basados
+en archivo sino también conjuntos de datos basados en Consultas SQL que contengan
+el contenido real de la base de datos. En este caso es que los Conjuntos de Datos
+basados en Consultas toman protagonismo:
 
 .. code-block:: php
 
@@ -937,8 +924,8 @@ contents of the database. This is where the Query DataSet shines:
     $ds->addTable('guestbook');
     ?>
 
-Adding a table just by name is an implicit way to define the
-data-table with the following query:
+Agregar una tabla usando su nombre es una manera implícita de definir los datos
+de un tabla, que es equivalente a la siguiente consulta:
 
 .. code-block:: php
 
@@ -947,9 +934,9 @@ data-table with the following query:
     $ds->addTable('guestbook', 'SELECT * FROM guestbook');
     ?>
 
-You can make use of this by specifying arbitrary queries for your
-tables, for example restricting rows, column or adding
-``ORDER BY`` clauses:
+Podemos usar este método para especificar consultas arbitrarias sobre nuestras
+tablas y, por ejemplo, restringir las filas, las columnas o agregar clausulas
+``ORDER BY``:
 
 .. code-block:: php
 
@@ -958,23 +945,21 @@ tables, for example restricting rows, column or adding
     $ds->addTable('guestbook', 'SELECT id, content FROM guestbook ORDER BY created DESC');
     ?>
 
-The section on Database Assertions will show some more details on
-how to make use of the Query DataSet.
+En la sección sobre Aserciones de Base de Datos mostraremos algunos detalles más
+sobre como hacer uso del Conjunto de Datos en base a Consultas.
 
 .. _database.database-db-dataset:
 
-Database (DB) Dataset
----------------------
+Conjunto de Datos basados en Base de Datos
+------------------------------------------
 
-Accessing the Test Connection you can automatically create a
-DataSet that consists of all the tables with their content in the
-database specified as second parameter to the Connections Factory
-method.
+Luego de acceder a una Conexión de Prueba podemos automáticamente crear un Conjunto
+de Datos que consiste en todas las tablas, con su contenido, de la base de datos
+que se especifica como segundo parámetro del método Fábrica de Conexiones.
 
-You can either create a dataset for the complete database as shown
-in ``testGuestbook()``, or restrict it to a set of
-specified table names with a whitelist as shown in
-``testFilteredGuestbook()`` method.
+Podemos crear un conjunto de datos para toda la base de datos como se muestra
+en ``testGuestbook()`` o restringirlo a un conjunto de tablas, especificándolas
+por su nombre con una lista blanca como se muestra en el método ``testFilteredGuestbook()``.
 
 .. code-block:: php
 
@@ -1018,14 +1003,14 @@ specified table names with a whitelist as shown in
 Replacement DataSet
 -------------------
 
-I have been talking about NULL problems with the Flat XML and CSV
-DataSet, but there is a slightly complicated workaround to get both
-types of datasets working with NULLs.
+Hemos hablado sobre los problemas con los valores nulos cuando usamos Conjuntos
+de Datos como XML Plano y CSV, pero hay una solución algo complicada para ambos
+casos que nos permite ponerlos a trabajar con valores NULL.
 
-The Replacement DataSet is a decorator for an existing dataset and
-allows you to replace values in any column of the dataset by another
-replacement value. To get our guestbook example working with NULL
-values we specify the file like:
+El Conjunto de Datos de Reemplazo es un decorador para un conjunto de datos existente
+que permite remplazar el valor de cualquier columna del conjunto de datos por otro
+valor. Para tener nuestro ejemplo de libro de visitas trabajando con valores
+NULL modificamos el archivo de la siguiente manera:
 
 .. code-block:: bash
 
@@ -1035,7 +1020,8 @@ values we specify the file like:
         <guestbook id="2" content="I like it!" user="##NULL##" created="2010-04-26 12:14:20" />
     </dataset>
 
-We then wrap the Flat XML DataSet into a Replacement DataSet:
+Luego, envolvemos el Conjunto de Datos XML Plano con el Conjunto de Datos de
+Remplazo:
 
 .. code-block:: php
 
@@ -1059,13 +1045,14 @@ We then wrap the Flat XML DataSet into a Replacement DataSet:
 
 .. _database.dataset-filter:
 
-DataSet Filter
---------------
+Filtro de Conjunto de Datos
+---------------------------
 
-If you have a large fixture file you can use the DataSet Filter for
-white- and blacklisting of tables and columns that should be
-contained in a sub-dataset. This is especially handy in combination
-with the DB DataSet to filter the columns of the datasets.
+Si tenemos un archivo de ambientación muy grande podemos usar el Filtro de Conjunto
+de Datos para crear una lista blanco o negra de tablas y columnas que contendrá
+un subconjunto de datos. Esto es especialmente útil, cuando se combina con el
+Conjunto de Datos basado en Base de Datos, para filtrar las columnas del conjunto
+de datos.
 
 .. code-block:: php
 
@@ -1100,23 +1087,22 @@ with the DB DataSet to filter the columns of the datasets.
         }
     }
     ?>
-    
-.. admonition:: Note
 
-    You cannot use both exclude and include column filtering on the same table,
-    only on different ones. Plus it is only possible to either white- or blacklist
-    tables, not both of them.
+.. admonition:: Nota
+
+    No podemos usar ambos filtros de columnas, exclusión e inclusión, sobre la
+    misma tabla, solo es posible sobre diferentes tablas. Ademas, solo es posible
+    la lista blanca de tablas o la negra, no ambas.
 
 .. _database.composite-dataset:
 
-Composite DataSet
------------------
+Conjunto de Datos Compuesto
+---------------------------
 
-The composite DataSet is very useful for aggregating several
-already existing datasets into a single dataset. When several
-datasets contain the same table the rows are appended in the
-specified order. For example if we have two datasets
-*fixture1.xml*:
+El Conjunto de Datos compuesto es muy útil para agregar varios conjuntos de datos
+que ya existen dentro de un solo conjunto de datos. Cuando varios conjuntos de
+datos pertenecen a la misma tabla, las filas se añaden en el orden especificado.
+Por ejemplo si tenemos dos conjuntos de datos *fixture1.xml*:
 
 .. code-block:: bash
 
@@ -1125,7 +1111,7 @@ specified order. For example if we have two datasets
         <guestbook id="1" content="Hello buddy!" user="joe" created="2010-04-24 17:15:23" />
     </dataset>
 
-and *fixture2.xml*:
+y *fixture2.xml*:
 
 .. code-block:: bash
 
@@ -1134,7 +1120,7 @@ and *fixture2.xml*:
         <guestbook id="2" content="I like it!" user="##NULL##" created="2010-04-26 12:14:20" />
     </dataset>
 
-Using the Composite DataSet we can aggregate both fixture files:
+Usando el Conjunto de Datos Compuesto podemos agregar ambos archivos a la ambientación:
 
 .. code-block:: php
 
@@ -1162,23 +1148,22 @@ Using the Composite DataSet we can aggregate both fixture files:
 
 .. _database.beware-of-foreign-keys:
 
-Beware of Foreign Keys
-======================
+Precauciones con las Llaves Foráneas
+====================================
 
-During Fixture SetUp PHPUnit's Database Extension inserts the rows
-into the database in the order they are specified in your fixture.
-If your database schema uses foreign keys this means you have to
-specify the tables in an order that does not cause foreign key
-constraints to fail.
+La Extensión de Base de Datos de PHPUnit inserta las columnas en la base de datos
+en el orden en que ellas se especifican en nuestra ambientación. Si nuestro
+esquema de base de datos usa llaves foráneas debemos especificar las tablas en
+un orden que no cause que las restricciones de llave foránea fallen.
 
 .. _database.implementing-your-own-datasetsdatatables:
 
-Implementing your own DataSets/DataTables
-=========================================
+Implementar nuestro propio Conjunto de Datos/Tablas de Datos
+============================================================
 
-To understand the internals of DataSets and DataTables, lets have a
-look at the interface of a DataSet. You can skip this part if you
-do not plan to implement your own DataSet or DataTable.
+Para entender el interior de los Conjuntos de Datos y Tablas de Datos, vamos a
+dar un vistazo a la interfaz de un Conjunto de Datos. Se puede saltar esta parte
+si no planeamos implementar nuestro propio Conjunto de Datos o Tabla de Datos.
 
 .. code-block:: php
 
@@ -1194,22 +1179,20 @@ do not plan to implement your own DataSet or DataTable.
     }
     ?>
 
-The public interface is used internally by the
-``assertDataSetsEqual()`` assertion on the Database
-TestCase to check for dataset quality. From the
-``IteratorAggregate`` interface the IDataSet
-inherits the ``getIterator()`` method to iterate
-over all tables of the dataset. The reverse iterator allows PHPUnit to
-truncate tables opposite the order they were created to satisfy foreign
-key constraints.
+La interfaz pública es usada internamente por la aserción ``assertDataSetsEqual()``
+en el Caso de Prueba de Base de Datos para revisar la calidad del conjunto de datos.
+De la interfaz ``IteratorAggregate`` la clase IDataSet hereda el método
+``getIterator()`` para iterar sobre todas las tablas del conjunto de datos. El
+iterador reverso permite a PHPUnit truncar tablas en el orden opuesto al que ellas
+fueron creadas para satisfacer las restricciones de llave foránea.
 
-Depending on the implementation different approaches are taken to
-add table instances to a dataset. For example, tables are added
-internally during construction from the source file in all
-file-based datasets such as ``YamlDataSet``,
-``XmlDataSet`` or ``FlatXmlDataSet``.
+Dependiendo de la implementación, se toman diferentes enfoques para agregar
+instancias de tabla a un conjunto de datos. Por ejemplo, las tablas se agregan
+internamente durante la construcción del archivo fuente en todos los Conjuntos de
+Datos basados en archivo, tales como ``YamlDataSet``, ``XmlDataSet`` o
+``FlatXmlDataSet``.
 
-A table is also represented by the following interface:
+Una tabla también se representa con la siguiente interfaz:
 
 .. code-block:: php
 
@@ -1224,41 +1207,37 @@ A table is also represented by the following interface:
     }
     ?>
 
-Except the ``getTableMetaData()`` method it is
-pretty self-explainatory. The used methods are all required for
-the different assertions of the Database Extension that are
-explained in the next chapter. The
-``getTableMetaData()`` method has to return an
-implementation of the
-``PHPUnit_Extensions_Database_DataSet_ITableMetaData``
-interface, which describes the structure of the table. It holds
-information on:
+Con la excepción del método ``getTableMetaData()``, el código anterior es bastante
+autoexplicativo. Los métodos usados son todos requeridos para las diferentes
+aserciones de la Extensión de la Base de Datos que se explican en el siguiente
+capítulo. El método ``getTableMetaData()`` debe regresar una implementación de la
+interfaz ``PHPUnit_Extensions_Database_DataSet_ITableMetaData``, que describe la
+estructura de la tabla. La información que posee es:
 
 -
 
-  The table name
+  El nombre de la tabla.
 
 -
 
-  An array of column-names of the table, ordered by their appearance
-  in the result-set.
+  Un arreglo con los nombres de las columnas de la tabla, ordenada por su aparición
+  en el conjunto de resultados.
 
 -
 
-  An array of the primary-key columns.
+  Un arreglo de las columnas que son llave primaria.
 
-This interface also has an assertion that checks if two instances
-of Table Metadata equal each other, which is used by the data-set
-equality assertion.
+Esta interfaz tiene además una aserción que revisa si dos instancias de los
+Metadatos de la Tabla son iguales entre si, que es usado por la aserción
+de igualdad de conjunto de datos.
 
 .. _database.the-connection-api:
 
-Using the Database Connection API
-#################################
+Usar la API de Conexión de Base de Datos
+########################################
 
-There are three interesting methods on the Connection interface
-which has to be returned from the
-``getConnection()`` method on the Database TestCase:
+Existen tres métodos interesantes en la interfaz de Conexión que debe regresar
+el método ``getConnection()`` en el Caso de Prueba de Base de Datos:
 
 .. code-block:: php
 
@@ -1275,8 +1254,9 @@ which has to be returned from the
 
 #.
 
-   The ``createDataSet()`` method creates a Database
-   (DB) DataSet as described in the DataSet implementations section.
+   El método ``createDataSet()`` crea un Conjunto de Datos basado en Base de
+   Datos (DB) como se describe en la sección de implementaciones de Conjunto de
+   Datos.
 
    .. code-block:: php
 
@@ -1298,11 +1278,9 @@ which has to be returned from the
 
 #.
 
-   The ``createQueryTable()`` method can be used to
-   create instances of a QueryTable, give them a result name and SQL
-   query. This is a handy method when it comes to result/table
-   assertions as will be shown in the next section on the Database
-   Assertions API.
+   El método ``createQueryTable()`` se puede usar para crear instancias de
+   una «Consulta a Tabla» (QueryTable), dado el nombre de una tabla y una
+   consulta SQL.
 
    .. code-block:: php
 
@@ -1324,10 +1302,9 @@ which has to be returned from the
 
 #.
 
-   The ``getRowCount()`` method is a convienent way to
-   access the number of rows in a table, optionally filtered by an
-   additional where clause. This can be used with a simple equality
-   assertion:
+   El método ``getRowCount()`` es una manera conveniente de acceder al número de
+   filas de una tabla, opcionalmente filtrado por una clausula «where». Este
+   método se puede usar con una aserción simple de igualdad:
 
    .. code-block:: php
 
@@ -1348,25 +1325,24 @@ which has to be returned from the
 
 .. _database.database-assertions-api:
 
-Database Assertions API
-#######################
+API de Aserciones de Base de Datos
+##################################
 
-For a testing tool the Database Extension surely provides some
-assertions that you can use to verify the current state of the
-database, tables and the row-count of tables. This section
-describes this functionality in detail:
+Una herramienta de pruebas como la Extensión de Base de Datos debe proveer
+algunas aserciones que podemos usar para revisar el estado actual
+de la base de datos, las tablas y la cantidad de filas de una tabla.
+En esta sección se describe estas funcionalidades detalladamente:
 
 .. _database.asserting-the-row-count-of-a-table:
 
-Asserting the Row-Count of a Table
-==================================
+Aseverar el número de filas de una Tabla
+========================================
 
-It is often helpful to check if a table contains a specific amount
-of rows. You can easily achieve this without additional glue code
-using the Connection API. Say we wanted to check that after
-insertion of a row into our guestbook we not only have the two
-initial entries that have accompanied us in all the previous
-examples, but a third one:
+A menudo es útil revisar si una tabla contiene una cantidad específica de filas.
+Podemos fácilmente conseguir esto sin código de enlace adicional usando la API
+de conexión. Supongamos que queremos revisar si después de insertar una fila
+en nuestro libro de visitas no solo tenemos las dos entradas iniciales, las que
+nos han acompañado en todos los ejemplos anteriores, sino tres:
 
 .. code-block:: php
 
@@ -1392,17 +1368,16 @@ examples, but a third one:
 
 .. _database.asserting-the-state-of-a-table:
 
-Asserting the State of a Table
-==============================
+Aseverar el Estado de una Tabla
+===============================
 
-The previous assertion is helpful, but we surely want to check the
-actual contents of the table to verify that all the values were
-written into the correct columns. This can be achieved by a table
-assertion.
+La aseveración anterior es útil pero seguramente queremos revisar el contenido
+real de una tabla para verificar que todos los valores se escribieron correctamente
+en las columnas. Esto se puede lograr con una aserción de tabla.
 
-For this we would define a Query Table instance which derives its
-content from a table name and SQL query and compare it to a
-File/Array Based Data Set:
+Para esto definiremos una instancia de Consulta de Tabla que obtiene
+su contenido del nombre de una tabla y una consulta SQL, y luego la compara con
+un Conjunto de Datos basado en Archivos o Arreglos:
 
 .. code-block:: php
 
@@ -1429,8 +1404,7 @@ File/Array Based Data Set:
     }
     ?>
 
-Now we have to write the *expectedBook.xml* Flat
-XML file for this assertion:
+Ahora debemos escribir el archivo XML Plano *expectedBook.xml* para esta aserción:
 
 .. code-block:: bash
 
@@ -1441,15 +1415,12 @@ XML file for this assertion:
         <guestbook id="3" content="Hello world!" user="suzy" created="2010-05-01 21:47:08" />
     </dataset>
 
-This assertion would only pass on exactly one second of the
-universe though, on *2010–05–01 21:47:08*. Dates
-pose a special problem to database testing and we can circumvent
-the failure by omitting the “created“ column from the
-assertion.
+Sin embargo esta aserción solo se cumple durante un segundo, *2010–05–01 21:47:08*.
+Las fechas representan un problema especial para las pruebas de base de datos,
+podemos evitar estas fallas omitiendo la columna «created» en la aserción.
 
-The adjusted *expectedBook.xml* Flat XML file
-would probably have to look like the following to make the
-assertion pass:
+El archivo XML Plano *expectedBook.xml* ajustado debe verse de la siguiente manera
+para que la aserción pase la prueba:
 
 .. code-block:: bash
 
@@ -1460,7 +1431,7 @@ assertion pass:
         <guestbook id="3" content="Hello world!" user="suzy" />
     </dataset>
 
-We have to fix up the Query Table call:
+Debemos arreglar la llamada a la Consulta de Tabla:
 
 .. code-block:: php
 
@@ -1472,12 +1443,12 @@ We have to fix up the Query Table call:
 
 .. _database.asserting-the-result-of-a-query:
 
-Asserting the Result of a Query
-===============================
+Aseverar el Resultado de una Consulta
+=====================================
 
-You can also assert the result of complex queries with the Query
-Table approach, just specify a result name with a query and
-compare it to a dataset:
+Además podemos aseverar el resultado de una consulta compleja con el enfoque
+de Consulta de Tabla, solamente especificando el resultado de la consulta y
+comparándola con un conjunto de datos:
 
 .. code-block:: php
 
@@ -1503,17 +1474,18 @@ compare it to a dataset:
 
 .. _database.asserting-the-state-of-multiple-tables:
 
-Asserting the State of Multiple Tables
-======================================
+Aseverar el Estado de Varias Tablas
+===================================
 
-For sure you can assert the state of multiple tables at once and
-compare a query dataset against a file based dataset. There are two
-different ways for DataSet assertions.
+Sin dudas podemos aseverar el estado de multiples tablas de una sola vez,
+comparando un conjunto de datos basados en una consulta contra un conjunto de
+datos basados en archivos. Existen dos maneras diferentes para las aserciones
+de Conjunto de Datos.
 
 #.
 
-   You can use the Database (DB) DataSet from the Connection and
-   compare it to a File-Based DataSet.
+   Podemos usar el Conjunto de Datos de Base de Datos (DB)
+   y compararlo con un Conjunto de Datos basado en Archivos.
 
    .. code-block:: php
 
@@ -1536,7 +1508,7 @@ different ways for DataSet assertions.
 
 #.
 
-   You can construct the DataSet on your own:
+   Podemos construir nuestro propio Conjunto de Datos:
 
    .. code-block:: php
 
@@ -1561,61 +1533,60 @@ different ways for DataSet assertions.
 
 .. _database.frequently-asked-questions:
 
-Frequently Asked Questions
-##########################
+Preguntas y Respuestas Comunes
+##############################
 
 .. _database.will-phpunit-re-create-the-database-schema-for-each-test:
 
-Will PHPUnit (re-)create the database schema for each test?
-===========================================================
+¿PHPUnit (re)creará el esquema de base de datos para cada prueba?
+=================================================================
 
-No, PHPUnit requires all database objects to be available when the
-suite is started. The Database, tables, sequences, triggers and
-views have to be created before you run the test suite.
+No, PHPUnit necesita que todos los objetos de la base de datos
+estén disponibles cuando las pruebas comiencen. La base de datos,
+tablas, secuencias, lanzadores y vistas se deben crear antes de
+ejecutar el conjunto de pruebas.
 
-`Doctrine 2 <http://www.doctrine-project.org>`_ or
-`eZ Components <http://www.ezcomponents.org>`_ have
-powerful tools that allow you to create the database schema from
-pre-defined datastructures. However, these have to be hooked into
-the PHPUnit extension to allow an automatic database re-creation
-before the complete test-suite is run.
+`Doctrine 2 <http://www.doctrine-project.org>`_ o
+`eZ Components <http://www.ezcomponents.org>`_ tienen
+poderosas herramientas que permiten crear el esquema de base
+de datos desde una estructura de datos predefinida. Sin embargo,
+ellas deben estar enlazadas a la extensión de PHPUnit para
+permitir la recreación automática de la base de datos antes
+de ejecutar el paquete de pruebas completo.
 
-Since each test completely cleans the database you are not even
-required to re-create the database for each test-run. A permanently
-available database works perfectly.
+Como cada prueba limpia completamente la base de datos no necesitamos
+recrear la base de datos para ejecutar cada prueba. Una base de datos
+disponible permanentemente funciona perfectamente.
 
 .. _database.am-i-required-to-use-pdo-in-my-application-for-the-database-extension-to-work:
 
-Am I required to use PDO in my application for the Database Extension to work?
-==============================================================================
+¿Estoy obligado a usar PDO en mi aplicación para que la Extensión de Base de Datos funcione?
+============================================================================================
 
-No, PDO is only required for the fixture clean- and set-up and for
-assertions. You can use whatever database abstraction you want
-inside your own code.
+No, PDO solo es obligatorio para limpiar y configurar el ambiente y
+para las aserciones. Podemos usar cualquier abstracción de base de
+datos dentro de nuestro código.
 
 .. _database.what-can-i-do-when-i-get-a-too-much-connections-error:
 
-What can I do, when I get a “Too much Connections“ Error?
-=============================================================
+¿Que puedo hacer cuando recibo un Error «Too much Connections»?
+===============================================================
 
-If you do not cache the PDO instance that is created from the
-TestCase ``getConnection()`` method the number of
-connections to the database is increasing by one or more with each
-database test. With default configuration MySql only allows 100
-concurrent connections other vendors also have maximum connection
-limits.
+Si no guardamos la instancia PDO que se crea con el método
+``getConnection()`` del Caso de Prueba el número de conexiones
+a la base de datos se incrementará una o más veces por cada prueba
+de base de datos. La configuración por defecto de MySQL solo permite
+100 conexiones concurrentes y otros proveedores también tienen un
+límite máximo de conexiones.
 
-The SubSection
-“Use your own Abstract Database TestCase“ shows how
-you can prevent this error from happening by using a single cached
-PDO instance in all your tests.
+La subsección «Usemos nuestro propio Caso Abstracto de Prueba de Base
+de Datos» muestra como podemos prevenir que este error suceda usando
+una sola instancia PDO, guardada en la caché, para todos nuestras pruebas.
 
 .. _database.how-to-handle-null-with-flat-xml-csv-datasets:
 
-How to handle NULL with Flat XML / CSV Datasets?
-================================================
+¿Como lidiar con valores NULL en los Conjuntos de Datos XML Plano y CSV?
+========================================================================
 
-Do not do this. Instead, you should use either the XML or the YAML
-DataSets.
-
-
+No lo hagas. En su lugar, deberíamos usar el Conjunto de Datos XML
+o el YAML.
