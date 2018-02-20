@@ -231,7 +231,7 @@ abstracta diferente e implementando los métodos abstractos
         use TestCaseTrait;
 
         /**
-         * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+         * @return PHPUnit\DbUnit\Database\Connection
          */
         public function getConnection()
         {
@@ -240,7 +240,7 @@ abstracta diferente e implementando los métodos abstractos
         }
 
         /**
-         * @return PHPUnit_Extensions_Database_DataSet_IDataSet
+         * @return PHPUnit\DbUnit\DataSet\IDataSet
          */
         public function getDataSet()
         {
@@ -265,7 +265,7 @@ En el ejemplo anterior creamos una conexión SQL en memoria que
 y le pasamos el método ``createDefaultDBConnection`` que envuelve
 la instancia PDO y un segundo parámetro (el nombre de la base de datos)
 en una capa de abstracción muy simple para conexiones de base de datos del tipo
-``PHPUnit_Extensions_Database_DB_IDatabaseConnection``.
+``PHPUnit\DbUnit\Database\Connection``.
 
 La sección «Usar la API de Conexión de Base de Data» explica la API de esta
 interfaz y como podemos hacer el mejor uso de ella.
@@ -279,8 +279,8 @@ El método ``getDataSet()`` define como debe ser el estado inicial de la base de
 datos antes de que cada prueba sea ejecutada. El estado de la base de datos es
 abstraído a través de los concepto DataSet (Conjunto de Datos) y DataTable (Tabla
 de Datos) que son representados por las interfaces
-``PHPUnit_Extensions_Database_DataSet_IDataSet`` y
-``PHPUnit_Extensions_Database_DataSet_IDataTable``. La siguiente sección describe
+``PHPUnit\DbUnit\DataSet\IDataSet`` y
+``PHPUnit\DbUnit\DataSet\IDataTable``. La siguiente sección describe
 en detalles como estos conceptos trabajan y que beneficios trae su uso en las
 pruebas de base de datos.
 
@@ -346,7 +346,7 @@ caso de prueba:
         // only instantiate pdo once for test clean-up/fixture load
         static private $pdo = null;
 
-        // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+        // only instantiate PHPUnit\DbUnit\Database\Connection once per test
         private $conn = null;
 
         final public function getConnection()
@@ -398,7 +398,7 @@ Ahora podemos modificar nuestro caso de prueba de la siguiente manera:
         // only instantiate pdo once for test clean-up/fixture load
         static private $pdo = null;
 
-        // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+        // only instantiate PHPUnit\DbUnit\Database\Connection once per test
         private $conn = null;
 
         final public function getConnection()
@@ -863,7 +863,13 @@ directo:
 .. code-block:: php
 
     <?php
-    class MyApp_DbUnit_ArrayDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractDataSet
+
+    use PHPUnit\DbUnit\DataSet\AbstractDataSet;
+    use PHPUnit\DbUnit\DataSet\DefaultTableMetaData
+    use PHPUnit\DbUnit\DataSet\DefaultTable
+    use PHPUnit\DbUnit\DataSet\DefaultTableIterator
+
+    class MyApp_DbUnit_ArrayDataSet extends AbstractDataSet
     {
         /**
          * @var array
@@ -881,8 +887,8 @@ directo:
                     $columns = array_keys($rows[0]);
                 }
 
-                $metaData = new PHPUnit_Extensions_Database_DataSet_DefaultTableMetaData($tableName, $columns);
-                $table = new PHPUnit_Extensions_Database_DataSet_DefaultTable($metaData);
+                $metaData = new DefaultTableMetaData($tableName, $columns);
+                $table = new DefaultTable($metaData);
 
                 foreach ($rows AS $row) {
                     $table->addRow($row);
@@ -893,7 +899,7 @@ directo:
 
         protected function createIterator($reverse = false)
         {
-            return new PHPUnit_Extensions_Database_DataSet_DefaultTableIterator($this->tables, $reverse);
+            return new DefaultTableIterator($this->tables, $reverse);
         }
 
         public function getTable($tableName)
@@ -920,7 +926,7 @@ basados en Consultas toman protagonismo:
 .. code-block:: php
 
     <?php
-    $ds = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+    $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook');
     ?>
 
@@ -930,7 +936,7 @@ de un tabla, que es equivalente a la siguiente consulta:
 .. code-block:: php
 
     <?php
-    $ds = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+    $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT * FROM guestbook');
     ?>
 
@@ -941,7 +947,7 @@ tablas y, por ejemplo, restringir las filas, las columnas o agregar clausulas
 .. code-block:: php
 
     <?php
-    $ds = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+    $ds = new PHPUnit\DbUnit\DataSet\QueryDataSet($this->getConnection());
     $ds->addTable('guestbook', 'SELECT id, content FROM guestbook ORDER BY created DESC');
     ?>
 
@@ -972,7 +978,7 @@ por su nombre con una lista blanca como se muestra en el método ``testFilteredG
         use TestCaseTrait;
 
         /**
-         * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+         * @return PHPUnit\DbUnit\Database\Connection
          */
         public function getConnection()
         {
@@ -1036,7 +1042,7 @@ Remplazo:
         public function getDataSet()
         {
             $ds = $this->createFlatXmlDataSet('myFlatXmlFixture.xml');
-            $rds = new PHPUnit_Extensions_Database_DataSet_ReplacementDataSet($ds);
+            $rds = new PHPUnit\DbUnit\DataSet\ReplacementDataSet($ds);
             $rds->addFullReplacement('##NULL##', null);
             return $rds;
         }
@@ -1069,7 +1075,7 @@ de datos.
             $tableNames = ['guestbook'];
             $dataSet = $this->getConnection()->createDataSet();
 
-            $filterDataSet = new PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+            $filterDataSet = new PHPUnit\DbUnit\DataSet\DataSetFilter($dataSet);
             $filterDataSet->addIncludeTables(['guestbook']);
             $filterDataSet->setIncludeColumnsForTable('guestbook', ['id', 'content']);
             // ..
@@ -1080,7 +1086,7 @@ de datos.
             $tableNames = ['guestbook'];
             $dataSet = $this->getConnection()->createDataSet();
 
-            $filterDataSet = new PHPUnit_Extensions_Database_DataSet_DataSetFilter($dataSet);
+            $filterDataSet = new PHPUnit\DbUnit\DataSet\DataSetFilter($dataSet);
             $filterDataSet->addExcludeTables(['foo', 'bar', 'baz']); // only keep the guestbook table!
             $filterDataSet->setExcludeColumnsForTable('guestbook', ['user', 'created']);
             // ..
@@ -1137,7 +1143,7 @@ Usando el Conjunto de Datos Compuesto podemos agregar ambos archivos a la ambien
             $ds1 = $this->createFlatXmlDataSet('fixture1.xml');
             $ds2 = $this->createFlatXmlDataSet('fixture2.xml');
 
-            $compositeDs = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
+            $compositeDs = new PHPUnit\DbUnit\DataSet\CompositeDataSet();
             $compositeDs->addDataSet($ds1);
             $compositeDs->addDataSet($ds2);
 
@@ -1168,12 +1174,14 @@ si no planeamos implementar nuestro propio Conjunto de Datos o Tabla de Datos.
 .. code-block:: php
 
     <?php
-    interface PHPUnit_Extensions_Database_DataSet_IDataSet extends IteratorAggregate
+    namespace PHPUnit\DbUnit\DataSet;
+
+    interface IDataSet extends IteratorAggregate
     {
         public function getTableNames();
         public function getTableMetaData($tableName);
         public function getTable($tableName);
-        public function assertEquals(PHPUnit_Extensions_Database_DataSet_IDataSet $other);
+        public function assertEquals(IDataSet $other);
 
         public function getReverseIterator();
     }
@@ -1197,13 +1205,13 @@ Una tabla también se representa con la siguiente interfaz:
 .. code-block:: php
 
     <?php
-    interface PHPUnit_Extensions_Database_DataSet_ITable
+    interface ITable
     {
         public function getTableMetaData();
         public function getRowCount();
         public function getValue($row, $column);
         public function getRow($row);
-        public function assertEquals(PHPUnit_Extensions_Database_DataSet_ITable $other);
+        public function assertEquals(ITable $other);
     }
     ?>
 
@@ -1211,7 +1219,7 @@ Con la excepción del método ``getTableMetaData()``, el código anterior es bas
 autoexplicativo. Los métodos usados son todos requeridos para las diferentes
 aserciones de la Extensión de la Base de Datos que se explican en el siguiente
 capítulo. El método ``getTableMetaData()`` debe regresar una implementación de la
-interfaz ``PHPUnit_Extensions_Database_DataSet_ITableMetaData``, que describe la
+interfaz ``PHPUnit\DbUnit\DataSet\ITableMetaData``, que describe la
 estructura de la tabla. La información que posee es:
 
 -
@@ -1242,7 +1250,9 @@ el método ``getConnection()`` en el Caso de Prueba de Base de Datos:
 .. code-block:: php
 
     <?php
-    interface PHPUnit_Extensions_Database_DB_IDatabaseConnection
+    namespace PHPUnit\DbUnit\Database;
+
+    interface Connection
     {
         public function createDataSet(Array $tableNames = NULL);
         public function createQueryTable($resultName, $sql);
@@ -1515,6 +1525,7 @@ de Conjunto de Datos.
        <?php
        use PHPUnit\Framework\TestCase;
        use PHPUnit\DbUnit\TestCaseTrait;
+       use PHPUnit\DbUnit\DataSet\QueryDataSet;
 
        class DataSetAssertionsTest extends TestCase
        {
@@ -1522,7 +1533,7 @@ de Conjunto de Datos.
 
            public function testManualDataSetAssertion()
            {
-               $dataSet = new PHPUnit_Extensions_Database_DataSet_QueryDataSet();
+               $dataSet = new QueryDataSet();
                $dataSet->addTable('guestbook', 'SELECT id, content, user FROM guestbook'); // additional tables
                $expectedDataSet = $this->createFlatXmlDataSet('guestbook.xml');
 
