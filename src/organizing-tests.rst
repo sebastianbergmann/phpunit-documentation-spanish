@@ -2,34 +2,35 @@
 
 .. _organizing-tests:
 
-================
-Organizing Tests
-================
+=====================
+Organizar las Pruebas
+=====================
 
-One of the goals of PHPUnit is that tests
-should be composable: we want to be able to run any number or combination
-of tests together, for instance all tests for the whole project, or the
-tests for all classes of a component that is part of the project, or just
-the tests for a single class.
+Uno de los objetivos de PHPUnit es que las pruebas se puedan
+combinar: queremos ser capaces de ejecutar cualquier cantidad o
+combinación de pruebas, por ejemplo, todas las pruebas de un proyecto
+entero o las pruebas para todas las clases de un componente que es parte
+de un proyecto o solamente probar una clase.
 
-PHPUnit supports different ways of organizing tests and composing them into
-a test suite. This chapter shows the most commonly used approaches.
+PHPUnit soporta diferentes maneras de organizar y componer las pruebas dentro
+de una suite de prueba. Este capítulo muestra los enfoques que se usan comúnmente.
 
 .. _organizing-tests.filesystem:
 
-Composing a Test Suite Using the Filesystem
-###########################################
+Componer una Suite de Prueba Usando el Sistema de Archivos
+##########################################################
 
-Probably the easiest way to compose a test suite is to keep all test case
-source files in a test directory. PHPUnit can automatically discover and
-run the tests by recursively traversing the test directory.
+Probablemente la manera más fácil de componer una suite de prueba es tener
+todos los archivos fuente con los casos de prueba en una carpeta de prueba.
+PHPUnit puede descubrir automáticamente y ejecutar las pruebas recorriendo
+recursivamente el directorio de prueba.
 
-Lets take a look at the test suite of the
-`sebastianbergmann/money <http://github.com/sebastianbergmann/money/>`_
-library. Looking at this project's directory structure, we see that the
-test case classes in the :file:`tests` directory mirror the
-package and class structure of the System Under Test (SUT) in the
-:file:`src` directory:
+Vamos a dar un vistazo a la suite de prueba de la biblioteca
+`sebastianbergmann/money <http://github.com/sebastianbergmann/money/>`_.
+Al ver la estructura de la carpeta del proyecto nos damos cuenta que
+las clases de casos de prueba en la carpeta :file:`tests` son un espejo
+del paquete y de la estructura de clases del Sistema Bajo Prueba, en ingles
+*System Under Test (SUT)*, en la carpeta :file:`src`:
 
 .. code-block:: bash
 
@@ -39,8 +40,8 @@ package and class structure of the System Under Test (SUT) in the
     `-- Money.php                       `-- MoneyTest.php
     `-- autoload.php
 
-To run all tests for the library we just need to point the PHPUnit
-command-line test runner to the test directory:
+Para ejecutar todas las pruebas de la biblioteca solo necesitamos apuntar el
+ejecutor de pruebas en línea de comandos a la carpeta de pruebas:
 
 .. code-block:: bash
 
@@ -53,14 +54,13 @@ command-line test runner to the test directory:
 
     OK (33 tests, 52 assertions)
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   If you point the PHPUnit command-line test runner to a directory it will
-   look for :file:`*Test.php` files.
+   Si apuntamos el ejecutor de pruebas en línea de comandos a la carpeta, él
+   buscará los archivos :file:`*Test.php`.
 
-To run only the tests that are declared in the ``CurrencyTest``
-test case class in :file:`tests/CurrencyTest.php` we can use
-the following command:
+Para ejecutar solamente las pruebas que están en la clase de pruebas ``CurrencyTest``
+del archivo :file:`tests/CurrencyTest.php`, podemos usar el siguiente comando:
 
 .. code-block:: bash
 
@@ -73,8 +73,8 @@ the following command:
 
     OK (8 tests, 8 assertions)
 
-For more fine-grained control of which tests to run we can use the
-``--filter`` option:
+Para un control de tipo granular sobre que pruebas ejecutar podemos usar la
+opción ``--filter``:
 
 .. code-block:: bash
 
@@ -87,29 +87,28 @@ For more fine-grained control of which tests to run we can use the
 
     OK (2 test, 2 assertions)
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   A drawback of this approach is that we have no control over the order in
-   which the tests are run. This can lead to problems with regard to test
-   dependencies, see :ref:`writing-tests-for-phpunit.test-dependencies`.
-   In the next section you will see how you can make the test execution
-   order explicit by using the XML configuration file.
+   Una desventaja de este abordaje es que no tenemos control sobre el orden
+   en que las pruebas se ejecutan. Esto puede causar problemas con las pruebas
+   que tienen dependencias, ver :ref:`writing-tests-for-phpunit.test-dependencies`.
+   En la siguiente sección veremos como podemos dar un orden de ejecución
+   explicito usando un archivo de configuración XML.
 
 .. _organizing-tests.xml-configuration:
 
-Composing a Test Suite Using XML Configuration
-##############################################
+Componer una Suite de Prueba con una Configuración XML
+######################################################
 
-PHPUnit's XML configuration file (:ref:`appendixes.configuration`)
-can also be used to compose a test suite.
+El archivo de configuración XML de PHPUnit (:ref:`appendixes.configuration`)
+se puede usar, además, para componer una suite de prueba. El
 :numref:`organizing-tests.xml-configuration.examples.phpunit.xml`
-shows a minimal :file:`phpunit.xml` file that will add all
-``*Test`` classes that are found in
-:file:`*Test.php` files when the :file:`tests`
-directory is recursively traversed.
+muestra un archivo :file:`phpunit.xml` que agregará todas las clases que
+se encuentran en los archivos :file:`*Test.php` cuando se recorre recursivamente
+la carpeta :file:`tests`.
 
 .. code-block:: php
-    :caption: Composing a Test Suite Using XML Configuration
+    :caption: Componer una Suite de Prueba con Configuración XML
     :name: organizing-tests.xml-configuration.examples.phpunit.xml
 
     <phpunit bootstrap="src/autoload.php">
@@ -120,16 +119,14 @@ directory is recursively traversed.
       </testsuites>
     </phpunit>
 
-If :file:`phpunit.xml` or
-:file:`phpunit.xml.dist` (in that order) exist in the
-current working directory and ``--configuration`` is
-*not* used, the configuration will be automatically
-read from that file.
+Si :file:`phpunit.xml` o :file:`phpunit.xml.dist` (en este orden) existen
+en la carpeta actual y la opción ``--configuration`` *no* se usa, la configuración
+será leída automáticamente del aquellos archivos.
 
-The order in which tests are executed can be made explicit:
+Se puede hacer explícito el orden en que las pruebas se ejecutan:
 
 .. code-block:: php
-    :caption: Composing a Test Suite Using XML Configuration
+    :caption: Componer una Suite de Prueba con Configuración XML
     :name: organizing-tests.xml-configuration.examples.phpunit.xml2
 
     <phpunit bootstrap="src/autoload.php">
@@ -141,5 +138,3 @@ The order in which tests are executed can be made explicit:
         </testsuite>
       </testsuites>
     </phpunit>
-
-
