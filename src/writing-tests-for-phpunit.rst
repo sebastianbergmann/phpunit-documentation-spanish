@@ -53,7 +53,6 @@ escribir pruebas con PHPUnit:
             $this->assertSame(0, count($stack));
         }
     }
-    ?>
 |
     *Martin Fowler*:
 
@@ -134,7 +133,6 @@ la anotación ``@depends`` para expresar dependencias entre métodos de prueba.
             $this->assertEmpty($stack);
         }
     }
-    ?>
 
 En el ejemplo anterior, la primera prueba, ``testEmpty()``, crea un nuevo
 arreglo y asevera que esta vacío. La prueba regresa un elemento como
@@ -178,7 +176,6 @@ de los defectos, aprovechando las dependencias entre pruebas, como se muestra en
         {
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -244,7 +241,6 @@ Ver :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
              $this->assertSame('second', $b);
          }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -301,7 +297,6 @@ sus argumentos.
             ];
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -353,7 +348,6 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
             ];
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -398,7 +392,6 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
             return new CsvFileIterator('data.csv');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -462,7 +455,6 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
             $this->key++;
         }
     }
-    ?>
 
 Cuando un prueba recibe una entrada tanto desde un método proveedor
 de datos ``@dataProvider`` como desde una o más pruebas de las que depende
@@ -510,7 +502,6 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -629,7 +620,6 @@ muestra un ejemplo.
         {
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -683,7 +673,6 @@ disparé un error de PHP, como se muestra en
             include 'not_existing_file.php';
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -722,21 +711,23 @@ llevaría a un ``PHPUnit\Framework\Error\Notice`` de phpunit.
     {
         public function testFileWriting() {
             $writer = new FileWriter;
+
             $this->assertFalse(@$writer->write('/is-not-writeable/file', 'stuff'));
         }
     }
+
     class FileWriter
     {
         public function write($file, $content) {
             $file = fopen($file, 'w');
+
             if($file == false) {
                 return false;
             }
+
             // ...
         }
     }
-
-    ?>
 
 .. code-block:: bash
 
@@ -790,7 +781,6 @@ fallo.
             print 'baz';
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -863,7 +853,6 @@ problema.
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
