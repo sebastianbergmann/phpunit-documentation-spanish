@@ -2,17 +2,17 @@
 
 .. _incomplete-and-skipped-tests:
 
-============================
-Incomplete and Skipped Tests
-============================
+=============================
+Omisión y Pruebas Incompletas
+=============================
 
 .. _incomplete-and-skipped-tests.incomplete-tests:
 
-Incomplete Tests
-################
+Pruebas Incompletas
+###################
 
-When you are working on a new test case class, you might want to begin
-by writing empty test methods such as:
+Cuando estamos trabajando con una nueva clase para un caso de prueba, podríamos
+querer comenzar a escribir una método de prueba vacío de la siguiente manera:
 
 .. code-block:: php
 
@@ -20,34 +20,33 @@ by writing empty test methods such as:
     {
     }
 
-to keep track of the tests that you have to write. The
-problem with empty test methods is that they are interpreted as a
-success by the PHPUnit framework. This misinterpretation leads to the
-test reports being useless -- you cannot see whether a test is actually
-successful or just not yet implemented. Calling
-``$this->fail()`` in the unimplemented test method
-does not help either, since then the test will be interpreted as a
-failure. This would be just as wrong as interpreting an unimplemented
-test as a success.
+para mantener el control de las pruebas que hemos escrito. El problema con
+los métodos de prueba vacíos es que son interpretados como exitosos por
+el framework PHPUnit. Este error en la interpretación lleva a que el reporte
+de la prueba sea inútil, porque no podemos ver si la prueba fue realmente
+exitosa o solo no está implementada. Llamar a ``$this->fail()`` en un
+método de prueba no implementado no es de ayuda, pues, la prueba será
+interpretada como una falla. Lo que sería tan incorrecto como interpretar
+una prueba no implementada como exitosa.
 
-If we think of a successful test as a green light and a test failure
-as a red light, we need an additional yellow light to mark a test
-as being incomplete or not yet implemented.
-``PHPUnit_Framework_IncompleteTest`` is a marker
-interface for marking an exception that is raised by a test method as
-the result of the test being incomplete or currently not implemented.
-``PHPUnit_Framework_IncompleteTestError`` is the
-standard implementation of this interface.
+Si pensamos en una luz verde para una prueba exitosa y una luz roja para una
+prueba fallida, necesitamos una luz adicional de color amarillo para marcar
+una prueba como incompleta o aún no implementada.
+``PHPUnit\Framework\IncompleteTest`` es una interfaz de marcado para indicar
+un excepción que lanza el método de prueba cuando la prueba está
+incompleta o actualmente no está implementada.
+La clase ``PHPUnit\Framework\IncompleteTestError`` es la implementación estándar
+de esta interfaz.
 
-:numref:`incomplete-and-skipped-tests.incomplete-tests.examples.SampleTest.php`
-shows a test case class, ``SampleTest``, that contains one test
-method, ``testSomething()``. By calling the convenience
-method ``markTestIncomplete()`` (which automatically
-raises an ``PHPUnit_Framework_IncompleteTestError``
-exception) in the test method, we mark the test as being incomplete.
+El :numref:`incomplete-and-skipped-tests.incomplete-tests.examples.SampleTest.php`
+muestra una clase para un caso de prueba, ``SampleTest``, que contiene un
+método de prueba ``testSomething()``. Mediante el llamado del método
+``markTestIncomplete()`` (que lanza automáticamente una excepción
+``PHPUnit\Framework\IncompleteTestError``) en el método de prueba, conseguimos
+marcar la prueba como incompleta.
 
 .. code-block:: php
-    :caption: Marking a test as incomplete
+    :caption: Marcar una prueba como incompleta
     :name: incomplete-and-skipped-tests.incomplete-tests.examples.SampleTest.php
 
     <?php
@@ -66,11 +65,10 @@ exception) in the test method, we mark the test as being incomplete.
             );
         }
     }
-    ?>
 
-An incomplete test is denoted by an ``I`` in the output
-of the PHPUnit command-line test runner, as shown in the following
-example:
+Una prueba incompleta se denota con una ``I`` en la salida del ejecutor de
+pruebas en línea de comandos de PHPUnit, como se muestra en el siguiente
+ejemplo:
 
 .. code-block:: bash
 
@@ -90,40 +88,42 @@ example:
     OK, but incomplete or skipped tests!
     Tests: 1, Assertions: 1, Incomplete: 1.
 
-:numref:`incomplete-and-skipped-tests.incomplete-tests.tables.api`
-shows the API for marking tests as incomplete.
+En la :numref:`incomplete-and-skipped-tests.incomplete-tests.tables.api`
+se muestra la API para marcar las pruebas como incompletas.
 
 .. rst-class:: table
-.. list-table:: API for Incomplete Tests
+.. list-table:: API para Pruebas Incompletas
     :name: incomplete-and-skipped-tests.incomplete-tests.tables.api
     :header-rows: 1
 
-    * - Method
-      - Meaning
+    * - Método
+      - Propósito
     * - ``void markTestIncomplete()``
-      - Marks the current test as incomplete.
+      - Marca la prueba actual como incompleta.
     * - ``void markTestIncomplete(string $message)``
-      - Marks the current test as incomplete using ``$message`` as an explanatory message.
+      - Marca la prueba actual como incompleta usando un mensaje, ``$message``,
+        explicativo.
 
 .. _incomplete-and-skipped-tests.skipping-tests:
 
-Skipping Tests
-##############
+Omitir las pruebas
+##################
 
-Not all tests can be run in every environment. Consider, for instance,
-a database abstraction layer that has several drivers for the different
-database systems it supports. The tests for the MySQL driver can of
-course only be run if a MySQL server is available.
+No todas la pruebas se pueden ejecutar en cualquier entorno. Consideremos por
+ejemplo, una capa de abstracción de base de datos que tiene varios controladores
+para los diferentes sistemas de base de datos soportados. Las pruebas para
+un controlador MySQL se pueden ejecutar solamente, por supuesto, si un servidor
+MySQL está disponible.
 
-:numref:`incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php`
-shows a test case class, ``DatabaseTest``, that contains one test
-method, ``testConnection()``. In the test case class'
-``setUp()`` template method we check whether the MySQLi
-extension is available and use the ``markTestSkipped()``
-method to skip the test if it is not.
+El :numref:`incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php`
+muestra una clase para un caso de prueba, ``DatabaseTest``, que contiene un
+método de prueba, ``testConnection()``. En el método modelo ``setUp()`` de la
+clase de caso de prueba revisamos si la extensión MySQLi está disponible y
+usamos el método ``markTestSkipped()`` para saltar la prueba si no está
+disponible la extensión.
 
 .. code-block:: php
-    :caption: Skipping a test
+    :caption: Omitir la prueba
     :name: incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php
 
     <?php
@@ -145,11 +145,10 @@ method to skip the test if it is not.
             // ...
         }
     }
-    ?>
 
-A test that has been skipped is denoted by an ``S`` in
-the output of the PHPUnit command-line test runner, as shown in the
-following example:
+Una prueba que se omite se denota con una ``S`` en la salida del ejecutor de
+pruebas en línea de comandos de PHPUnit, como se muestra en el siguiente
+ejemplo:
 
 .. code-block:: bash
 
@@ -169,65 +168,66 @@ following example:
     OK, but incomplete or skipped tests!
     Tests: 1, Assertions: 0, Skipped: 1.
 
-:numref:`incomplete-and-skipped-tests.skipped-tests.tables.api`
-shows the API for skipping tests.
+En la :numref:`incomplete-and-skipped-tests.skipped-tests.tables.api`
+se muestra la API para omitir pruebas.
 
 .. rst-class:: table
-.. list-table:: API for Skipping Tests
+.. list-table:: API para omitir pruebas
     :name: incomplete-and-skipped-tests.skipped-tests.tables.api
     :header-rows: 1
 
-    * - Method
-      - Meaning
+    * - Método
+      - Propósito
     * - ``void markTestSkipped()``
-      - Marks the current test as skipped.
+      - Marca la prueba actual como omitida.
     * - ``void markTestSkipped(string $message)``
-      - Marks the current test as skipped using ``$message`` as an explanatory message.
+      - Marca la prueba actual como omitida usando un mensaje, ``$message``, de
+        explicación.
 
 .. _incomplete-and-skipped-tests.skipping-tests-using-requires:
 
-Skipping Tests using @requires
-##############################
+Omitir pruebas usando @requires
+###############################
 
-In addition to the above methods it is also possible to use the
-``@requires`` annotation to express common preconditions for a test case.
+A parte de los métodos de arriba es posible usar la anotación ``@requires``
+para expresar precondiciones comunes para un caso de prueba.
 
 .. rst-class:: table
-.. list-table:: Possible @requires usages
+.. list-table:: Posibles usos para @requires
     :name: incomplete-and-skipped-tests.requires.tables.api
     :header-rows: 1
 
-    * - Type
-      - Possible Values
-      - Examples
-      - Another example
+    * - Tipo
+      - Posibles Valores
+      - Ejemplos
+      - Otros Ejemplos
     * - ``PHP``
-      - Any PHP version identifier
+      - Cualquier identificador de versión de PHP
       - @requires PHP 5.3.3
       - @requires PHP 7.1-dev
     * - ``PHPUnit``
-      - Any PHPUnit version identifier
+      - Cualquier identificador de versión de PHPUnit
       - @requires PHPUnit 3.6.3
       - @requires PHPUnit 4.6
     * - ``OS``
-      - A regexp matching `PHP_OS <http://php.net/manual/en/reserved.constants.php#constant.php-os>`_
+      - Una expresión regular que coincida con `PHP_OS <http://php.net/manual/es/reserved.constants.php#constant.php-os>`_
       - @requires OS Linux
       - @requires OS WIN32|WINNT
     * - ``OSFAMILY``
-      - Any `OS family <http://php.net/manual/en/reserved.constants.php#constant.php-os-family>`_
+      - Cualquier valor de `Familia de SO <http://php.net/manual/es/reserved.constants.php#constant.php-os-family>`_
       - @requires OSFAMILY Solaris
       - @requires OSFAMILY Windows
     * - ``function``
-      - Any valid parameter to `function_exists <http://php.net/function_exists>`_
+      - Cualquier parámetro valido para `function_exists <http://php.net/function_exists>`_
       - @requires function imap_open
       - @requires function ReflectionMethod::setAccessible
     * - ``extension``
-      - Any extension name along with an optional version identifier
+      - Cualquier nombre de extensión junto con un identificador de versión opcional
       - @requires extension mysqli
       - @requires extension redis 2.2.0
 
 .. code-block:: php
-    :caption: Skipping test cases using @requires
+    :caption: Omitir casos de pruebas usando @requires
     :name: incomplete-and-skipped-tests.skipping-tests.examples.DatabaseClassSkippingTest.php
 
     <?php
@@ -248,9 +248,7 @@ In addition to the above methods it is also possible to use the
 
         // ... All other tests require the mysqli extension
     }
-    ?>
 
-If you are using syntax that doesn't compile with a certain PHP Version look into the xml
-configuration for version dependent includes in :ref:`appendixes.configuration.testsuites`
-
-
+Si estamos usando una sintaxis que no copila con una determinada versión de PHP
+es conveniente revisar la dependencia de versiones en la configuración xml
+que se incluye en :ref:`appendixes.configuration.testsuites`.
