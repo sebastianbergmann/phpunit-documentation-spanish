@@ -2,21 +2,20 @@
 
 .. _logging:
 
-=======
-Logging
-=======
+========
+Registro
+========
 
-PHPUnit can produce several types of logfiles.
+PHPUnit puede producir una serie de archivos de registro.
 
 .. _logging.xml:
 
-Test Results (XML)
-##################
+Resultados de Pruebas (XML)
+###########################
 
-The XML logfile for test results produced by PHPUnit is based upon the one
-used by the `JUnit
-task for Apache Ant <http://ant.apache.org/manual/Tasks/junit.html>`_. The following example shows the XML
-logfile generated for the tests in ``ArrayTest``:
+El archivo de registro de resultados de pruebas en XML de PHPUnit está basado en
+él utilizado por la `tarea JUnit para Apache Ant <http://ant.apache.org/manual/Tasks/junit.html>`_.
+El siguiente ejemplo muestra el archivo XML generado por las pruebas en ``ArrayTest``:
 
 .. code-block:: bash
 
@@ -44,10 +43,10 @@ logfile generated for the tests in ``ArrayTest``:
       </testsuite>
     </testsuites>
 
-The following XML logfile was generated for two tests,
-``testFailure`` and ``testError``,
-of a test case class named ``FailureErrorTest`` and
-shows how failures and errors are denoted.
+El siguiente archivo XML fue generado por dos pruebas,
+``testFailure`` y ``testError``,
+de una clase de pruebas llamada ``FailureErrorTest`` y
+muestra cómo se guardan los fallos y errores.
 
 .. code-block:: bash
 
@@ -90,12 +89,13 @@ shows how failures and errors are denoted.
 
 .. _logging.codecoverage.xml:
 
-Code Coverage (XML)
-###################
+Cobertura de Código (XML)
+#########################
 
-The XML format for code coverage information logging produced by PHPUnit
-is loosely based upon the one used by `Clover <http://www.atlassian.com/software/clover/>`_. The following example shows the XML
-logfile generated for the tests in ``BankAccountTest``:
+El formato XML para la información sobre cobertura de código producido por
+PHPUnit está ligeramente basado en el utilizado por
+`Clover <http://www.atlassian.com/software/clover/>`_. El siguiente ejemplo
+muestra el registro XML generado por las pruebas en ``BankAccountTest``:
 
 .. code-block:: bash
 
@@ -137,23 +137,21 @@ logfile generated for the tests in ``BankAccountTest``:
 
 .. _logging.codecoverage.text:
 
-Code Coverage (TEXT)
-####################
+Cobertura de Código (TEXT)
+##########################
 
-Human readable code coverage output for the command-line or a text file.
+La cobertura de código en texto plano puede salir por la consola o a un archivo
+de texto.
 
-The aim of this output format is to provide a quick coverage overview while
-working on a small set of classes. For bigger projects this output can be
-useful to get an quick overview of the projects coverage or when used with
-the ``--filter`` functionality.
-When used from the command-line by writing to ``php://stdout``
-this will honor the ``--colors`` setting.
-Writing to standard out is the default option when used from the command-line.
-By default this will only show files that have at least one covered line.
-This can only be changed via the ``showUncoveredFiles`` xml
-configuration option. See :ref:`appendixes.configuration.logging`.
-By default all files and their coverage status are shown in the detailed report.
-This can be changed via the ``showOnlySummary`` xml
-configuration option.
-
-
+El objetivo de este formato es proveer de un visual de la cobertura de código
+mientras se prueba un grupo pequeño de clases. Para proyectos más grandes esta
+salida puede ser útil para obtener una visión rápida de la cobertura del proyecto
+o simplemente se puede usar con la funcionalidad ``--filter``.
+Cuando lo usamos desde la consola será escrito en ``php://stdout``;
+respetando la configuración de ``--colors``.
+Cuando se llama al comando la opción por defecto es escribir la salida en la consola.
+Por defecto se mostrará solo los archivos que tengan al menos una línea cubierta.
+Esto solo puede cambiarse con la opción ``showUncoveredFiles`` en la configuración para xml.
+Ver :ref:`appendixes.configuration.logging`. Por defecto todos los archivos y
+sus estados de cobertura se muestran en el informe detallado.
+Esto se puede cambiar con la opción ``showOnlySummary`` en la configuración para xml.

@@ -14,6 +14,8 @@ Code Coverage Analysis
     tested and has a lower chance of containing software bugs than a program
     with low code coverage.
 
+En este capítulo
+
 In this chapter you will learn all about PHPUnit's code coverage
 functionality that provides an insight into what parts of the production
 code are executed when the tests are run. It makes use of the
@@ -337,5 +339,3 @@ coverage information.
         this_call_will_never_show_up_as_covered();
     }
     ?>
-
-
