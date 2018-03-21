@@ -2,19 +2,20 @@
 
 .. _logging:
 
-=======
+========
 Registro
-=======
+========
 
 PHPUnit puede producir una serie de archivos de registro.
 
 .. _logging.xml:
 
 Resultados de Pruebas (XML)
-##################
+###########################
 
-El archivo de registro de resultados de pruebas en XML de PHPUnit está basado en el
-utilizado por esta `tarea JUnit para Apache Ant <http://ant.apache.org/manual/Tasks/junit.html>`_. El siguiente ejemplo muestra el archivo XML generado por las pruebas en ``ArrayTest``:
+El archivo de registro de resultados de pruebas en XML de PHPUnit está basado en
+él utilizado por la `tarea JUnit para Apache Ant <http://ant.apache.org/manual/Tasks/junit.html>`_.
+El siguiente ejemplo muestra el archivo XML generado por las pruebas en ``ArrayTest``:
 
 .. code-block:: bash
 
@@ -45,7 +46,7 @@ utilizado por esta `tarea JUnit para Apache Ant <http://ant.apache.org/manual/Ta
 El siguiente archivo XML fue generado por dos pruebas,
 ``testFailure`` y ``testError``,
 de una clase de pruebas llamada ``FailureErrorTest`` y
-muestra cómo se guardarán los fallos y errores.
+muestra cómo se guardan los fallos y errores.
 
 .. code-block:: bash
 
@@ -89,9 +90,12 @@ muestra cómo se guardarán los fallos y errores.
 .. _logging.codecoverage.xml:
 
 Cobertura de Código (XML)
-###################
+#########################
 
-El formato XML para la información sobre cobertura de código producido por PHPUnit está ligeramente basado en el utilizado por `Clover <http://www.atlassian.com/software/clover/>`_. El siguiente ejemplo muestra el registro XML generado por las pruebas en ``BankAccountTest``:
+El formato XML para la información sobre cobertura de código producido por
+PHPUnit está ligeramente basado en el utilizado por
+`Clover <http://www.atlassian.com/software/clover/>`_. El siguiente ejemplo
+muestra el registro XML generado por las pruebas en ``BankAccountTest``:
 
 .. code-block:: bash
 
@@ -134,17 +138,20 @@ El formato XML para la información sobre cobertura de código producido por PHP
 .. _logging.codecoverage.text:
 
 Cobertura de Código (TEXT)
-####################
+##########################
 
-La cobertura de código en texto plano puede salir por la consola o a un archivo de texto.
+La cobertura de código en texto plano puede salir por la consola o a un archivo
+de texto.
 
-El objetivo de este formato es proveer de un visual de la cobertura de código mientras se prueban un grupo pequeño de clases. Para proyectos más grandes esta salida puede ser útil para obtener una visión rápida o conjuntamente con la funcionalidad ``--filter``.
+El objetivo de este formato es proveer de un visual de la cobertura de código
+mientras se prueba un grupo pequeño de clases. Para proyectos más grandes esta
+salida puede ser útil para obtener una visión rápida de la cobertura del proyecto
+o simplemente se puede usar con la funcionalidad ``--filter``.
 Cuando lo usamos desde la consola será escrito en ``php://stdout``;
-esto hara honra a la opción ``--colors``.
-Escribir a la consola es la opción por defecto cuando se llama al comando.
-Por defecto esto mostrará solo los archivos que tengan al menos una línea cubierta.
-Esto solo puede cambiar con la opción XML ``showUncoveredFiles``. Mirar :ref:`appendixes.configuration.logging`.
-Por defecto todos los archivos y sus estados de cobertura son mostrados en el informe detallado.
-Esto puede cambiar con la opcion XML ``showOnlySummary``.
-
-
+respetando la configuración de ``--colors``.
+Cuando se llama al comando la opción por defecto es escribir la salida en la consola.
+Por defecto se mostrará solo los archivos que tengan al menos una línea cubierta.
+Esto solo puede cambiarse con la opción ``showUncoveredFiles`` en la configuración para xml.
+Ver :ref:`appendixes.configuration.logging`. Por defecto todos los archivos y
+sus estados de cobertura se muestran en el informe detallado.
+Esto se puede cambiar con la opción ``showOnlySummary`` en la configuración para xml.
