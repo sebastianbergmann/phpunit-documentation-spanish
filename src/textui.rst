@@ -2,13 +2,13 @@
 
 .. _textui:
 
-============================
-The Command-Line Test Runner
-============================
+==============================================
+El Ejecutor de Pruebas desde Línea de Comandos
+==============================================
 
-The PHPUnit command-line test runner can be invoked through the
-:file:`phpunit` command. The following code shows how to run
-tests with the PHPUnit command-line test runner:
+El ejecutor de pruebas desde línea de comandos de PHPUnit se puede invocar
+con el comando :file:`phpunit`. El siguiente código muestra como ejecutar las
+pruebas con el ejecutor de pruebas desde línea de comandos:
 
 .. code-block:: bash
 
@@ -21,57 +21,56 @@ tests with the PHPUnit command-line test runner:
 
     OK (2 tests, 2 assertions)
 
-When invoked as shown above, the PHPUnit command-line test runner will look
-for a :file:`ArrayTest.php` sourcefile in the current working
-directory, load it, and expect to find a ``ArrayTest`` test
-case class. It will then execute the tests of that class.
+Cuando se ejecuta de la manera que se muestra arriba, el ejecutor de pruebas
+desde línea de comandos buscará el archivo fuente :file:`ArrayTest.php` en la
+carpeta actual, lo cargará y esperará encontrar la clase de caso de prueba
+``ArrayTest``. Y luego se ejecutaran las pruebas de la clase.
 
-For each test run, the PHPUnit command-line tool prints one character to
-indicate progress:
+Para cada prueba que se ejecuta, la herramienta de línea de comandos imprime
+un carácter para indicar el progreso:
 
 ``.``
 
-    Printed when the test succeeds.
+    Se imprime cuando la prueba es exitosa.
 
 ``F``
 
-    Printed when an assertion fails while running the test method.
+    Se imprime cuando una aserción falla al ejecutarse el método de prueba.
 
 ``E``
 
-    Printed when an error occurs while running the test method.
+    Se imprime cuando ocurre un error mientras se ejecuta el método de prueba.
 
 ``R``
 
-    Printed when the test has been marked as risky (see
+    Se imprime cuando una prueba se ha marcado como riesgosa (ver
     :ref:`risky-tests`).
 
 ``S``
 
-    Printed when the test has been skipped (see
+    Se imprime cuando la prueba ha sido omitida (ver
     :ref:`incomplete-and-skipped-tests`).
 
 ``I``
 
-    Printed when the test is marked as being incomplete or not yet
-    implemented (see :ref:`incomplete-and-skipped-tests`).
+    Se imprime cuando la prueba se marca como incompleta o aún no implementada
+    (ver :ref:`incomplete-and-skipped-tests`).
 
-PHPUnit distinguishes between *failures* and
-*errors*. A failure is a violated PHPUnit
-assertion such as a failing ``assertSame()`` call.
-An error is an unexpected exception or a PHP error. Sometimes
-this distinction proves useful since errors tend to be easier to fix
-than failures. If you have a big list of problems, it is best to
-tackle the errors first and see if you have any failures left when
-they are all fixed.
+PHPUnit distingue entre *fallas* y *errores*. Una falla es una aserción de
+PHPUnit violada, como cuando la llamada a ``assertSame()`` falla. Un error
+es una excepción inesperada o un error de PHP. A veces esta distinción muestra
+ser útil porque los errores tienden a ser más fáciles de corregir que las
+fallas. Si tenemos una lista grande de problemas, es mejor resolver
+primero los errores y ver si queda alguna falla luego de que todos los errores
+están corregidos.
 
 .. _textui.clioptions:
 
-Command-Line Options
-####################
+Opciones de la línea de comandos
+################################
 
-Let's take a look at the command-line test runner's options in
-the following code:
+Vamos a dar una ojeada a las opciones del ejecutor de pruebas desde línea
+de comandos en el siguiente código:
 
 .. code-block:: bash
 
@@ -169,105 +168,100 @@ the following code:
 
 ``phpunit UnitTest``
 
-    Runs the tests that are provided by the class
-    ``UnitTest``. This class is expected to be declared
-    in the :file:`UnitTest.php` sourcefile.
+    Ejecuta las pruebas que se encuentran en la clase ``UnitTest``. Se espera
+    que esta clase este declarada en el archivo fuente :file:`UnitTest.php`.
 
-    ``UnitTest`` must be either a class that inherits
-    from ``PHPUnit\Framework\TestCase`` or a class that
-    provides a ``public static suite()`` method which
-    returns a ``PHPUnit_Framework_Test`` object, for
-    example an instance of the
-    ``PHPUnit_Framework_TestSuite`` class.
+    ``UnitTest`` debe ser una clase que hereda de ``PHPUnit\Framework\TestCase``
+    o una clase que provee un método ``public static suite()`` que regresa un
+    objeto ``PHPUnit_Framework_Test``, por ejemplo una instancia de la clase
+    ``PHPUnit_Framework_TestSuite``.
 
 ``phpunit UnitTest UnitTest.php``
 
-    Runs the tests that are provided by the class
-    ``UnitTest``. This class is expected to be declared
-    in the specified sourcefile.
+    Ejecuta las pruebas que están en la clase ``UnitTest``. Se espera que esta
+    clase este declarada en el archivo fuente que se especifica.
 
 ``--coverage-clover``
 
-    Generates a logfile in XML format with the code coverage information
-    for the tests run. See :ref:`logging` for more details.
+    Genera un archivo de registro en formato XML con la información de la
+    cobertura de código de las pruebas ejecutadas. Ver :ref:`logging` para más
+    detalles.
 
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
+    Nótese que esta funcionalidad solo está disponible cuando las extensiones
+    tokenizer y Xdebug están instaladas.
 
 ``--coverage-crap4j``
 
-    Generates a code coverage report in Crap4j format. See
-    :ref:`code-coverage-analysis` for more details.
+    Genera un reporte de cobertura de código en formato Crap4J. Para más
+    detalles se puede ver :ref:`code-coverage-analysis`.
 
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
+    Nótese que esta funcionalidad solo está disponible cuando las extensiones
+    tokenizer y Xdebug están instaladas.
 
 ``--coverage-html``
 
-    Generates a code coverage report in HTML format. See
-    :ref:`code-coverage-analysis` for more details.
+    Genera un reporte de cobertura de código en formato HTML. Ver
+    :ref:`code-coverage-analysis` para más detalles.
 
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
+    Nótese que esta funcionalidad solo está disponible cuando las extensiones
+    tokenizer y Xdebug están instaladas.
 
 ``--coverage-php``
 
-    Generates a serialized PHP_CodeCoverage object with the
-    code coverage information.
+    Genera un objeto PHP_CodeCoverage serializado con la información de
+    cobertura de código.
 
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
+    Nótese que esta funcionalidad solo está disponible cuando las extensiones
+    tokenizer y Xdebug están instaladas.
 
 ``--coverage-text``
 
-    Generates a logfile or command-line output in human readable format
-    with the code coverage information for the tests run.
-    See :ref:`logging` for more details.
+    Genera un archivo de registro o una salida en línea de comandos en un formato
+    legible por humanos con la información de cobertura de código de las pruebas
+    ejecutadas. Ver :ref:`logging` para más detalles.
 
-    Please note that this functionality is only available when the
-    tokenizer and Xdebug extensions are installed.
+    Nótese que esta funcionalidad solo está disponible cuando las extensiones
+    tokenizer y Xdebug están instaladas.
 
 ``--log-junit``
 
-    Generates a logfile in JUnit XML format for the tests run.
-    See :ref:`logging` for more details.
+    Genera un archivo de sucesos en formato JUnit XML de las pruebas ejecutadas.
+    Ver :ref:`logging` para más detalles.
 
 ``--testdox-html`` and ``--testdox-text``
 
-    Generates agile documentation in HTML or plain text format for the
-    tests that are run. See :ref:`other-uses-for-tests` for
-    more details.
+    Genera un documento ágil en formato HTML o texto plano de las pruebas que
+    se ejecutaron. Ver :ref:`other-uses-for-tests` para más detalles.
 
 ``--filter``
 
-    Only runs tests whose name matches the given regular expression
-    pattern. If the pattern is not enclosed in delimiters, PHPUnit
-    will enclose the pattern in ``/`` delimiters.
+    Solo ejecuta las pruebas cuyo nombre coincide con un patrón de expresión
+    regular dado. Si el patrón no se encierra entre delimitadores, PHPUnit
+    cerrará el patrón dentro de delimitadores ``/``.
 
-    The test names to match will be in one of the following formats:
+    El nombre de las pruebas para hacer coincidir estarán en uno de los
+    siguientes formatos:
 
     ``TestNamespace\TestCaseClass::testMethod``
 
-        The default test name format is the equivalent of using
-        the ``__METHOD__`` magic constant inside
-        the test method.
+        El formato de nombre para pruebas por defecto es equivalente a usar
+        la constante mágica ``__METHOD__`` dentro el método de prueba.
 
     ``TestNamespace\TestCaseClass::testMethod with data set #0``
 
-        When a test has a data provider, each iteration of the
-        data gets the current index appended to the end of the
-        default test name.
+        Cuando una prueba tiene un proveedor de datos, cada iteración sobre los
+        datos trae el índice actual añadido al final del nombre de la prueba por
+        defecto.
 
     ``TestNamespace\TestCaseClass::testMethod with data set "my named data"``
 
-        When a test has a data provider that uses named sets, each
-        iteration of the data gets the current name appended to the
-        end of the default test name. See
-        :numref:`textui.examples.TestCaseClass.php` for an
-        example of named data sets.
+        Cuando una prueba tiene un proveedor de datos que usa conjuntos nombrados,
+        cada iteración de los datos trae el nombre actual añadido al final del
+        nombre de la prueba por defecto. Ver :numref:`textui.examples.TestCaseClass.php`
+        para un ejemplo de conjunto de datos nombrados.
 
         .. code-block:: php
-            :caption: Named data sets
+            :caption: Conjunto de datos nombrados
             :name: textui.examples.TestCaseClass.php
 
             <?php
@@ -297,213 +291,227 @@ the following code:
 
     ``/path/to/my/test.phpt``
 
-        The test name for a PHPT test is the filesystem path.
+        El nombre de la prueba, para una prueba PHPT, es la ruta del sistema de
+        archivos.
 
-    See :numref:`textui.examples.filter-patterns` for examples
-    of valid filter patterns.
+    Revisar el ejemplo :numref:`textui.examples.filter-patterns`
+    para ver patrones de filtro validos.
 
-    .. code-block:: php
-        :caption: Filter pattern examples
+    .. code-block:: shell
+        :caption: Ejemplos de patrones de filtro
         :name: textui.examples.filter-patterns
 
-    See :numref:`textui.examples.filter-shortcuts` for some
-    additional shortcuts that are available for matching data
-    providers.
+        --filter 'TestNamespace\\TestCaseClass::testMethod'
+        --filter 'TestNamespace\\TestCaseClass'
+        --filter TestNamespace
+        --filter TestCaseClase
+        --filter testMethod
+        --filter '/::testMethod .*"my named data"/'
+        --filter '/::testMethod .*#5$/'
+        --filter '/::testMethod .*#(5|6|7)$/'
+
+    Ver el :numref:`textui.examples.filter-shortcuts` para algunos atajos
+    adicionales que están disponibles para seleccionar proveedores de datos.
 
     .. code-block:: php
-        :caption: Filter shortcuts
+        :caption: Atajos para filtros
         :name: textui.examples.filter-shortcuts
+
+        --filter 'testMethod#2'
+        --filter 'testMethod#2-4'
+        --filter '#2'
+        --filter '#2-4'
+        --filter 'testMethod@my named data'
+        --filter 'testMethod@my.*data'
+        --filter '@my named data'
+        --filter '@my.*data'
 
 ``--testsuite``
 
-    Only runs the test suite whose name matches the given pattern.
+    Solo ejecuta la suite de prueba cuyo nombre coincide con el patrón dado.
 
 ``--group``
 
-    Only runs tests from the specified group(s). A test can be tagged as
-    belonging to a group using the ``@group`` annotation.
+    Solo ejecuta las pruebas del o de los grupos especificados. Una prueba se
+    puede marcar como perteneciente a un grupo usando la anotación ``@group``.
 
-    The ``@author`` annotation is an alias for
-    ``@group`` allowing to filter tests based on their
-    authors.
+    La anotación ``@author`` es un alias para ``@group`` que permite filtrar
+    las pruebas con base en sus autores.
 
 ``--exclude-group``
 
-    Exclude tests from the specified group(s). A test can be tagged as
-    belonging to a group using the ``@group`` annotation.
+    Excluye las pruebas de un grupo o grupos especificados. Una prueba se puede
+    marcar como perteneciente a un grupo usando la anotación ``@group``.
 
 ``--list-groups``
 
-    List available test groups.
+    Lista los grupos de pruebas disponibles.
 
 ``--test-suffix``
 
-    Only search for test files with specified suffix(es).
+    Solo busca los archivos de prueba con el o los sufijos especificados.
 
 ``--dont-report-useless-tests``
 
-    Do not report tests that do not test anything. See :ref:`risky-tests` for details.
+    No reporta las pruebas que no prueban nada. Ver :ref:`risky-tests` para más detalles.
 
 ``--strict-coverage``
 
-    Be strict about unintentionally covered code. See :ref:`risky-tests` for details.
+    Es estricto con la cobertura de código involuntaria. Ver :ref:`risky-tests`
+    para más detalles.
 
 ``--strict-global-state``
 
-    Be strict about global state manipulation. See :ref:`risky-tests` for details.
+    Es estricto con la manipulación del estado global. Ver :ref:`risky-tests`
+    para más detalles.
 
 ``--disallow-test-output``
 
-    Be strict about output during tests. See :ref:`risky-tests` for details.
+    Es estricto sobre la salida durante las pruebas. Ver :ref:`risky-tests` para más detalles.
 
 ``--disallow-todo-tests``
 
-    Does not execute tests which have the ``@todo`` annotation in its docblock.
+    No ejecuta las pruebas que tienen la anotación ``@todo`` es su bloque de
+    documentación.
 
 ``--enforce-time-limit``
 
-    Enforce time limit based on test size. See :ref:`risky-tests` for details.
+    Impone un límite de tiempo basado en el tamaño de la prueba. Ver
+    :ref:`risky-tests` para detalles.
 
 ``--process-isolation``
 
-    Run each test in a separate PHP process.
+    Ejecuta cada prueba en un proceso PHP separado.
 
 ``--no-globals-backup``
 
-    Do not backup and restore $GLOBALS. See :ref:`fixtures.global-state`
-    for more details.
+    No respalda ni restaura la variable $GLOBALS. Ver :ref:`fixtures.global-state`
+    para más detalles.
 
 ``--static-backup``
 
-    Backup and restore static attributes of user-defined classes.
-    See :ref:`fixtures.global-state` for more details.
+    Respalda y restaura los atributos estáticos de las clases definidas por el
+    usuario. Ver :ref:`fixtures.global-state` para más detalles.
 
 ``--colors``
 
-    Use colors in output.
-    On Windows, use `ANSICON <https://github.com/adoxa/ansicon>`_ or `ConEmu <https://github.com/Maximus5/ConEmu>`_.
+    Usa colores para la salida. En Windows, usamos
+    `ANSICON <https://github.com/adoxa/ansicon>`_ o `ConEmu <https://github.com/Maximus5/ConEmu>`_.
 
-    There are three possible values for this option:
-
-    -
-
-      ``never``: never displays colors in the output. This is the default value when ``--colors`` option is not used.
+    Existen tres valores posibles para esta opción:
 
     -
 
-      ``auto``: displays colors in the output unless the current terminal doesn't supports colors,
-      or if the output is piped to a command or redirected to a file.
+      ``never``: nunca mostrar colores en la salida. Este es el valor por defecto
+      cuando se usa la opción ``--colors``.
 
     -
 
-      ``always``: always displays colors in the output even when the current terminal doesn't supports colors,
-      or when the output is piped to a command or redirected to a file.
+      ``auto``: muestra los colores en la salida a menos que la terminal actual
+      no soporte colores o si la salida se canalizada hacia un comando o se
+      redirige a un archivo.
 
-    When ``--colors`` is used without any value, ``auto`` is the chosen value.
+    -
+
+      ``always``: siempre muestra colores en la salida incluso cuando la terminal
+      no soporta colores o cuando la salida se canaliza hacia un comando o se
+      redirige a un archivo.
+
+    Cuando se usa ``--colors`` sin ningún valor se toma la opción ``auto``.
 
 ``--columns``
 
-    Defines the number of columns to use for progress output.
-    If ``max`` is defined as value, the number of columns will be maximum of the current terminal.
+    Define el número de columnas que se usan para la salida de progreso. Si
+    ``max`` se define como valor, el número de columnas será el máximo de la
+    terminal actual.
 
 ``--stderr``
 
-    Optionally print to ``STDERR`` instead of
-    ``STDOUT``.
+    Opcionalmente imprime en ``STDERR`` en lugar de ``STDOUT``.
 
 ``--stop-on-error``
 
-    Stop execution upon first error.
+    Se detiene la ejecución frente al primer error.
 
 ``--stop-on-failure``
 
-    Stop execution upon first error or failure.
+    Se detiene la ejecución frente al primer error o falla.
 
 ``--stop-on-risky``
 
-    Stop execution upon first risky test.
+    Se detiene la ejecución frente a la primera prueba riesgosa.
 
 ``--stop-on-skipped``
 
-    Stop execution upon first skipped test.
+    Se detiene la ejecución frente a la primera prueba omitida.
 
 ``--stop-on-incomplete``
 
-    Stop execution upon first incomplete test.
+    Se detiene la ejecución frente a la primera prueba incompleta.
 
 ``--verbose``
 
-    Output more verbose information, for instance the names of tests
-    that were incomplete or have been skipped.
+    Hace a la información de salida más verbosa, por ejemplo, se muestran los
+    nombres de las pruebas incompletas u omitidas.
 
 ``--debug``
 
-    Output debug information such as the name of a test when its
-    execution starts.
+    Muestra la información de depuración en la salida, tal como el nombre de una
+    prueba cuando comienza su ejecución.
 
 ``--loader``
 
-    Specifies the ``PHPUnit_Runner_TestSuiteLoader``
-    implementation to use.
+    Especifica la implementación de ``PHPUnit_Runner_TestSuiteLoader`` que se
+    usa.
 
-    The standard test suite loader will look for the sourcefile in the
-    current working directory and in each directory that is specified in
-    PHP's ``include_path`` configuration directive.
-    A class name such as ``Project_Package_Class`` is
-    mapped to the source filename
+    El cargador de la suite de pruebas estándares buscará el archivo fuente en
+    la carpeta actual y en cada carpeta que se especifica en la directiva
+    de configuración ``include_path`` de PHP. Un nombre de clase como
+    ``Project_Package_Class`` se asocia al archivo fuente
     :file:`Project/Package/Class.php`.
 
 ``--repeat``
 
-    Repeatedly runs the test(s) the specified number of times.
+    Ejecutar repetidamente la o las pruebas el número de veces especificado.
 
 ``--testdox``
 
-    Reports the test progress as agile documentation. See
-    :ref:`other-uses-for-tests` for more details.
+    Reporta el progreso de las pruebas como una documentación ágil. Ver
+    :ref:`other-uses-for-tests` para más detalles.
 
 ``--printer``
 
-    Specifies the result printer to use. The printer class must extend
-    ``PHPUnit_Util_Printer`` and implement the
-    ``PHPUnit\Framework\TestListener`` interface.
+    Especifica la impresora que se usa para generar el resultado. La clase
+    impresora debe extender de ``PHPUnit_Util_Printer`` e implementar la interfaz
+    ``PHPUnit\Framework\TestListener``.
 
 ``--bootstrap``
 
-    A "bootstrap" PHP file that is run before the tests.
+    Un archivo PHP «bootstrap» se ejecuta antes de las pruebas.
 
 ``--configuration``, ``-c``
 
-    Read configuration from XML file.
-    See :ref:`appendixes.configuration` for more details.
+    Leer la configuración desde el archivo XML. Ver :ref:`appendixes.configuration`
+    para más detalles.
 
-    If :file:`phpunit.xml` or
-    :file:`phpunit.xml.dist` (in that order) exist in the
-    current working directory and ``--configuration`` is
-    *not* used, the configuration will be automatically
-    read from that file.
-
-    If a directory is specified and if
-    :file:`phpunit.xml` or :file:`phpunit.xml.dist` (in that order)
-    exists in this directory, the configuration will be
-    automatically read from that file.
+    Si :file:`phpunit.xml` o :file:`phpunit.xml.dist` (en este orden) existen
+    en la carpeta actual de trabajo y ``--configuration`` *no* se usa, la
+    configuración se leerá automáticamente de alguno de estos archivo.
 
 ``--no-configuration``
 
-    Ignore :file:`phpunit.xml` and
-    :file:`phpunit.xml.dist` from the current working
-    directory.
+    Ignora los archivos :file:`phpunit.xml` y :file:`phpunit.xml.dist` de la
+    capeta de trabajo actual.
 
 ``--include-path``
 
-    Prepend PHP's ``include_path`` with given path(s).
+    Añade al comienzo del ``include_path`` de PHP una o varias rutas dadas.
 
 ``-d``
 
-    Sets the value of the given PHP configuration option.
+    Asigna una valor a la opción de configuración de PHP que se indica.
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   Please note that as of 4.8, options can be put after the argument(s).
-
-
+    Nótese que desde la versión 4.8 las opciones se pueden colocar después de los
+    argumentos.
