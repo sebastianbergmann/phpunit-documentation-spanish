@@ -8,29 +8,26 @@ Installing PHPUnit
 
 .. _installation.requirements:
 
-Requirements
-############
+Requisitos
+##########
 
-PHPUnit 7.0 requires PHP 7.1; using the latest version of PHP is highly
-recommended.
+PHPUnit 7.0 requiere PHP 7.1, usar la ultima versión de PHP es muy recomendable.
 
-PHPUnit requires the `dom <http://php.net/manual/en/dom.setup.php>`_ and `json <http://php.net/manual/en/json.installation.php>`_
-extensions, which are normally enabled by default.
+PHPUnit requiere las extensiones `dom <http://php.net/manual/en/dom.setup.php>`_
+y `json <http://php.net/manual/en/json.installation.php>`_ que normalmente están
+habilitados por defecto.
 
-PHPUnit also requires the
-`pcre <http://php.net/manual/en/pcre.installation.php>`_,
+Además, PHPUnit requiere las extensiones `pcre <http://php.net/manual/en/pcre.installation.php>`_,
 `reflection <http://php.net/manual/en/reflection.installation.php>`_,
-and `spl <http://php.net/manual/en/spl.installation.php>`_
-extensions. These standard extensions are enabled by default and cannot be
-disabled without patching PHP's build system and/or C sources.
+y `spl <http://php.net/manual/en/spl.installation.php>`_.
+Estas extensiones estándares se habilitan por defecto y no se pueden desactivar
+sin parchear el sistema PHP construido y/o las fuentes en C.
 
-The code coverage report feature requires the
-`Xdebug <http://xdebug.org/>`_ (2.5.0 or later) and
-`tokenizer <http://php.net/manual/en/tokenizer.installation.php>`_
-extensions.
-Generating XML reports requires the
-`xmlwriter <http://php.net/manual/en/xmlwriter.installation.php>`_
-extension.
+La característica de reporte de cobertura de código requiere las extensiones
+`Xdebug <http://xdebug.org/>`_ (2.5.0 o superior) y
+`tokenizer <http://php.net/manual/en/tokenizer.installation.php>`_.
+La generación de reportes en XML requiere la extensión
+`xmlwriter <http://php.net/manual/en/xmlwriter.installation.php>`_.
 
 .. _installation.phar:
 
@@ -267,10 +264,8 @@ example:
 Composer
 ########
 
-Simply add a (development-time) dependency on
-``phpunit/phpunit`` to your project's
-``composer.json`` file if you use `Composer <https://getcomposer.org/>`_ to manage the
-dependencies of your project:
+Si usamos `Composer <https://getcomposer.org/>`_ para gestionar las dependencias
+de nuestro proyecto simplemente agregamos la dependencia (en desarrollo) sobre ``phpunit/phpunit`` en nuestro archivo ``composer.json`` del proyecto:
 
 .. code-block:: bash
 
@@ -305,5 +300,3 @@ The following optional packages are available:
     .. code-block:: bash
 
         composer require --dev phpunit/dbunit
-
-

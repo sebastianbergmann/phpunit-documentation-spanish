@@ -50,8 +50,10 @@ esas implementaciones simuladas para que regresen un valor cuando sean llamadas.
 
    Nótese que los métodos ``final``, ``private``, ``protected`` y ``static``
    no se pueden esbozar, *stubbed*, o simular *mocked*.
-   La funcionalidad de dobles de prueba de PHPUnit ignoran a estos métodos
-   que mantienen su comportamiento original.
+   La funcionalidad de dobles de prueba de PHPUnit ignora a estos métodos
+   que mantienen su comportamiento original excepto los métodos ``static``
+   que se reemplazan por el método lanzador de excepciones
+   ``\PHPUnit\Framework\MockObject\BadMethodCallException``.
 
 .. _test-doubles.stubs:
 

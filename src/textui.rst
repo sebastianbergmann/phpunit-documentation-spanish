@@ -313,7 +313,7 @@ de comandos en el siguiente código:
     Ver el :numref:`textui.examples.filter-shortcuts` para algunos atajos
     adicionales que están disponibles para seleccionar proveedores de datos.
 
-    .. code-block:: php
+    .. code-block:: shell
         :caption: Atajos para filtros
         :name: textui.examples.filter-shortcuts
 
