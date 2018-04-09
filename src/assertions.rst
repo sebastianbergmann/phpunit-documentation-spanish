@@ -17,7 +17,7 @@ Static vs. Non-Static Usage of Assertion Methods
 Las aserciones de PHPUnit están implementadas en PHPUnit\\Framework\\Assert.
 PHPUnit\\Framework\\TestCase hereda de PHPUnit\\Framework\\Assert.
 
-Los métodos para hacer aserciones son declarados estaticos y se pueden invocar
+Los métodos para hacer aserciones son declarados estáticos y se pueden invocar
 desde cualquier contexto usando PHPUnit\\Framework\\Assert::assertTrue(),
 $this->assertTrue() o self::assertTrue() en una clase que extiende de
 PHPUnit\\Framework\\TestCase.
@@ -28,13 +28,13 @@ cuando hemos incluido (manualmente) el archivo con código fuente
 :file:`src/Framework/Assert/Functions.php` que viene con PHPUnit.
 
 Una pregunta común, especialmente de los nuevos desarrolladores de PHPUnit,
-es cual es «la manera correcta» de invocar una aserciónm si usar $this->assertTrue()
+es cual es «la manera correcta» de invocar una aserción si usar $this->assertTrue()
 o self::assertTrue(). La respuesta corta es: no hay una manera correcta. Y tampoco
 hay una manera incorrecta. Es un asunto de preferencias personales.
 
 La mayoría de las personas «se siente segura» usando $this->assertTrue() porque
 el método de prueba se invoca en un objeto de prueba. El hecho de que los métodos
-para hacer aserciones se declaran estaticos permite (re)usarlos fuera del ámbito
+para hacer aserciones se declaran estáticos permite (re)usarlos fuera del ámbito
 de un objeto de prueba. Por último, la envoltura de funciones globales permite
 a los desarrolladores escribir menos caracteres (assertTrue() en lugar de
 $this->assertTrue() o self::assertTrue()).
@@ -624,9 +624,11 @@ assertDirectoryIsWritable()
 
 ``assertDirectoryIsWritable(string $directory[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the directory specified by ``$directory`` is not a directory or is not writable.
+Reporta un error identificado por el ``$message`` si la carpeta especificada en
+``$directory`` no es una carpeta o no se puede escribir en ella.
 
-``assertDirectoryNotIsWritable()`` es el inverso de esta aserción y toma los mismos argumentos.
+``assertDirectoryNotIsWritable()`` es el inverso de esta aserción y toma los
+mismos argumentos.
 
 .. code-block:: php
     :caption: Uso del método assertDirectoryIsWritable()
@@ -670,11 +672,13 @@ assertEmpty()
 
 ``assertEmpty(mixed $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$actual`` is not empty.
+Reporta un error identificado por el ``$message`` si ``$actual`` no está vacío.
 
 ``assertNotEmpty()`` es el inverso de esta aserción y toma los mismos argumentos.
 
-``assertAttributeEmpty()`` and ``assertAttributeNotEmpty()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
+``assertAttributeEmpty()`` y ``assertAttributeNotEmpty()`` son envoltorios
+apropiados para ser usados con atributos de tipo ``public``, ``protected`` o
+``private`` de un objeto o una clase.
 
 .. code-block:: php
     :caption: Uso del método assertEmpty()
@@ -718,7 +722,9 @@ assertEqualXMLStructure()
 
 ``assertEqualXMLStructure(DOMElement $expectedElement, DOMElement $actualElement[, boolean $checkAttributes = false, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the XML Structure of the DOMElement in ``$actualElement`` is not equal to the XML structure of the DOMElement in ``$expectedElement``.
+Reporta un error identificado por el ``$message`` si la estructura del DOMElement
+en ``$actualElement`` no es igual a la estructura XML del DOMElement en
+``$expectedElement``.
 
 .. code-block:: php
     :caption: Uso del método assertEqualXMLStructure()
@@ -831,11 +837,14 @@ assertEquals()
 
 ``assertEquals(mixed $expected, mixed $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the two variables ``$expected`` and ``$actual`` are not equal.
+Reporta un error identificado por el ``$message`` si las dos variables
+``$expected`` y ``$actual`` no son iguales.
 
 ``assertNotEquals()`` es el inverso de esta aserción y toma los mismos argumentos.
 
-``assertAttributeEquals()`` and ``assertAttributeNotEquals()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
+``assertAttributeEquals()`` y ``assertAttributeNotEquals()`` son los envoltorios
+apropiados cuando se usa atributos ``public``, ``protected`` o ``private`` de
+una clase u objeto para el valor actual.
 
 .. code-block:: php
     :caption: Uso del método assertEquals()
