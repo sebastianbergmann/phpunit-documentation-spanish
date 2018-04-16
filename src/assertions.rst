@@ -844,7 +844,7 @@ Reporta un error identificado por el ``$message`` si las dos variables
 
 ``assertAttributeEquals()`` y ``assertAttributeNotEquals()`` son los envoltorios
 apropiados cuando se usa atributos ``public``, ``protected`` o ``private`` de
-una clase u objeto para el valor actual.
+una clase u objeto para el valor real
 
 .. code-block:: php
     :caption: Uso del método assertEquals()
@@ -914,16 +914,22 @@ una clase u objeto para el valor actual.
     FAILURES!
     Tests: 3, Assertions: 3, Failures: 3.
 
-More specialized comparisons are used for specific argument types for ``$expected`` and ``$actual``, see below.
+Comparaciones más especializadas se usan para especificar el tipo de argumentos
+para ``$expected`` y ``$actual``, ver abajo.
 
 ``assertEquals(float $expected, float $actual[, string $message = '', float $delta = 0])``
 
-Reporta un error identificado por el ``$message`` si the absolute difference between two floats ``$expected`` and ``$actual`` is greater than ``$delta``. If the absolute difference between two floats ``$expected`` and ``$actual`` is less than *or equal to* ``$delta``, the assertion will pass.
+Reporta un error identificado por el ``$message`` si la diferencia absoluta entre
+los números de tipo flotante ``$expected`` y ``$actual`` es mayor que el ``$delta``.
+Si la diferencia absoluta entre los número de tipo flotante ``$expected`` y ``$actual``
+es menor o *igual a* ``$delta`` entonces la aserción pasa.
 
-Please read "`What Every Computer Scientist Should Know About Floating-Point Arithmetic <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_" to understand why ``$delta`` is neccessary.
+Por favor lea "`Todo lo que un Científico de la Computación Debe Saber sobre la
+Aritmética de Punto Flotante <http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html>`_"
+para entender porqué ``$delta`` es necesario.
 
 .. code-block:: php
-    :caption: Uso del método assertEquals() with floats
+    :caption: Uso del método assertEquals() con número de punto flotante
     :name: appendixes.assertions.assertEquals.example2
 
     <?php
@@ -964,10 +970,12 @@ Please read "`What Every Computer Scientist Should Know About Floating-Point Ari
 
 ``assertEquals(DOMDocument $expected, DOMDocument $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the uncommented canonical form of the XML documents represented by the two DOMDocument objects ``$expected`` and ``$actual`` are not equal.
+Reporta un error identificado por el ``$message`` si la forma canónica no comentada
+del documento XML representado por los dos objectos DOMDocument ``$expected`` y
+``$actual`` no son iguales.
 
 .. code-block:: php
-    :caption: Uso del método assertEquals() with DOMDocument objects
+    :caption: Uso del método assertEquals() con objetos DOMDocument
     :name: appendixes.assertions.assertEquals.example3
 
     <?php
@@ -1019,10 +1027,11 @@ Reporta un error identificado por el ``$message`` si the uncommented canonical f
 
 ``assertEquals(object $expected, object $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the two objects ``$expected`` and ``$actual`` do not have equal attribute values.
+Reporta un error identificado por el ``$message`` si los dos objetos ``$expected``
+y ``$actual`` no tienen valores de atributos iguales.
 
 .. code-block:: php
-    :caption: Uso del método assertEquals() with objects
+    :caption: Uso del método assertEquals() con objetos
     :name: appendixes.assertions.assertEquals.example4
 
     <?php
@@ -1075,10 +1084,11 @@ Reporta un error identificado por el ``$message`` si the two objects ``$expected
 
 ``assertEquals(array $expected, array $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the two arrays ``$expected`` and ``$actual`` are not equal.
+Reporta un error identificado por el ``$message`` si los dos arreglos ``$expected``
+y ``$actual`` no son iguales.
 
 .. code-block:: php
-    :caption: Uso del método assertEquals() with arrays
+    :caption: Uso del método assertEquals() con arreglos
     :name: appendixes.assertions.assertEquals.example5
 
     <?php
@@ -1129,7 +1139,7 @@ assertFalse()
 
 ``assertFalse(bool $condition[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$condition`` is ``true``.
+Reporta un error identificado por el ``$message`` si ``$condition`` es ``true``.
 
 ``assertNotFalse()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -1175,7 +1185,8 @@ assertFileEquals()
 
 ``assertFileEquals(string $expected, string $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the file specified by ``$expected`` does not have the same contents as the file specified by ``$actual``.
+Reporta un error identificado por el ``$message`` si the archivo especificado en
+``$expected`` no tiene el mismo contenido que el archivo especificado en ``$actual``.
 
 ``assertFileNotEquals()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -1227,7 +1238,8 @@ assertFileExists()
 
 ``assertFileExists(string $filename[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the file specified by ``$filename`` does not exist.
+Reporta un error identificado por el ``$message`` si the archivo especificado en
+``$filename`` no existe.
 
 ``assertFileNotExists()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -1273,7 +1285,8 @@ assertFileIsReadable()
 
 ``assertFileIsReadable(string $filename[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the file specified by ``$filename`` is not a file or is not readable.
+Reporta un error identificado por el ``$message`` si el archivo especificado
+en ``$filename`` no es un archivo o no es legible.
 
 ``assertFileNotIsReadable()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -1319,7 +1332,8 @@ assertFileIsWritable()
 
 ``assertFileIsWritable(string $filename[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the file specified by ``$filename`` is not a file or is not writable.
+Reporta un error identificado por el ``$message`` si el archivo especificado en
+``$filename`` no es un archivo o no se puede escribir en él.
 
 ``assertFileNotIsWritable()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -1365,9 +1379,11 @@ assertGreaterThan()
 
 ``assertGreaterThan(mixed $expected, mixed $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the value of ``$actual`` is not greater than the value of ``$expected``.
+Reporta un error identificado por el ``$message`` si el valor de ``$actual``
+no es mayor que el valor de ``$expected``.
 
-``assertAttributeGreaterThan()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
+``assertAttributeGreaterThan()`` es un envoltorio conveniente que usa el atributo
+``public``, ``protected`` o ``private`` de una clase u objeto como el valor real..
 
 .. code-block:: php
     :caption: Uso del método assertGreaterThan()
@@ -1411,9 +1427,12 @@ assertGreaterThanOrEqual()
 
 ``assertGreaterThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the value of ``$actual`` is not greater than or equal to the value of ``$expected``.
+Reporta un error identificado por el ``$message`` si el valor de ``$actual``
+no es mayor o igual al valor de ``$expected``.
 
-``assertAttributeGreaterThanOrEqual()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
+``assertAttributeGreaterThanOrEqual()`` es un envoltorio conveniente que usa el
+atributo ``public``, ``protected`` o ``private`` de una clase u objeto como el
+valor real.
 
 .. code-block:: php
     :caption: Uso del método assertGreaterThanOrEqual()
@@ -1503,11 +1522,14 @@ assertInstanceOf()
 
 ``assertInstanceOf($expected, $actual[, $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$actual`` is not an instance of ``$expected``.
+Reporta un error identificado por el ``$message`` si ``$actual`` no es una
+instancia de ``$expected``.
 
 ``assertNotInstanceOf()`` es el inverso de esta aserción y toma los mismos argumentos.
 
-``assertAttributeInstanceOf()`` and ``assertAttributeNotInstanceOf()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
+``assertAttributeInstanceOf()`` son ``assertAttributeNotInstanceOf()`` son
+envoltorios convenientes que se pueden aplicar a un atributo ``public``,
+``protected`` o ``private`` de una clase u objeto.
 
 .. code-block:: php
     :caption: Uso del método assertInstanceOf()
@@ -1551,11 +1573,14 @@ assertInternalType()
 
 ``assertInternalType($expected, $actual[, $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$actual`` is not of the ``$expected`` type.
+Reporta un error identificado por el ``$message`` si ``$actual`` no es del tipo
+``$expected``.
 
 ``assertNotInternalType()`` es el inverso de esta aserción y toma los mismos argumentos.
 
-``assertAttributeInternalType()`` and ``assertAttributeNotInternalType()`` are convenience wrappers that can be applied to a ``public``, ``protected``, or ``private`` attribute of a class or object.
+``assertAttributeInternalType()`` y ``assertAttributeNotInternalType()`` son
+envoltorios convenientes que se pueden aplicar a un atributo ``public``,
+``protected`` o ``private`` de una clase u objeto.
 
 .. code-block:: php
     :caption: Uso del método assertInternalType()
@@ -1599,7 +1624,8 @@ assertIsReadable()
 
 ``assertIsReadable(string $filename[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the file or directory specified by ``$filename`` is not readable.
+Reporta un error identificado por el ``$message`` si el archivo o carpeta
+especificada en ``$filename`` no se puede leer.
 
 ``assertNotIsReadable()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -1645,7 +1671,8 @@ assertIsWritable()
 
 ``assertIsWritable(string $filename[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the file or directory specified by ``$filename`` is not writable.
+Reporta un error identificado por el ``$message`` si el archivo o carpeta
+especificada en ``$filename`` no se puede escribir.
 
 ``assertNotIsWritable()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -1691,8 +1718,8 @@ assertJsonFileEqualsJsonFile()
 
 ``assertJsonFileEqualsJsonFile(mixed $expectedFile, mixed $actualFile[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the value of ``$actualFile`` does not match the value of
-``$expectedFile``.
+Reporta un error identificado por el ``$message`` si el valor de ``$actualFile``
+no coincide con el valor de ``$expectedFile``.
 
 .. code-block:: php
     :caption: Uso del método assertJsonFileEqualsJsonFile()
@@ -1737,8 +1764,8 @@ assertJsonStringEqualsJsonFile()
 
 ``assertJsonStringEqualsJsonFile(mixed $expectedFile, mixed $actualJson[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the value of ``$actualJson`` does not match the value of
-``$expectedFile``.
+Reporta un error identificado por el ``$message`` si el valor de ``$actualJson``
+no coincide con el valor de ``$expectedFile``.
 
 .. code-block:: php
     :caption: Uso del método assertJsonStringEqualsJsonFile()
@@ -1784,8 +1811,8 @@ assertJsonStringEqualsJsonString()
 
 ``assertJsonStringEqualsJsonString(mixed $expectedJson, mixed $actualJson[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the value of ``$actualJson`` does not match the value of
-``$expectedJson``.
+Reporta un error identificado por el ``$message`` si el valor de ``$actualJson``
+no coincide con el valor de ``$expectedJson``.
 
 .. code-block:: php
     :caption: Uso del método assertJsonStringEqualsJsonString()
@@ -1839,9 +1866,11 @@ assertLessThan()
 
 ``assertLessThan(mixed $expected, mixed $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the value of ``$actual`` is not less than the value of ``$expected``.
+Reporta un error identificado por el ``$message`` si el valor de ``$actual`` no
+es menor que el valor de ``$expected``.
 
-``assertAttributeLessThan()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
+``assertAttributeLessThan()`` es un envoltorio conveniente que usa el atributo
+``public``, ``protected`` o ``private`` de una clase u objeto como el valor real.
 
 .. code-block:: php
     :caption: Uso del método assertLessThan()
@@ -1885,9 +1914,12 @@ assertLessThanOrEqual()
 
 ``assertLessThanOrEqual(mixed $expected, mixed $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the value of ``$actual`` is not less than or equal to the value of ``$expected``.
+Reporta un error identificado por el ``$message`` si el valor de ``$actual``
+no es menor o igual que el valor de ``$expected``.
 
-``assertAttributeLessThanOrEqual()`` is a convenience wrapper that uses a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
+``assertAttributeLessThanOrEqual()`` es un envoltorio conveniente que usa el
+atributo ``public``, ``protected`` o ``private`` de una clase u objeto como el
+valor real.
 
 .. code-block:: php
     :caption: Uso del método assertLessThanOrEqual()
@@ -1931,7 +1963,7 @@ assertNan()
 
 ``assertNan(mixed $variable[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$variable`` is not ``NAN``.
+Reporta un error identificado por el ``$message`` si ``$variable`` no es ``NAN``.
 
 .. code-block:: php
     :caption: Uso del método assertNan()
@@ -1975,7 +2007,7 @@ assertNull()
 
 ``assertNull(mixed $variable[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$variable`` is not ``null``.
+Reporta un error identificado por el ``$message`` si ``$variable`` no es ``null``.
 
 ``assertNotNull()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2021,7 +2053,8 @@ assertObjectHasAttribute()
 
 ``assertObjectHasAttribute(string $attributeName, object $object[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$object->attributeName`` does not exist.
+Reporta un error identificado por el ``$message`` si ``$object->attributeName``
+no existe.
 
 ``assertObjectNotHasAttribute()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2067,7 +2100,8 @@ assertRegExp()
 
 ``assertRegExp(string $pattern, string $string[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$string`` does not match the regular expression ``$pattern``.
+Reporta un error identificado por el ``$message`` si ``$string`` no coincide con
+la expresión regular ``$pattern``.
 
 ``assertNotRegExp()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2113,7 +2147,8 @@ assertStringMatchesFormat()
 
 ``assertStringMatchesFormat(string $format, string $string[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the ``$string`` does not match the ``$format`` string.
+Reporta un error identificado por el ``$message`` si el ``$string`` no coincide con
+el formato dado en ``$format``.
 
 ``assertStringNotMatchesFormat()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2152,51 +2187,58 @@ Reporta un error identificado por el ``$message`` si the ``$string`` does not ma
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
 
-The format string may contain the following placeholders:
+La cadena de caracteres que designa el formato puede contener los siguientes
+sustitutos:
 
 -
 
-  ``%e``: Represents a directory separator, for example ``/`` on Linux.
+  ``%e``: Representa el separador de carpetas, por ejemplo ``/`` en GNU/Linux.
 
 -
 
-  ``%s``: One or more of anything (character or white space) except the end of line character.
+  ``%s``: Uno o más de cualquier carácter (o espacio en blanco) excepto el
+  carácter de fin de línea.
 
 -
 
-  ``%S``: Zero or more of anything (character or white space) except the end of line character.
+  ``%S``: Cero o más de cualquier carácter (o espacio en blanco) excepto el
+  carácter de fin de línea.
 
 -
 
-  ``%a``: One or more of anything (character or white space) including the end of line character.
+  ``%a``: Uno o más de cualquier carácter (o espacio en blanco) incluyendo el
+  carácter de fin de línea.
 
 -
 
-  ``%A``: Zero or more of anything (character or white space) including the end of line character.
+  ``%A``: Cero o más de cualquier carácter (o espacio en blanco) incluyendo el
+  carácter de fin de línea.
 
 -
 
-  ``%w``: Zero or more white space characters.
+  ``%w``: Cero o más caracteres de espacio en blanco.
 
 -
 
-  ``%i``: A signed integer value, for example ``+3142``, ``-3142``.
+  ``%i``: Un valor entero con signo, por ejemplo ``+3142``, ``-3142``.
 
 -
 
-  ``%d``: An unsigned integer value, for example ``123456``.
+  ``%d``: Un valor entero sin signo, por ejemplo ``123456``.
 
 -
 
-  ``%x``: One or more hexadecimal character. That is, characters in the range ``0-9``, ``a-f``, ``A-F``.
+  ``%x``: Uno o más caracteres hexadecimales. Esto es, caracteres en el rango de
+  ``0-9``, ``a-f`` y ``A-F``.
 
 -
 
-  ``%f``: A floating point number, for example: ``3.142``, ``-3.142``, ``3.142E-10``, ``3.142e+10``.
+  ``%f``: Un número de punto flotante, por ejemplo: ``3.142``, ``-3.142``,
+  ``3.142E-10`` o ``3.142e+10``.
 
 -
 
-  ``%c``: A single character of any sort.
+  ``%c``: Un solo carácter de cualquier tipo.
 
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
@@ -2205,9 +2247,11 @@ assertStringMatchesFormatFile()
 
 ``assertStringMatchesFormatFile(string $formatFile, string $string[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the ``$string`` does not match the contents of the ``$formatFile``.
+Reporta un error identificado por el ``$message`` si el ``$string`` no coincide
+con el contenido de ``$formatFile``.
 
-``assertStringNotMatchesFormatFile()`` es el inverso de esta aserción y toma los mismos argumentos.
+``assertStringNotMatchesFormatFile()`` es el inverso de esta aserción y toma los
+mismos argumentos.
 
 .. code-block:: php
     :caption: Uso del método assertStringMatchesFormatFile()
@@ -2252,11 +2296,14 @@ assertSame()
 
 ``assertSame(mixed $expected, mixed $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the two variables ``$expected`` and ``$actual`` do not have the same type and value.
+Reporta un error identificado por el ``$message`` si las dos variables ``$expected``
+y ``$actual`` no tienen el mismo tipo y valor.
 
 ``assertNotSame()`` es el inverso de esta aserción y toma los mismos argumentos.
 
-``assertAttributeSame()`` and ``assertAttributeNotSame()`` are convenience wrappers that use a ``public``, ``protected``, or ``private`` attribute of a class or object as the actual value.
+``assertAttributeSame()`` y ``assertAttributeNotSame()`` son envoltorios convenientes
+que usan el atributo ``public``, ``protected`` o ``private`` de una clase u
+objeto como el valor real.
 
 .. code-block:: php
     :caption: Uso del método assertSame()
@@ -2295,10 +2342,11 @@ Reporta un error identificado por el ``$message`` si the two variables ``$expect
 
 ``assertSame(object $expected, object $actual[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the two variables ``$expected`` and ``$actual`` do not reference the same object.
+Reporta un error identificado por el ``$message`` si las dos variables ``$expected``
+y ``$actual`` no hacen referencia al mismo objeto.
 
 .. code-block:: php
-    :caption: Uso del método assertSame() with objects
+    :caption: Uso del método assertSame() con objetos
     :name: appendixes.assertions.assertSame.example2
 
     <?php
@@ -2339,7 +2387,8 @@ assertStringEndsWith()
 
 ``assertStringEndsWith(string $suffix, string $string[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the ``$string`` does not end with ``$suffix``.
+Reporta un error identificado por el ``$message`` si ``$string`` no termina en
+``$suffix``.
 
 ``assertStringEndsNotWith()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2385,7 +2434,8 @@ assertStringEqualsFile()
 
 ``assertStringEqualsFile(string $expectedFile, string $actualString[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the file specified by ``$expectedFile`` does not have ``$actualString`` as its contents.
+Reporta un error identificado por el ``$message`` si el archivo especificado en
+``$expectedFile`` no tiene a ``$actualString`` como su contenido.
 
 ``assertStringNotEqualsFile()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2437,7 +2487,8 @@ assertStringStartsWith()
 
 ``assertStringStartsWith(string $prefix, string $string[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the ``$string`` does not start with ``$prefix``.
+Reporta un error identificado por el ``$message`` si el ``$string`` no comienza
+con el ``$prefix``.
 
 ``assertStringStartsNotWith()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2481,17 +2532,16 @@ Reporta un error identificado por el ``$message`` si the ``$string`` does not st
 assertThat()
 ############
 
-More complex assertions can be formulated using the
-``PHPUnit\Framework\Constraint`` classes. They can be
-evaluated using the ``assertThat()`` method.
-:numref:`appendixes.assertions.assertThat.example` shows how the
-``logicalNot()`` and ``equalTo()``
-constraints can be used to express the same assertion as
+Aserciones más complejas se pueden formular usando las clases ``PHPUnit\Framework\Constraint``.
+Ellas se pueden evaluar usando el método ``assertThat()``. El
+:numref:`appendixes.assertions.assertThat.example` muestra como las restricciones
+`logicalNot()`` y ``equalTo()`` se pueden usar para expresar la aserción
 ``assertNotEquals()``.
 
 ``assertThat(mixed $value, PHPUnit\Framework\Constraint $constraint[, $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the ``$value`` does not match the ``$constraint``.
+Reporta un error identificado por el ``$message`` si el ``$value`` no coincide
+con el ``$constraint``.
 
 .. code-block:: php
     :caption: Uso del método assertThat()
@@ -2517,8 +2567,8 @@ Reporta un error identificado por el ``$message`` si the ``$value`` does not mat
     }
     ?>
 
-:numref:`appendixes.assertions.assertThat.tables.constraints` shows the
-available ``PHPUnit\Framework\Constraint`` classes.
+La :numref:`appendixes.assertions.assertThat.tables.constraints` muestra las
+clases disponibles en ``PHPUnit\Framework\Constraint``.
 
 .. rst-class:: table
 .. list-table:: Constraints
