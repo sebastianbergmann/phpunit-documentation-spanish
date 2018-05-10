@@ -949,7 +949,7 @@ Cuando una comparación falla PHPUnit crea una representación textual
 de los valores de entrada y los compara. Debido a esta implementación
 un diff puede mostrar más problemas de los que realmente existen.
 
-Esto solo sucede cuando se usa assertEquals o otras funciones de comparación
+Esto solo sucede cuando se usa assertEquals u otras funciones de comparación
 «débil» sobre arreglos u objetos.
 
 .. code-block:: php
