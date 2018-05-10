@@ -2,150 +2,160 @@
 
 .. _code-coverage-analysis:
 
-======================
-Code Coverage Analysis
-======================
+===============================
+Análisis de Cobertura de Código
+===============================
 
     *Wikipedia*:
 
-    In computer science, code coverage is a measure used to describe the
-    degree to which the source code of a program is tested by a particular
-    test suite. A program with high code coverage has been more thoroughly
-    tested and has a lower chance of containing software bugs than a program
-    with low code coverage.
+    En ciencias de la computación la cobertura de código es una medida usada
+    para describir el grado en que el código fuente de un programa se ha probado
+    por medio de un conjunto de pruebas. Un programa con una alta cobertura de
+    código ha sido probado más profundamente y tiene una baja probabilidad de
+    contener errores en comparación con un programa con una baja cobertura
+    de código.
 
-En este capítulo
+En este capítulo aprenderemos todo sobre la cobertura de código de PHPUnit,
+funcionalidad que provee una idea de que parte del código de producción
+se ejecuta cuando se hacen las pruebas. La funcionalidad se vale del componente
+`php-code-coverage <https://github.com/sebastianbergmann/php-code-coverage>`_,
+que a su vez aprovecha la funcionalidad de cobertura de código que provee la
+extensión de PHP `Xdebug <https://xdebug.org/>`_.
 
-In this chapter you will learn all about PHPUnit's code coverage
-functionality that provides an insight into what parts of the production
-code are executed when the tests are run. It makes use of the
-`PHP_CodeCoverage <https://github.com/sebastianbergmann/php-code-coverage>`_
-component, which in turn leverages the code coverage functionality provided
-by the `Xdebug <http://xdebug.org/>`_ extension for PHP.
+.. admonition:: Nota
 
-.. admonition:: Note
+   Xdebug no se distribuye como parte de PHPUnit. Si recibimos una notificación
+   mientras ejecutamos las pruebas indicando que el controlador de cobertura de
+   código no esta disponible, es posible que Xdebug no este instalado o no este configurado
+   apropiadamente. Antes de poder usar la característica de cobertura de código
+   en PHPUnit deberíamos leer
+   `la guía de instalación de Xdebug <https://xdebug.org/docs/install>`_.
 
-   Xdebug is not distributed as part of PHPUnit. If you receive a notice
-   while running tests that the Xdebug extension is not loaded, it means
-   that Xdebug is either not installed or not configured properly. Before
-   you can use the code coverage analysis features in PHPUnit, you should
-   read `the Xdebug installation guide <http://xdebug.org/docs/install>`_.
+php-code-coverage también soporta `phpdbg <https://phpdbg.room11.org/introduction.html>`_
+como fuente alternativa de datos para la cobertura de código.
 
-PHPUnit can generate an HTML-based code coverage report as well as
-XML-based logfiles with code coverage information in various formats
-(Clover, Crap4J, PHPUnit). Code coverage information can also be reported
-as text (and printed to STDOUT) and exported as PHP code for further
-processing.
+PHPUnit puede generar un reporte de cobertura de código basado en HTML, como
+también en archivos de registro de sucesos basados en XML, con la información de
+cobertura de código en varios formatos (Clover, Crap4J, PHPUnit). La información
+de cobertura de código se puede reportar como texto (e impresa por STDOUT) y
+exportada como código PHP para ser procesado posteriormente.
 
-Please refer to :ref:`textui` for a list of commandline switches
-that control code coverage functionality as well as :ref:`appendixes.configuration.logging` for the relevant
-configuration settings.
+Podemos revisar :ref:`textui` para ver una lista de comandos que acompañados con
+los interruptores adecuados permite controlar la funcionalidad de cobertura de código,
+también debemos revisar :ref:`appendixes.configuration.logging` para las
+configuraciones relevantes.
 
 .. _code-coverage-analysis.metrics:
 
-Software Metrics for Code Coverage
-##################################
+Métricas de Software para la Cobertura de Código
+################################################
 
-Various software metrics exist to measure code coverage:
+Existen varias métricas de software para medir la cobertura de código:
 
 *Line Coverage*
 
-    The *Line Coverage* software metric measures
-    whether each executable line was executed.
+    La métrica de software *Line Coverage* mide si cada línea ejecutable fue
+    ejecutada.
 
 *Function and Method Coverage*
 
-    The *Function and Method Coverage* software
-    metric measures whether each function or method has been invoked.
-    PHP_CodeCoverage only considers a function or method as covered when
-    all of its executable lines are covered.
+    La métrica de software *Function and Method Coverage* mide si cada función
+    o método se ha invocado. php-code-coverage solo considera una función o
+    método como cubierto cuando todas sus líneas ejecutables fueron cubiertas.
 
 *Class and Trait Coverage*
 
-    The *Class and Trait Coverage* software metric
-    measures whether each method of a class or trait is covered.
-    PHP_CodeCoverage only considers a class or trait as covered when all
-    of its methods are covered.
+    La métrica de software *Class and Trait Coverage* mide si cada método de una
+    clase o *trait* fue cubierto. php-code-coverage solo considera una clase o
+    *trait* como cubierto cuando todos sus métodos fueron cubiertos.
 
 *Opcode Coverage*
 
-    The *Opcode Coverage* software metric measures
-    whether each opcode of a function or method has been executed while
-    running the test suite. A line of code usually compiles into more
-    than one opcode. Line Coverage regards a line of code as covered as
-    soon as one of its opcodes is executed.
+    La métrica de software *Opcode Coverage* mide si cada *código de operación*, «opcode»,
+    de una función o método se ha ejecutado mientras se corre la suite de prueba.
+    Una línea de código se copila usualmente dentro de más de una linea de
+    *código de operación*. La cobertura de línea considera a una línea de código
+    cubierta tan pronto como sus *códigos de operación* se ejecutan.
 
 *Branch Coverage*
 
-    The *Branch Coverage* software metric measures
-    whether the boolean expression of each control structure evaluated
-    to both ``true`` and ``false`` while
-    running the test suite.
+    La métrica de software *Branch Coverage* mide si la expresión booleana de
+    cada estructura de control evalúa ``true`` y ``false`` mientras se ejecuta
+    la suite de prueba.
 
 *Path Coverage*
 
-    The *Path Coverage* software metric measures
-    whether each of the possible execution paths in a function or method
-    has been followed while running the test suite. An execution path is
-    a unique sequence of branches from the entry of the function or
-    method to its exit.
+    La métrica de software *Path Coverage* mide si cada una de las rutas posibles
+    de ejecución de una función o método fue seguida durante la ejecución de la
+    suite de prueba. Una ruta de ejecución es una secuencia única entre un conjunto
+    de ramas desde el comienzo de la función o método hasta su salida.
 
 *Change Risk Anti-Patterns (CRAP) Index*
 
-    The *Change Risk Anti-Patterns (CRAP) Index* is
-    calculated based on the cyclomatic complexity and code coverage of a
-    unit of code. Code that is not too complex and has an adequate test
-    coverage will have a low CRAP index. The CRAP index can be lowered
-    by writing tests and by refactoring the code to lower its
-    complexity.
+    El *Change Risk Anti-Patterns (CRAP) Index* se calcula en base a la complejidad
+    ciclomática y cobertura de código de una unidad de código. El código que no
+    es muy complejo y tiene una cobertura de código adecuada tendrá un índice
+    CRAP bajo. El índice CRAP se puede bajar escribiendo pruebas y refactorizando
+    el código para disminuir su complejidad.
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   The *Opcode Coverage*,
-   *Branch Coverage*, and
-   *Path Coverage* software metrics are not yet
-   supported by PHP_CodeCoverage.
+   Las métricas de software *Opcode Coverage*, *Branch Coverage* y *Path Coverage*
+   aún no están soportadas por php-code-coverage.
 
 .. _code-coverage-analysis.whitelisting-files:
 
-Whitelisting Files
-##################
+Lista Blanca de Archivos
+########################
 
-It is mandatory to configure a *whitelist* for telling
-PHPUnit which sourcecode files to include in the code coverage report.
-This can either be done using the ``--whitelist``
-commandline option or via the configuration file (see :ref:`appendixes.configuration.whitelisting-files`).
+Es obligatorio configurar una *whitelist* para indicarle a PHPUnit que archivos
+de código fuente incluir en el reporte de cobertura de código. Esto se puede
+hacer o usando la opción de línea de comandos ``--whitelist`` o desde el
+archivo de configuración (ver :ref:`appendixes.configuration.whitelisting-files`).
 
-Optionally, all whitelisted files can be added to the code coverage
-report by setting ``addUncoveredFilesFromWhitelist="true"``
-in your PHPUnit configuration (see :ref:`appendixes.configuration.whitelisting-files`). This allows the
-inclusion of files that are not tested yet at all. If you want to get
-information about which lines of such an uncovered file are executable,
-for instance, you also need to set
-``processUncoveredFilesFromWhitelist="true"`` in your
-PHPUnit configuration (see :ref:`appendixes.configuration.whitelisting-files`).
+Los valores de configuración ``addUncoveredFilesFromWhitelist`` y
+``processUncoveredFilesFromWhitelist`` se usan para configurar la manera como se
+usa la lista blanca:
 
-.. admonition:: Note
+- ``addUncoveredFilesFromWhitelist="false"`` significa que solo los archivos
+  en la lista blanca que por lo menos tienen una línea de código ejecutado
+  se incluyen en el reporte de cobertura de código.
 
-   Please note that the loading of sourcecode files that is performed when
-   ``processUncoveredFilesFromWhitelist="true"`` is set can
-   cause problems when a sourcecode file contains code outside the scope of
-   a class or function, for instance.
+- ``addUncoveredFilesFromWhitelist="true"`` (por defecto) significa que todos
+  los archivos en la lista blanca se incluyen en el reporte de cobertura de código
+  incluso si no fue ejecutada ni una sola línea del archivo.
+
+- ``processUncoveredFilesFromWhitelist="false"`` (por defecto) significa que un
+  archivo listado en la lista blanca que no tiene líneas de código ejecutadas
+  será agregado al reporte de cobertura de código (si se indica ``addUncoveredFilesFromWhitelist="true"``)
+  pero no será cargado por PHPUnit y por lo tanto no se analizará la corrección
+  de las líneas de código de información.
+
+- ``processUncoveredFilesFromWhitelist="true"`` significa que un archivo listado
+  en la lista blanca que no tiene líneas de código ejecutadas será cargado por
+  PHPUnit así que se puede analizar la corrección de las líneas de información
+  del código ejecutables.
+
+.. admonition:: Nota
+
+   Por favor observemos que la carga de los archivos de código fuente que se ejecuta
+   cuando se configura ``processUncoveredFilesFromWhitelist="true"``, por ejemplo,
+   puede causar problemas cuando un archivo de código fuente contiene código
+   fuera del alcance de una clase o función.
 
 .. _code-coverage-analysis.ignoring-code-blocks:
 
-Ignoring Code Blocks
-####################
+Ignorar Bloques de Código
+#########################
 
-Sometimes you have blocks of code that you cannot test and that you may
-want to ignore during code coverage analysis. PHPUnit lets you do this
-using the ``@codeCoverageIgnore``,
-``@codeCoverageIgnoreStart`` and
-``@codeCoverageIgnoreEnd`` annotations as shown in
+En ocasiones tenemos bloques de código que no podemos probar y que podríamos
+querer ignorar durante el análisis de cobertura de código. PHPUnit permite hacer
+esto usando las anotaciones ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart``
+y ``@codeCoverageIgnoreEnd`` como se muestra en
 :numref:`code-coverage-analysis.ignoring-code-blocks.examples.Sample.php`.
 
 .. code-block:: php
-    :caption: Using the ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart`` and ``@codeCoverageIgnoreEnd`` annotations
+    :caption: Uso de las anotaciones ``@codeCoverageIgnore``, ``@codeCoverageIgnoreStart`` y ``@codeCoverageIgnoreEnd``
     :name: code-coverage-analysis.ignoring-code-blocks.examples.Sample.php
 
     <?php
@@ -180,25 +190,23 @@ using the ``@codeCoverageIgnore``,
     exit; // @codeCoverageIgnore
     ?>
 
-The ignored lines of code (marked as ignored using the annotations)
-are counted as executed (if they are executable) and will not be
-highlighted.
+Las líneas de código ignoradas (marcadas como ignoradas usando las anotaciones)
+se cuentan como ejecutadas (si ellas son ejecutables) y no serán señaladas.
 
 .. _code-coverage-analysis.specifying-covered-methods:
 
-Specifying Covered Methods
-##########################
+Especificar los Métodos de Cobertura
+####################################
 
-The ``@covers`` annotation (see
-:ref:`appendixes.annotations.covers.tables.annotations`) can be
-used in the test code to specify which method(s) a test method wants to
-test. If provided, only the code coverage information for the specified
-method(s) will be considered.
+La anotación ``@covers`` (ver :ref:`appendixes.annotations.covers.tables.annotations`)
+se puede usar en el código de prueba para especificar que método(s) un método
+de prueba quiere ejecutar. Si se provee, solo la información de cobertura de
+código para el o los métodos especificados serán considerados. El
 :numref:`code-coverage-analysis.specifying-covered-methods.examples.BankAccountTest.php`
-shows an example.
+muestra un ejemplo.
 
 .. code-block:: php
-    :caption: Tests that specify which method they want to cover
+    :caption: Prueba que especifica que métodos se quieren cubrir
     :name: code-coverage-analysis.specifying-covered-methods.examples.BankAccountTest.php
 
     <?php
@@ -273,21 +281,19 @@ shows an example.
     }
     ?>
 
-It is also possible to specify that a test should not cover
-*any* method by using the
-``@coversNothing`` annotation (see
-:ref:`appendixes.annotations.coversNothing`). This can be
-helpful when writing integration tests to make sure you only
-generate code coverage with unit tests.
+Además, es posible especificar que una prueba no debe cubrir *ningún* method usando
+la anotación ``@coversNothing`` (ver :ref:`appendixes.annotations.coversNothing`).
+Esto puede ser útil cuando escribimos pruebas de integración para asegurar que
+solo se genera cobertura de código para pruebas unitarias.
 
 .. code-block:: php
-    :caption: A test that specifies that no method should be covered
+    :caption: Una prueba que especifica que ningún método será cubierto
     :name: code-coverage-analysis.specifying-covered-methods.examples.GuestbookIntegrationTest.php
 
     <?php
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\DbUnit\TestCase
 
-    class GuestbookIntegrationTest extends PHPUnit_Extensions_Database_TestCase
+    class GuestbookIntegrationTest extends TestCase
     {
         /**
          * @coversNothing
@@ -311,11 +317,11 @@ generate code coverage with unit tests.
 
 .. _code-coverage-analysis.edge-cases:
 
-Edge Cases
-##########
+Casos Límite
+############
 
-This section shows noteworthy edge cases that lead to confusing code
-coverage information.
+Esta sección muestra interesantes casos límite que producen información de
+cobertura de código confusa.
 
 .. code-block:: php
     :name: code-coverage-analysis.edge-cases.examples.Sample.php
