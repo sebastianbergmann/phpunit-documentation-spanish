@@ -83,8 +83,6 @@ en el ejemplo. Esto lleva a tener un código más legible y «fluido».
     :name: test-doubles.stubs.examples.SomeClass.php
 
     <?php
-    use PHPUnit\Framework\TestCase;
-
     class SomeClass
     {
         public function doSomething()
@@ -125,7 +123,7 @@ en el ejemplo. Esto lleva a tener un código más legible y «fluido».
    declara un método llamado «método».
 
    Si la clase original declara un método llamado «method» entonces debemos usar
-  ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');``,
+   ``$stub->expects($this->any())->method('doSomething')->willReturn('foo');``.
 
 «Detrás de bastidores» PHPUnit automáticamente genera una nueva clase PHP que
 implementa el comportamiento deseado cuando se usa el método ``createMock()``.

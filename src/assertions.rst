@@ -1476,7 +1476,7 @@ assertInfinite()
 
 ``assertInfinite(mixed $variable[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$variable`` is not ``INF``.
+Reporta un error identificado por el ``$message`` si ``$variable`` es not ``INF``.
 
 ``assertFinite()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2535,7 +2535,7 @@ assertThat()
 Aserciones más complejas se pueden formular usando las clases ``PHPUnit\Framework\Constraint``.
 Ellas se pueden evaluar usando el método ``assertThat()``. El
 :numref:`appendixes.assertions.assertThat.example` muestra como las restricciones
-`logicalNot()`` y ``equalTo()`` se pueden usar para expresar la aserción
+``logicalNot()`` y ``equalTo()`` se pueden usar para expresar la aserción
 ``assertNotEquals()``.
 
 ``assertThat(mixed $value, PHPUnit\Framework\Constraint $constraint[, $message = ''])``
@@ -2651,7 +2651,7 @@ assertTrue()
 
 ``assertTrue(bool $condition[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$condition`` is ``false``.
+Reporta un error identificado por el ``$message`` si ``$condition`` es ``false``.
 
 ``assertNotTrue()`` es el inverso de esta aserción y toma los mismos argumentos.
 
@@ -2697,7 +2697,8 @@ assertXmlFileEqualsXmlFile()
 
 ``assertXmlFileEqualsXmlFile(string $expectedFile, string $actualFile[, string $message = ''])``
 
-Reporta un error identificado por el ``$message`` si the XML document in ``$actualFile`` is not equal to the XML document in ``$expectedFile``.
+Reporta un error identificado por el ``$message`` si the XML document in ``$actualFile``
+no es igual al documento XML en ``$expectedFile``.
 
 ``assertXmlFileNotEqualsXmlFile()`` es el inverso de esta aserción y toma los mismos argumentos.
 
