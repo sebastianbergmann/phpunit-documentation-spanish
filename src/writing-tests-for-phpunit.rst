@@ -538,6 +538,63 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
 
+.. code-block:: php
+    :caption: Usar multiples proveedores de datos para una sola prueba
+    :name: writing-tests-for-phpunit.data-providers.examples2.DataTest.php
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class DataTest extends TestCase
+    {
+        /**
+         * @dataProvider additionWithNonNegativeNumbersProvider
+         * @dataProvider additionWithNegativeNumbersProvider
+         */
+        public function testAdd($a, $b, $expected)
+        {
+            $this->assertSame($expected, $a + $b);
+        }
+
+        public function additionWithNonNegativeNumbersProvider()
+        {
+            return [
+                [0, 1, 1],
+                [1, 0, 1],
+                [1, 1, 3]
+            ];
+        }
+
+        public function additionWithNegativeNumbersProvider()
+        {
+            return [
+                [-1, 1, 0],
+                [-1, -1, -2],
+                [1, -1, 0]
+            ];
+        }
+     }
+
+
+.. code-block:: bash
+
+    $ phpunit DataTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    ..F...                                                              6 / 6 (100%)
+
+    Time: 0 seconds, Memory: 5.75Mb
+
+    There was 1 failure:
+
+    1) DataTest::testAdd with data set #3 (1, 1, 3)
+    Failed asserting that 2 is identical to 3.
+
+    /home/sb/DataTest.php:12
+
+    FAILURES!
+    Tests: 6, Assertions: 6, Failures: 1.
+
 .. admonition:: Nota
 
    Cuando una prueba depende de otra prueba que usa un proveedor de datos, la
@@ -703,10 +760,10 @@ representan respectivamente notificaciones y avisos de PHP.
    indeseables. De la misma forma, probar la clase ``Exception`` con
    ``@expectedException`` o ``expectException()`` ya no es permitido.
 
-Cuando la prueba depende de funciones php que lanzan errores, como ``fopen``,
+Cuando la prueba depende de funciones PHP que lanzan errores, como ``fopen``,
 puede que sea útil usar la supresión de errores mientras se prueba. Esto permite
 revisar los valores retornados que sin la supresión de las notificaciones
-llevaría a un ``PHPUnit\Framework\Error\Notice`` de phpunit.
+llevaría a un ``PHPUnit\Framework\Error\Notice`` de PHPUnit.
 
 .. code-block:: php
     :caption: Probar valores de retorno de un código que usa errores de PHP
@@ -1016,4 +1073,5 @@ Esto solo sucede cuando se usa assertEquals u otras funciones de comparación
     Tests: 1, Assertions: 1, Failures: 1.
 
 En este ejemplo la diferencia en el primer índice, entre ``1`` y ``'1'``, se
-reporta aunque assertEquals considera a estos valores como iguales.
+
+reporta aunque ``assertEquals()`` considera a estos valores como iguales.

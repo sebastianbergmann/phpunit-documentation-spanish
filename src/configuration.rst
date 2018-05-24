@@ -2,17 +2,17 @@
 
 .. _appendixes.configuration:
 
-==========================
-The XML Configuration File
-==========================
+============================
+Archivo de Configuración XML
+============================
 
 .. _appendixes.configuration.phpunit:
 
 PHPUnit
 #######
 
-The attributes of the ``<phpunit>`` element can
-be used to configure PHPUnit's core functionality.
+Los atributos del elemento ``<phpunit>`` se pueden usar para configurar la
+funcionalidad del núcleo de PHPUnit.
 
 .. code-block:: bash
 
@@ -46,15 +46,16 @@ be used to configure PHPUnit's core functionality.
       <!-- ... -->
     </phpunit>
 
-The XML configuration above corresponds to the default behaviour of the
-TextUI test runner documented in :ref:`textui.clioptions`.
+El XML de configuración de arriba corresponde al comportamiento por defecto del
+ejecutor de pruebas TextUI documentado en :ref:`textui.clioptions`.
 
-Additional options that are not available as command-line options are:
+Las opciones adicionales que no están disponibles como opciones desde la línea de
+comandos son:
 
 ``convertErrorsToExceptions``
 
-    By default, PHPUnit will install an error handler that converts
-    the following errors to exceptions:
+    Por defecto PHPUnit instalará un gestor de errores que convierte los
+    siguientes errores en excepciones:
 
     - ``E_WARNING``
 
@@ -74,58 +75,55 @@ Additional options that are not available as command-line options are:
 
     - ``E_USER_DEPRECATED``
 
-    Set ``convertErrorsToExceptions`` to
-    ``false`` to disable this feature.
+    Colocamos ``convertErrorsToExceptions`` en ``false`` para desactivar esta
+    característica.
 
 ``convertNoticesToExceptions``
 
-    When set to ``false``, the error handler installed
-    by ``convertErrorsToExceptions`` will not convert
-    ``E_NOTICE``, ``E_USER_NOTICE``, or
-    ``E_STRICT`` errors to exceptions.
+    Cuando colocamos ``false``, el gestor de errores instalado por
+    ``convertErrorsToExceptions`` no convertirá los errores ``E_NOTICE``,
+    ``E_USER_NOTICE`` o ``E_STRICT`` en excepciones.
 
 ``convertWarningsToExceptions``
 
-    When set to ``false``, the error handler installed
-    by ``convertErrorsToExceptions`` will not convert
-    ``E_WARNING`` or ``E_USER_WARNING``
-    errors to exceptions.
+    Cuando colocamos ``false``, el gestor de errores instalado por
+    ``convertErrorsToExceptions`` no convertirá los errores ``E_WARNING`` o
+    ``E_USER_WARNING`` en excepciones.
 
 ``forceCoversAnnotation``
 
-    Code Coverage will only be recorded for tests that use the
-    ``@covers`` annotation documented in
-    :ref:`appendixes.annotations.covers`.
+    El código de cobertura solo será reportado para pruebas que usan la anotación
+    ``@covers`` documentada en :ref:`appendixes.annotations.covers`.
 
 ``timeoutForLargeTests``
 
-    If time limits based on test size are enforced then this attribute
-    sets the timeout for all tests marked as ``@large``.
-    If a test does not complete within its configured timeout, it will
-    fail.
+    Si los límites de tiempo basados en el tamaño de la prueba son forzados
+    entonces este atributo designará el tiempo límite para todos las pruebas
+    marcadas con ``@large``. Si una prueba no se completa dentro del tiempo límite
+    configurado entonces la prueba fallará.
 
 ``timeoutForMediumTests``
 
-    If time limits based on test size are enforced then this attribute
-    sets the timeout for all tests marked as ``@medium``.
-    If a test does not complete within its configured timeout, it will
-    fail.
+    Si los límites de tiempo basados en el tamaño de la prueba son forzados
+    entonces este atributo designará el tiempo límite para todas las pruebas
+    marcadas con ``@medium``. Si una prueba no se completa dentro del tiempo
+    límite configurado entonces la prueba fallará.
 
 ``timeoutForSmallTests``
 
-    If time limits based on test size are enforced then this attribute
-    sets the timeout for all tests not marked as
-    ``@medium`` or ``@large``. If a test
-    does not complete within its configured timeout, it will fail.
+    Si los límites de tiempo basados en el tamaño de la prueba son forzados
+    entonces este atributo designa el tiempo límite para todas las pruebas que
+    no han sido marcadas como ``@medium`` o ``@large``. Si una prueba no se
+    completa dentro del tiempo límite configurado, la prueba fallará.
 
 .. _appendixes.configuration.testsuites:
 
-Test Suites
-###########
+Suites de Pruebas
+#################
 
-The ``<testsuites>`` element and its
-one or more ``<testsuite>`` children can be
-used to compose a test suite out of test suites and test cases.
+El elemento ``<testsuites>`` y su o sus hijos ``<testsuite>`` se pueden usar
+para construir una suite de prueba compuesta por suites de pruebas y casos de
+prueba.
 
 .. code-block:: bash
 
@@ -137,12 +135,10 @@ used to compose a test suite out of test suites and test cases.
       </testsuite>
     </testsuites>
 
-Using the ``phpVersion`` and
-``phpVersionOperator`` attributes, a required PHP version
-can be specified. The example below will only add the
-:file:`/path/to/\*Test.php` files and
-:file:`/path/to/MyTest.php` file if the PHP version is at
-least 5.3.0.
+Si usamos los atributos ``phpVersion`` y ``phpVersionOperator`` se puede
+especificar una determinada versión de PHP. El ejemplo de abajo solo agregará
+los archivos :file:`/path/to/\*Test.php` y el archivo :file:`/path/to/MyTest.php`
+si la versión de PHP es superior o igual a 5.3.0.
 
 .. code-block:: bash
 
@@ -153,21 +149,17 @@ least 5.3.0.
         </testsuite>
       </testsuites>
 
-The ``phpVersionOperator`` attribute is optional and
-defaults to ``>=``.
+El atributo ``phpVersionOperator`` es opcional y por defecto tiene el valor ``>=``.
 
 .. _appendixes.configuration.groups:
 
-Groups
+Grupos
 ######
 
-The ``<groups>`` element and its
-``<include>``,
-``<exclude>``, and
-``<group>`` children can be used to select
-groups of tests marked with the ``@group`` annotation
-(documented in :ref:`appendixes.annotations.group`)
-that should (not) be run.
+El elemento ``<groups>`` y sus hijos ``<include>``, ``<exclude>`` y ``<group>``
+se pueden usar para seleccionar grupos de pruebas marcadas con la anotación
+``@group`` (documentada en :ref:`appendixes.annotations.group`) que serán o no
+serán ejecutadas.
 
 .. code-block:: bash
 
@@ -180,8 +172,8 @@ that should (not) be run.
       </exclude>
     </groups>
 
-The XML configuration above corresponds to invoking the TextUI test runner
-with the following options:
+La configuración XML de arriba es equivalente a invocar el ejecutor de pruebas
+TextUI con las siguientes opciones:
 
 -
 
@@ -193,11 +185,11 @@ with the following options:
 
 .. _appendixes.configuration.whitelisting-files:
 
-Whitelisting Files for Code Coverage
-####################################
+Lista Blanca de Archivos para la Cobertura de Código
+####################################################
 
-The ``<filter>`` element and its children can
-be used to configure the whitelist for the code coverage reporting.
+El elemento ``<filter>`` y sus hijos se pueden usar para configurar la lista
+blanca usada para el reporte de cobertura de código.
 
 .. code-block:: bash
 
@@ -217,9 +209,8 @@ be used to configure the whitelist for the code coverage reporting.
 Logging
 #######
 
-The ``<logging>`` element and its
-``<log>`` children can be used to configure the
-logging of the test execution.
+El elemento ``<logging>`` y su hijo ``<log>`` se puede usar para configurar
+el registro de sucesos de la ejecución de la prueba.
 
 .. code-block:: bash
 
@@ -234,8 +225,8 @@ logging of the test execution.
       <log type="testdox-text" target="/tmp/testdox.txt"/>
     </logging>
 
-The XML configuration above corresponds to invoking the TextUI test runner
-with the following options:
+La configuración XML de arriba es equivalente a invocar el ejecutor de pruebas
+TextUI con las siguiente opciones:
 
 -
 
@@ -269,34 +260,36 @@ with the following options:
 
   ``--testdox-text /tmp/testdox.txt``
 
-The ``lowUpperBound``, ``highLowerBound``,
-and ``showUncoveredFiles`` attributes have no equivalent TextUI
-test runner option.
+Los atributos ``lowUpperBound``, ``highLowerBound`` y ``showUncoveredFiles``
+no tienen opciones equivalentes en el ejecutor de pruebas TextUI.
 
 -
 
-  ``lowUpperBound``: Maximum coverage percentage to be considered "lowly" covered.
+  ``lowUpperBound``:  Máximo porcentaje de cobertura de código para considerar
+  la cobertura como baja, «lowly».
 
 -
 
-  ``highLowerBound``: Minimum coverage percentage to be considered "highly" covered.
+  ``highLowerBound``: Mínimo porcentaje de cobertura para que se considere
+  como alta, «highly».
 
 -
 
-  ``showUncoveredFiles``: Show all whitelisted files in ``--coverage-text`` output not just the ones with coverage information.
+  ``showUncoveredFiles``: Mostrar todos los archivos de la lista blanca en la
+  salida ``--coverage-text`` y no solo los archivos con la información de
+  cobertura.
 
 -
 
-  ``showOnlySummary``: Show only the summary in ``--coverage-text`` output.
+  ``showOnlySummary``: Solo mostrar el resumen en la salida ``--coverage-text``.
 
 .. _appendixes.configuration.test-listeners:
 
-Test Listeners
-##############
+«Listeners» de Prueba
+#####################
 
-The ``<listeners>`` element and its
-``<listener>`` children can be used to attach
-additional test listeners to the test execution.
+El elemento ``<listeners>`` y su hijo ``<listener>`` se pueden usar para adjuntar
+escuchas de prueba, «test listeners», adicionales a la prueba en ejecución.
 
 .. code-block:: bash
 
@@ -317,8 +310,8 @@ additional test listeners to the test execution.
       </listener>
     </listeners>
 
-The XML configuration above corresponds to attaching the
-``$listener`` object (see below) to the test execution:
+La configuración XML de arriba corresponde a adjuntar el objeto ``$listener``
+(ver abajo) a la ejecución de una prueba:
 
 .. code-block:: bash
 
@@ -333,17 +326,17 @@ The XML configuration above corresponds to attaching the
 
 .. _appendixes.configuration.extensions:
 
-Registering TestRunner Extensions
-#################################
+Registrar Extensiones de TestRunner
+###################################
 
-The ``<extensions>`` element and its ``<extension>`` children
-can be used to register custom TestRunner extensions.
+El elemento ``<extensions>`` y su hijo ``<extension>`` se puede usar para
+registrar extensiones de TextRunner personalizadas.
 
-:numref:`configuration.examples.RegisterExtension` shows how to register
-such an extension.
+El :numref:`configuration.examples.RegisterExtension` muestra como registrar
+una extensión.
 
 .. code-block:: xml
-    :caption: Registering a TestRunner Extension
+    :caption: Registrar una Extensión de TestRunner
     :name: configuration.examples.RegisterExtension
 
       <?xml version="1.0" encoding="UTF-8"?>
@@ -355,12 +348,12 @@ such an extension.
 
 .. _appendixes.configuration.php-ini-constants-variables:
 
-Setting PHP INI settings, Constants and Global Variables
-########################################################
+Asignar las configuraciones de PHP INI, Constantes y Variables Globales
+#######################################################################
 
-The ``<php>`` element and its children can be
-used to configure PHP settings, constants, and global variables. It can
-also be used to prepend the ``include_path``.
+El elemento ``<php>`` y sus hijos se pueden usar para establecer las configuraciones
+de PHP, constantes y variables globales. Se puede usar para agregar el
+``include_path``.
 
 .. code-block:: bash
 
@@ -378,7 +371,7 @@ also be used to prepend the ``include_path``.
       <request name="foo" value="bar"/>
     </php>
 
-The XML configuration above corresponds to the following PHP code:
+La configuración XML de arriba se corresponde con el siguiente código PHP:
 
 .. code-block:: bash
 
@@ -392,5 +385,3 @@ The XML configuration above corresponds to the following PHP code:
     $_SERVER['foo'] = 'bar';
     $_FILES['foo'] = 'bar';
     $_REQUEST['foo'] = 'bar';
-
-

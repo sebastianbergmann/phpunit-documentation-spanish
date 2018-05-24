@@ -509,7 +509,7 @@ de datos.
 Conjunto de Datos con XML Plano
 -------------------------------
 
-El conjunto de datos más común es el llamado XML Plano. Es un formato xml muy
+El conjunto de datos más común es el llamado XML Plano. Es un formato XML muy
 simple donde una etiqueta dentro del nodo raíz ``<dataset>`` representa exactamente
 una fila en la base de datos. El nombre de la etiqueta es igual a la tabla en la
 que se inserta la fila y un atributo representa una columna. Un ejemplo para una
@@ -531,7 +531,7 @@ Sin embargo, esta simplicidad tiene un costo.
 
 En el ejemplo anterior no es obvio como podríamos especificar una tabla vacía.
 Podemos insertar una etiqueta sin atributos con el nombre de la tabla vacía.
-Un archivo xml plano para una tabla que representa un libro de visitas vacío
+Un archivo XML plano para una tabla que representa un libro de visitas vacío
 podría ser el siguiente:
 
 .. code-block:: bash
@@ -541,10 +541,10 @@ podría ser el siguiente:
         <guestbook />
     </dataset>
 
-La manipulación de valores NULL con xml plano es tedioso. En casi todas las bases
+La manipulación de valores NULL con XML plano es tedioso. En casi todas las bases
 de datos, excepto Oracle, un valor NULL es diferente a una cadena de caracteres
 con valor vacío, además, es algo que resulta difícil de describir en un formato
-xml plano. Podemos representar valores NULL omitiendo el atributo que especifica
+XML plano. Podemos representar valores NULL omitiendo el atributo que especifica
 la fila. Si nuestro libro de visitas permite entradas anónimas representadas
 por el valor NULL en la columna de usuario, un estado hipotético de la tabla
 que representa el libro de visitas podría ser el siguiente:
@@ -564,7 +564,7 @@ columnas pertenecen a una tabla. Si un atributo es NULL para todas las filas
 de la tabla de datos, ¿como podría saber la Extensión de Base de Datos que la
 columna debe ser parte de la tabla?
 
-El conjunto de datos en xml plano hace una suposición crucial, a partir del
+El conjunto de datos en XML plano hace una suposición crucial, a partir del
 atributo de la primera fila definida de una tabla, se definen las columnas de
 esta tabla. En el ejemplo anterior esto significaría que «id», «content», «user»
 y «created» son columnas de la tabla del libro de visitas. Para la segunda fila
@@ -588,7 +588,7 @@ Esto puede traer errores si una de las columnas omitidas se define como
 En conclusión podemos decir que los conjuntos de datos en XML Plano solo se pueden
 usar si no necesitamos valores NULL.
 
-Podemos crear una instancia del conjunto de datos xml plano dentro de nuestro
+Podemos crear una instancia del conjunto de datos XML plano dentro de nuestro
 Caso de Prueba de Base de Datos llamando al método ``createFlatXmlDataSet($filename)``:
 
 .. code-block:: php
@@ -651,7 +651,7 @@ vacía. Las etiquetas ``<value>`` y ``<null />`` se deben especificar en el orde
 en que se especificaron los elementos ``<column>``. La etiqueta ``<null />``
 obviamente significa que el valor es NULL.
 
-Podemos crear una instancia del conjunto de datos xml desde dentro de nuestro
+Podemos crear una instancia del conjunto de datos XML desde dentro de nuestro
 Caso de Prueba de Base de Datos llamando al método ``createXmlDataSet($filename)``:
 
 .. code-block:: php
@@ -890,7 +890,7 @@ directo:
                 $metaData = new DefaultTableMetaData($tableName, $columns);
                 $table = new DefaultTable($metaData);
 
-                foreach ($rows AS $row) {
+                foreach ($rows as $row) {
                     $table->addRow($row);
                 }
                 $this->tables[$tableName] = $table;
@@ -1254,9 +1254,9 @@ el método ``getConnection()`` en el Caso de Prueba de Base de Datos:
 
     interface Connection
     {
-        public function createDataSet(Array $tableNames = NULL);
+        public function createDataSet(array $tableNames = null);
         public function createQueryTable($resultName, $sql);
-        public function getRowCount($tableName, $whereClause = NULL);
+        public function getRowCount($tableName, $whereClause = null);
 
         // ...
     }
