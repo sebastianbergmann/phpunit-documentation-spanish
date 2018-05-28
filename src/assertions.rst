@@ -18,26 +18,26 @@ Las aserciones de PHPUnit están implementadas en PHPUnit\\Framework\\Assert.
 PHPUnit\\Framework\\TestCase hereda de PHPUnit\\Framework\\Assert.
 
 Los métodos para hacer aserciones son declarados estáticos y se pueden invocar
-desde cualquier contexto usando PHPUnit\\Framework\\Assert::assertTrue(),
-$this->assertTrue() o self::assertTrue() en una clase que extiende de
+desde cualquier contexto usando ``PHPUnit\\Framework\\Assert::assertTrue()``,
+``$this->assertTrue()`` o ``self::assertTrue()`` en una clase que extiende de
 PHPUnit\\Framework\\TestCase.
 
-De hecho, incluso podemos usar envoltorios de funciones globales como assertTrue()
+De hecho, incluso podemos usar envoltorios de funciones globales como ``assertTrue()``
 en cualquier contexto (incluyendo clases que extienden de PHPUnit\\Framework\\TestCase)
 cuando hemos incluido (manualmente) el archivo con código fuente
 :file:`src/Framework/Assert/Functions.php` que viene con PHPUnit.
 
 Una pregunta común, especialmente de los nuevos desarrolladores de PHPUnit,
-es cual es «la manera correcta» de invocar una aserción si usar $this->assertTrue()
-o self::assertTrue(). La respuesta corta es: no hay una manera correcta. Y tampoco
+es cual es «la manera correcta» de invocar una aserción si usar ``$this->assertTrue()``
+o ``self::assertTrue()``. La respuesta corta es: no hay una manera correcta. Y tampoco
 hay una manera incorrecta. Es un asunto de preferencias personales.
 
-La mayoría de las personas «se siente segura» usando $this->assertTrue() porque
+La mayoría de las personas «se siente segura» usando ``$this->assertTrue()`` porque
 el método de prueba se invoca en un objeto de prueba. El hecho de que los métodos
 para hacer aserciones se declaran estáticos permite (re)usarlos fuera del ámbito
 de un objeto de prueba. Por último, la envoltura de funciones globales permite
-a los desarrolladores escribir menos caracteres (assertTrue() en lugar de
-$this->assertTrue() o self::assertTrue()).
+a los desarrolladores escribir menos caracteres (``assertTrue()`` en lugar de
+``$this->assertTrue()`` o ``self::assertTrue())``.
 
 .. _appendixes.assertions.assertArrayHasKey:
 
@@ -66,7 +66,6 @@ argumentos.
             $this->assertArrayHasKey('foo', ['bar' => 'baz']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -113,7 +112,6 @@ mismos argumentos.
             $this->assertClassHasAttribute('foo', stdClass::class);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -161,7 +159,6 @@ de arreglos.
             $this->assertArraySubset(['config' => ['key-a', 'key-b']], ['config' => ['key-a']]);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -213,7 +210,6 @@ no existe.
             $this->assertClassHasStaticAttribute('foo', stdClass::class);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -264,7 +260,6 @@ clase u objeto como el lugar donde buscar, *haystack*.
             $this->assertContains(4, [1, 2, 3]);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -306,7 +301,6 @@ Si ``$ignoreCase`` es ``true``, la prueba será insensible a mayúsculas y minú
             $this->assertContains('baz', 'foobar');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -346,7 +340,6 @@ Si ``$ignoreCase`` es ``true``, la prueba será insensible a mayúsculas y minú
             $this->assertContains('foo', 'FooBar', '', true);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -400,7 +393,6 @@ envoltorios convenientes que usan un atributo ``public``, ``protected`` o
             $this->assertContainsOnly('string', ['1', '2', 3]);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -452,7 +444,6 @@ solamente instancias de la clase ``$classname``.
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -500,7 +491,6 @@ argumentos.
             $this->assertCount(0, ['foo']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -548,7 +538,6 @@ argumentos.
             $this->assertDirectoryExists('/path/to/directory');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -596,7 +585,6 @@ mismos argumentos.
             $this->assertDirectoryIsReadable('/path/to/directory');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -644,7 +632,6 @@ mismos argumentos.
             $this->assertDirectoryIsWritable('/path/to/directory');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -694,7 +681,6 @@ apropiados para ser usados con atributos de tipo ``public``, ``protected`` o
             $this->assertEmpty(['foo']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -782,7 +768,6 @@ en ``$actualElement`` no es igual a la estructura XML del DOMElement en
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -870,7 +855,6 @@ una clase u objeto para el valor real
             $this->assertEquals("foo\nbar\nbaz\n", "foo\nbah\nbaz\n");
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -947,7 +931,6 @@ para entender porqué ``$delta`` es necesario.
             $this->assertEquals(1.0, 1.1);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -994,7 +977,6 @@ del documento XML representado por los dos objectos DOMDocument ``$expected`` y
             $this->assertEquals($expected, $actual);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1052,7 +1034,6 @@ y ``$actual`` no tienen valores de atributos iguales.
             $this->assertEquals($expected, $actual);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1101,7 +1082,6 @@ y ``$actual`` no son iguales.
             $this->assertEquals(['a', 'b', 'c'], ['a', 'c', 'd']);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1157,7 +1137,6 @@ Reporta un error identificado por el ``$message`` si ``$condition`` es ``true``.
             $this->assertFalse(true);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1204,7 +1183,6 @@ Reporta un error identificado por el ``$message`` si the archivo especificado en
             $this->assertFileEquals('/home/sb/expected', '/home/sb/actual');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1257,7 +1235,6 @@ Reporta un error identificado por el ``$message`` si the archivo especificado en
             $this->assertFileExists('/path/to/file');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1304,7 +1281,6 @@ en ``$filename`` no es un archivo o no es legible.
             $this->assertFileIsReadable('/path/to/file');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1351,7 +1327,6 @@ Reporta un error identificado por el ``$message`` si el archivo especificado en
             $this->assertFileIsWritable('/path/to/file');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1399,7 +1374,6 @@ no es mayor que el valor de ``$expected``.
             $this->assertGreaterThan(2, 1);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1448,7 +1422,6 @@ valor real.
             $this->assertGreaterThanOrEqual(2, 1);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1494,7 +1467,6 @@ Reporta un error identificado por el ``$message`` si ``$variable`` es not ``INF`
             $this->assertInfinite(1);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1545,7 +1517,6 @@ envoltorios convenientes que se pueden aplicar a un atributo ``public``,
             $this->assertInstanceOf(RuntimeException::class, new Exception);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1596,7 +1567,6 @@ envoltorios convenientes que se pueden aplicar a un atributo ``public``,
             $this->assertInternalType('string', 42);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1643,7 +1613,6 @@ especificada en ``$filename`` no se puede leer.
             $this->assertIsReadable('/path/to/unreadable');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1690,7 +1659,6 @@ especificada en ``$filename`` no se puede escribir.
             $this->assertIsWritable('/path/to/unwritable');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1736,7 +1704,6 @@ no coincide con el valor de ``$expectedFile``.
               'path/to/fixture/file', 'path/to/actual/file');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1783,7 +1750,6 @@ no coincide con el valor de ``$expectedFile``.
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1831,7 +1797,6 @@ no coincide con el valor de ``$expectedJson``.
             );
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1886,7 +1851,6 @@ es menor que el valor de ``$expected``.
             $this->assertLessThan(1, 2);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1935,7 +1899,6 @@ valor real.
             $this->assertLessThanOrEqual(1, 2);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -1979,7 +1942,6 @@ Reporta un error identificado por el ``$message`` si ``$variable`` no es ``NAN``
             $this->assertNan(1);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2025,7 +1987,6 @@ Reporta un error identificado por el ``$message`` si ``$variable`` no es ``null`
             $this->assertNull('foo');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2072,7 +2033,6 @@ no existe.
             $this->assertObjectHasAttribute('foo', new stdClass);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2119,7 +2079,6 @@ la expresión regular ``$pattern``.
             $this->assertRegExp('/foo/', 'bar');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2166,7 +2125,6 @@ el formato dado en ``$format``.
             $this->assertStringMatchesFormat('%i', 'foo');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2267,7 +2225,6 @@ mismos argumentos.
             $this->assertStringMatchesFormatFile('/path/to/expected.txt', 'foo');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2319,7 +2276,6 @@ objeto como el valor real.
             $this->assertSame('2204', 2204);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2359,7 +2315,6 @@ y ``$actual`` no hacen referencia al mismo objeto.
             $this->assertSame(new stdClass, new stdClass);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2406,7 +2361,6 @@ Reporta un error identificado por el ``$message`` si ``$string`` no termina en
             $this->assertStringEndsWith('suffix', 'foo');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2453,7 +2407,6 @@ Reporta un error identificado por el ``$message`` si el archivo especificado en
             $this->assertStringEqualsFile('/home/sb/expected', 'actual');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2506,7 +2459,6 @@ con el ``$prefix``.
             $this->assertStringStartsWith('prefix', 'foo');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2565,7 +2517,6 @@ con el ``$constraint``.
             );
         }
     }
-    ?>
 
 La :numref:`appendixes.assertions.assertThat.tables.constraints` muestra las
 clases disponibles en ``PHPUnit\Framework\Constraint``.
@@ -2669,7 +2620,6 @@ Reporta un error identificado por el ``$message`` si ``$condition`` es ``false``
             $this->assertTrue(false);
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2717,7 +2667,6 @@ no es igual al documento XML en ``$expectedFile``.
               '/home/sb/expected.xml', '/home/sb/actual.xml');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2772,7 +2721,6 @@ Reporta un error identificado por el ``$message`` si the XML document in ``$actu
               '/home/sb/expected.xml', '<foo><baz/></foo>');
         }
     }
-    ?>
 
 .. code-block:: bash
 
@@ -2827,7 +2775,6 @@ Reporta un error identificado por el ``$message`` si the XML document in ``$actu
               '<foo><bar/></foo>', '<foo><baz/></foo>');
         }
     }
-    ?>
 
 .. code-block:: bash
 

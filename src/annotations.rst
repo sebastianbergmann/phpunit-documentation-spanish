@@ -3,43 +3,43 @@
 .. _appendixes.annotations:
 
 ===========
-Annotations
+Anotaciones
 ===========
 
-An annotation is a special form of syntactic metadata that can be added to
-the source code of some programming languages. While PHP has no dedicated
-language feature for annotating source code, the usage of tags such as
-``@annotation arguments`` in a documentation block has been
-established in the PHP community to annotate source code. In PHP
-documentation blocks are reflective: they can be accessed through the
-Reflection API's ``getDocComment()`` method on the function,
-class, method, and attribute level. Applications such as PHPUnit use this
-information at runtime to configure their behaviour.
+Una anotación es una forma especial de meta datos sintácticos que se pueden
+agregar al código fuente de algún lenguaje de programación. Aunque PHP no
+tiene entre sus características la anotación de código fuente, el uso de
+etiquetas como ``@annotation arguments`` en un bloque de documentación se ha
+establecido en la comunidad PHP como el modo de anotar el código fuente. En PHP
+los bloques de documentación son reflexivos: se puede acceder a ellos por medio
+del método ``getDocComment()`` de la «API Reflection» a nivel de función,
+clase, método y atributo. Aplicaciones como PHPUnit usan esta información
+en tiempo de ejecución para configurar su comportamiento.
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   A doc comment in PHP must start with ``/**`` and end with
-   ``*/``. Annotations in any other style of comment will be
-   ignored.
+   Un comentario de documentación en PHP debe comenzar con ``/**`` y terminar
+   con ``*/``. Las anotaciones en cualquier otro estilo de comentarios serán
+   ignoradas.
 
-This appendix shows all the varieties of annotations supported by PHPUnit.
+Este apéndice muestra toda la variedad de anotaciones soportada por PHPUnit.
 
 .. _appendixes.annotations.author:
 
 @author
 #######
 
-The ``@author`` annotation is an alias for the
-``@group`` annotation (see :ref:`appendixes.annotations.group`) and allows to filter tests based
-on their authors.
+La anotación ``@author`` es un alias de la anotación ``@group``
+(ver :ref:`appendixes.annotations.group`) y permite filtrar las pruebas en
+base a sus autores.
 
 .. _appendixes.annotations.after:
 
 @after
 ######
 
-The ``@after`` annotation can be used to specify methods
-that should be called after each test method in a test case class.
+La anotación ``@after`` se puede usar para especificar métodos que deben ser
+llamados después de todos los métodos de prueba de la clase de casos de prueba.
 
 .. code-block:: php
 
@@ -281,25 +281,25 @@ the syntax of the ``@covers`` annotation.
     * - Annotation
       - Description
     * - ``@covers ClassName::methodName``
-      - ``Specifies that the annotated test method covers the specified method.``
+      - Specifies that the annotated test method covers the specified method.
     * - ``@covers ClassName``
-      - ``Specifies that the annotated test method covers all methods of a given class.``
+      - Specifies that the annotated test method covers all methods of a given class.
     * - ``@covers ClassName<extended>``
-      - ``Specifies that the annotated test method covers all methods of a given class and its parent class(es) and interface(s).``
+      - Specifies that the annotated test method covers all methods of a given class and its parent class(es) and interface(s).
     * - ``@covers ClassName::<public>``
-      - ``Specifies that the annotated test method covers all public methods of a given class.``
+      - Specifies that the annotated test method covers all public methods of a given class.
     * - ``@covers ClassName::<protected>``
-      - ``Specifies that the annotated test method covers all protected methods of a given class.``
+      - Specifies that the annotated test method covers all protected methods of a given class.
     * - ``@covers ClassName::<private>``
-      - ``Specifies that the annotated test method covers all private methods of a given class.``
+      - Specifies that the annotated test method covers all private methods of a given class.
     * - ``@covers ClassName::<!public>``
-      - ``Specifies that the annotated test method covers all methods of a given class that are not public.``
+      - Specifies that the annotated test method covers all methods of a given class that are not public.
     * - ``@covers ClassName::<!protected>``
-      - ``Specifies that the annotated test method covers all methods of a given class that are not protected.``
+      - Specifies that the annotated test method covers all methods of a given class that are not protected.
     * - ``@covers ClassName::<!private>``
-      - ``Specifies that the annotated test method covers all methods of a given class that are not private.``
+      - Specifies that the annotated test method covers all methods of a given class that are not private.
     * - ``@covers ::functionName``
-      - ``Specifies that the annotated test method covers the specified global function.``
+      - Specifies that the annotated test method covers the specified global function.
 
 .. _appendixes.annotations.coversDefaultClass:
 
@@ -332,7 +332,6 @@ repeated for every ``@covers`` annotation. See
             $o->publicMethod();
         }
     }
-    ?>
 
 .. _appendixes.annotations.coversNothing:
 
@@ -356,7 +355,7 @@ will override any ``@covers`` tags.
 #############
 
 A test method can accept arbitrary arguments. These arguments are to be
-provided by a data provider method (``provider()`` in
+provided by one or more data provider methods (``provider()`` in
 :ref:`writing-tests-for-phpunit.data-providers.examples.DataTest.php`).
 The data provider method to be used is specified using the
 ``@dataProvider`` annotation.
@@ -419,7 +418,7 @@ specific exception.
          * @expectedException     MyException
          * @expectedExceptionCode 20
          */
-        public function testExceptionHasErrorcode20()
+        public function testExceptionHasErrorCode20()
         {
             throw new MyException('Some Message', 20);
         }
@@ -440,7 +439,7 @@ specify a class constant as an
           * @expectedException     MyException
           * @expectedExceptionCode MyClass::ERRORCODE
           */
-        public function testExceptionHasErrorcode20()
+        public function testExceptionHasErrorCode20()
         {
           throw new MyException('Some Message', 20);
         }
@@ -737,7 +736,8 @@ annotation in a method's DocBlock to mark it as a test method.
 ########
 
 Specifies an alternative description used when generating the agile
-documentation sentences (see :ref:`other-uses-for-tests.agile-documentation`).
+documentation sentences.
+
 The ``@testdox`` annotation can be applied to both test classes and test methods.
 
 .. code-block:: php
@@ -772,6 +772,13 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
 Instead of implementing a method for use with ``@dataProvider``,
 you can define a data set using the ``@testWith`` annotation.
 
+A data set consists of one or many elements. To define a data set
+with multiple elements, define each element in a separate line.
+Each element of the data set must be an array defined in JSON.
+
+See :ref:`writing-tests-for-phpunit.data-providers` to learn
+more about passing a set of data to a test.
+
 .. code-block:: php
 
     /**
@@ -786,12 +793,29 @@ you can define a data set using the ``@testWith`` annotation.
         $this->assertSame($expectedLength, strlen($input));
     }
 
+An object representation in JSON will be converted into an associative array.
+
+.. code-block:: php
+
+    /**
+     * @param array     $array
+     * @param array     $keys
+     *
+     * @testWith        [{"day": "monday", "conditions": "sunny"}, ["day", "conditions"]]
+     */
+    public function testArrayKeys($array, $keys)
+    {
+        $this->assertSame($keys, array_keys($array));
+    }
+
 .. _appendixes.annotations.ticket:
 
 @ticket
 #######
 
-.. code-block:: php
+The ``@ticket`` annotation is an alias for the
+``@group`` annotation (see :ref:`appendixes.annotations.group`) and allows to filter tests based
+on their ticket ID.
 
 .. _appendixes.annotations.uses:
 
@@ -817,5 +841,3 @@ This annotation is especially useful in strict coverage mode where
 unintentionally covered code will cause a test to fail. See
 :ref:`risky-tests.unintentionally-covered-code` for more
 information regarding strict coverage mode.
-
-

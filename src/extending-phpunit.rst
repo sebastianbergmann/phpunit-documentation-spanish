@@ -182,7 +182,6 @@ implementación simple de la interfaz ``PHPUnit\Framework\TestListener``.
             printf("TestSuite '%s' ended.\n", $suite->getName());
         }
     }
-    ?>
 
 El :numref:`extending-phpunit.examples.BaseTestListener.php` muestra como
 hacer una subclase de la clase abstracta ``PHPUnit\Framework\BaseTestListener``,
@@ -204,7 +203,6 @@ todos los otros.
             printf("Test '%s' ended.\n", $test->getName());
         }
     }
-    ?>
 
 En el :ref:`appendixes.configuration.test-listeners` podemos ver como configurar
 PHPUnit para adjuntar nuestro escucha de pruebas a la ejecución de una prueba.
@@ -287,7 +285,6 @@ donde el primer valor es el valor esperado y el segundo es el valor real.
 
     $test = new DataDrivenTest('data_file.csv');
     $result = PHPUnit\TextUI\TestRunner::run($test);
-    ?>
 
 .. code-block:: bash
 
@@ -348,22 +345,22 @@ para una extensión que implementa las interfaces ``BeforeFirstTestHook`` y
     :caption: Ejemplo de Extensión para el TestRunner
     :name: extending-phpunit.examples.TestRunnerExtension
 
-        <?php
+    <?php
 
-        namespace Vendor;
+    namespace Vendor;
 
-        use PHPUnit\Runner\AfterLastTestHook;
-        use PHPUnit\Runner\BeforeFirstTestHook;
+    use PHPUnit\Runner\AfterLastTestHook;
+    use PHPUnit\Runner\BeforeFirstTestHook;
 
-        final class MyExtension implements BeforeFirstTestHook, AfterLastTestHook
+    final class MyExtension implements BeforeFirstTestHook, AfterLastTestHook
+    {
+        public function executeAfterLastTest(): void
         {
-            public function executeAfterLastTest(): void
-            {
-                // called after the last test has been run
-            }
-
-            public function executeBeforeFirstTest(): void
-            {
-                // called before the first test is being run
-            }
+            // called after the last test has been run
         }
+
+        public function executeBeforeFirstTest(): void
+        {
+            // called before the first test is being run
+        }
+    }
