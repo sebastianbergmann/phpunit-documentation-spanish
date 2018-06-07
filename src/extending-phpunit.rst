@@ -113,7 +113,7 @@ El :numref:`extending-phpunit.examples.IsTrue.php` muestra como la clase
         }
     }
 
-La ventaja de implementar los métodos ``assertTrue()`` y ``isTrue()` de la misma
+La ventaja de implementar los métodos ``assertTrue()`` y ``isTrue()`` de la misma
 manera que la clase ``PHPUnit\Framework\Constraint\IsTrue`` está en que ``assertThat()``
 automáticamente contabiliza la evaluación de la aserción para incluirla en las
 estadísticas. Además, el método ``isTrue()`` se puede usar como un objeto para
@@ -183,22 +183,24 @@ implementación simple de la interfaz ``PHPUnit\Framework\TestListener``.
         }
     }
 
-El :numref:`extending-phpunit.examples.BaseTestListener.php` muestra como
-hacer una subclase de la clase abstracta ``PHPUnit\Framework\BaseTestListener``,
+El :numref:`extending-phpunit.examples.ExtendedTestListener.php` muestra como
+usar un el «trait» ``PHPUnit\Framework\TestListenerDefaultImplementation``,
 que nos permite especificar sola los métodos de interfaz que son interesantes
 para nuestro caso de uso, mientras que se proveen implementaciones vacías para
 todos los otros.
 
 .. code-block:: php
-    :caption: Usar el escucha de prueba base
-    :name: extending-phpunit.examples.BaseTestListener.php
+    :caption: Usar la implementación «trait» por defecto en un escucha de pruebas
+    :name: extending-phpunit.examples.ExtendedTestListener.php
 
     <?php
-    use PHPUnit\Framework\BaseTestListener;
+    use PHPUnit\Framework\TestListenerDefaultImplementation;
 
-    class ShortTestListener extends BaseTestListener
+    class ShortTestListener
     {
-        public function endTest(PHPUnit\Framework\Test $test, $time)
+        use TestListenerDefaultImplementation;
+
+        public function endTest(PHPUnit\Framework\Test $test, $time): void
         {
             printf("Test '%s' ended.\n", $test->getName());
         }

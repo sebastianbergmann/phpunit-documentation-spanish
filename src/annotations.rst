@@ -636,8 +636,8 @@ Una lista completa de posibilidades y ejemplos se puede encontrar en
 @runTestsInSeparateProcesses
 ############################
 
-Indicates that all tests in a test class should be run in a separate
-PHP process.
+Indica que todas las pruebas en la clase de pruebas deben ser ejecutados en un
+proceso PHP separado.
 
 .. code-block:: php
 
@@ -651,19 +651,18 @@ PHP process.
         // ...
     }
 
-*Note:* By default, PHPUnit will
-attempt to preserve the global state from the parent process by
-serializing all globals in the parent process and unserializing them
-in the child process. This can cause problems if the parent process
-contains globals that are not serializable. See :ref:`appendixes.annotations.preserveGlobalState` for information
-on how to fix this.
+*Nota:* Por defecto, PHPUnit intentará preservar el estado global desde el
+proceso padre serializando todas las globales del proceso padre y
+deserialzandolas en el proceso hijo. Esto puede causar problemas si el proceso
+padre contiene globales que no son serializables. Para información sobre como
+corregir esto podemos revisar :ref:`appendixes.annotations.preserveGlobalState`.
 
 .. _appendixes.annotations.runInSeparateProcess:
 
 @runInSeparateProcess
 #####################
 
-Indicates that a test should be run in a separate PHP process.
+Indica que la prueba debe ser ejecutada en un proceso PHP separado.
 
 .. code-block:: php
 
@@ -680,41 +679,38 @@ Indicates that a test should be run in a separate PHP process.
         }
     }
 
-*Note:* By default, PHPUnit will
-attempt to preserve the global state from the parent process by
-serializing all globals in the parent process and unserializing them
-in the child process. This can cause problems if the parent process
-contains globals that are not serializable. See :ref:`appendixes.annotations.preserveGlobalState` for information
-on how to fix this.
+*Nota:* Por defecto, PHPUnit intentará preservar el estado global desde el
+proceso padre serializando todas las globales del proceso padre y
+deserialzandolas en el proceso hijo. Esto puede causar problemas si el proceso
+padre contiene globales que no son serializables. Para información sobre como
+corregir esto podemos revisar :ref:`appendixes.annotations.preserveGlobalState`.
 
 .. _appendixes.annotations.small:
 
 @small
 ######
 
-The ``@small`` annotation is an alias for
-``@group small``. A small test must not depend on a test
-marked as ``@medium`` or ``@large``.
+La anotación ``@small`` es un alias para ``@group small``. Una prueba pequeña
+no debe depender de una prueba marcada como ``@medium`` o ``@large``.
 
-If the ``PHP_Invoker`` package is installed and strict
-mode is enabled, a small test will fail if it takes longer than 1
-second to execute. This timeout is configurable via the
-``timeoutForSmallTests`` attribute in the XML
-configuration file.
+Si el paquete ``PHP_Invoker`` está instalado y el modo estricto está habilitado,
+una prueba «pequeña» fallará si toma más de un segundo en ejecutarse. El tiempo
+de espera se configura con el atributo ``timeoutForSmallTests`` en el archivo
+de configuración XML.
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   Tests need to be explicitly annotated by either ``@small``,
-   ``@medium``, or ``@large`` to enable run time limits.
+   Para habilitar los límites de tiempo las pruebas tienen que ser anotadas
+   explícitamente con ``@small``, ``@medium`` y ``@large``.
 
 .. _appendixes.annotations.test:
 
 @test
 #####
 
-As an alternative to prefixing your test method names with
-``test``, you can use the ``@test``
-annotation in a method's DocBlock to mark it as a test method.
+Como alternativa a añadir el prefijo ``test`` al nombre del método podemos usar
+la anotación ``@test`` en un bloque de documentación de método para marcarlo
+como un método de prueba.
 
 .. code-block:: php
 
@@ -731,10 +727,11 @@ annotation in a method's DocBlock to mark it as a test method.
 @testdox
 ########
 
-Specifies an alternative description used when generating the agile
-documentation sentences.
+Especifica una descripción alternativa que se usa cuando se genera la documentación
+ágil de sentencias.
 
-The ``@testdox`` annotation can be applied to both test classes and test methods.
+La anotación ``@testdox`` se pueden aplicar tanto a clases de prueba como a
+métodos de prueba.
 
 .. code-block:: php
 
@@ -752,26 +749,26 @@ The ``@testdox`` annotation can be applied to both test classes and test methods
         }
     }
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   Prior to PHPUnit 7.0 (due to a bug in the annotation parsing), using
-   the ``@testdox`` annotation also activated the behaviour
-   of the ``@test`` annotation.
+   Antes de PHPUnit 7.0 (debido a un error en el análisis sintáctico de las
+   anotaciones, «parsing»), cuando se usa la anotación ``@testdox`` además se
+   activa la anotación ``@test``.
 
 .. _appendixes.annotations.testWith:
 
 @testWith
 #########
 
-Instead of implementing a method for use with ``@dataProvider``,
-you can define a data set using the ``@testWith`` annotation.
+En lugar de implementar un método como ``@dataProvider`` podemos definir un
+conjunto de datos usando la anotación ``@testWith``.
 
-A data set consists of one or many elements. To define a data set
-with multiple elements, define each element in a separate line.
-Each element of the data set must be an array defined in JSON.
+Un conjunto de datos consiste de uno o varios elementos. Para definir un conjunto
+de datos con multiples elementos definimos cada elemento en una línea separada.
+Cada elemento del conjunto de datos debe ser un arreglo definido en JSON.
 
-See :ref:`writing-tests-for-phpunit.data-providers` to learn
-more about passing a set of data to a test.
+Ver :ref:`writing-tests-for-phpunit.data-providers` para aprender más sobre como
+pasar un conjunto de datos a una prueba.
 
 .. code-block:: php
 
@@ -787,7 +784,7 @@ more about passing a set of data to a test.
         $this->assertSame($expectedLength, strlen($input));
     }
 
-An object representation in JSON will be converted into an associative array.
+Una representación de un objeto en JSON será convertido a un arreglo asociado.
 
 .. code-block:: php
 
@@ -816,9 +813,9 @@ on their ticket ID.
 @uses
 #####
 
-The ``@uses`` annotation specifies code which will be
-executed by a test, but is not intended to be covered by the test. A good
-example is a value object which is necessary for testing a unit of code.
+La anotación ``@uses`` especifica el código que será ejecutado por una prueba
+pero que no deseamos que sea cubierto por la prueba. Un buen ejemplo es un objeto
+de valor, «value object», que se necesita para probar una unidad de código.
 
 .. code-block:: php
 
@@ -831,7 +828,7 @@ example is a value object which is necessary for testing a unit of code.
         // ...
     }
 
-This annotation is especially useful in strict coverage mode where
-unintentionally covered code will cause a test to fail. See
-:ref:`risky-tests.unintentionally-covered-code` for more
-information regarding strict coverage mode.
+Esta anotación es especialmente útil en el modo de cobertura estricto en donde
+código cubierto causa involuntariamente que la prueba falle. Para más
+información sobre el modo de cobertura estricto podemos ver
+:ref:`risky-tests.unintentionally-covered-code`.
