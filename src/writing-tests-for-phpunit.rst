@@ -23,13 +23,14 @@ escribir pruebas con PHPUnit:
 
    Las pruebas son métodos públicos y toman como nombre ``test*``.
 
-   También, podemos usar la anotación de *docblock* ``@test`` en el método para marcarlo como un método de prueba.
+   También, podemos usar la anotación de *docblock* ``@test`` en el método para
+   marcarlo como un método de prueba.
 
 #.
 
    Dentro de los métodos de prueba están los métodos de aserción, como ``assertSame()``
    (ver :ref:`appendixes.assertions`), que se usan para determinar o aseverar si
-   el valor actual coincide con el valor esperado.
+   el valor real coincide con el valor esperado.
 
 .. code-block:: php
     :caption: Probando operaciones sobre un arreglo con PHPUnit
@@ -71,7 +72,7 @@ Dependencia de Pruebas
     refactorizar el código y sirve como documentación de la parte del software
     bajo prueba. Para alcanzar estos beneficios, las pruebas unitarias deberían
     idealmente cubrir todos los posibles caminos en un programa. Una prueba
-    unitaria cubre generalmente una ruta de acción específico de un método o
+    unitaria cubre generalmente una ruta de acción específica de un método o
     función. Sin embargo un método de prueba no es necesariamente una entidad
     encapsulada e independiente. A veces existen dependencias implícitas entre
     los métodos de prueba, escondidas en el escenario de implementación de una
@@ -79,8 +80,9 @@ Dependencia de Pruebas
 
 PHPUnit soporta la declaración de dependencias explícitas entre métodos de
 prueba. Estas dependencias no definen el orden en que los métodos de pruebas
-deben ser ejecutados pero ellas permiten el retorno de una instancia con
-los elementos de la prueba de un productor y pasarlos a los consumidores dependientes.
+deben ser ejecutados pero ellas permiten retornar una instancia con
+los elementos necesarios para una prueba, pasándolos desde un productor hasta los
+consumidores.
 
 -
 
@@ -96,7 +98,7 @@ El :numref:`writing-tests-for-phpunit.examples.StackTest2.php` muestra como usar
 la anotación ``@depends`` para expresar dependencias entre métodos de prueba.
 
 .. code-block:: php
-    :caption: Usando la anotación ``@depends`` para expresar dependencias
+    :caption: Usar la anotación ``@depends`` para expresar dependencias
     :name: writing-tests-for-phpunit.examples.StackTest2.php
 
     <?php
@@ -134,19 +136,19 @@ la anotación ``@depends`` para expresar dependencias entre métodos de prueba.
         }
     }
 
-En el ejemplo anterior, la primera prueba, ``testEmpty()``, crea un nuevo
-arreglo y asevera que esta vacío. La prueba regresa un elemento como
-resultado. La segunda prueba, ``testPush()``, depende de ``testEmpty()`` y se
-pasa el resultado de la prueba de la que depende como argumento. Finalmente,
+En el ejemplo anterior, la primera prueba ``testEmpty()`` crea un nuevo
+arreglo y asevera que esta vacío. Como resultado la prueba regresa un elemento.
+La segunda prueba ``testPush()`` depende de ``testEmpty()``, en este caso,
+se pasa como argumento el resultado de la prueba de la que depende. Finalmente,
 ``testPop()`` depende de ``testPush()``.
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   El valor de retorno brindado por un productor es pasado «como está» a su
+   Por defecto el valor de retorno brindado por un productor se pasa «como está» a su
    consumidor. Esto significa que cuando un productor regresa un
    objeto, se pasa una referencia del objeto al consumidor. En lugar de una
    referencia es posible pasar o (a) una copia (profunda) con la anotación
-   ``@depends clone`` o (b) una clonación (superficial), basada en la palabra
+   ``@depends clone`` o (b) una clonación (superficial normal), basada en la palabra
    clave de PHP ``clone``, con la anotación ``@depends shallowClone``.
 
 Para localizar defectos rápidamente, queremos concentrar nuestra atención sobre
@@ -180,7 +182,7 @@ de los defectos, aprovechando las dependencias entre pruebas, como se muestra en
 .. code-block:: bash
 
     $ phpunit --verbose DependencyFailureTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     FS
 
@@ -245,7 +247,7 @@ Ver :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
 .. code-block:: bash
 
     $ phpunit --verbose MultipleDependenciesTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...
 
@@ -265,13 +267,13 @@ El método proveedor de datos que queremos usar se especifica con la anotación
 ``@dataProvider``.
 
 Un método proveedor de datos debe ser ``public`` y retornar una arreglo de
-arreglos o un objeto que implementa la interface ``Iterator`` que produce un
+arreglos o un objeto que implementa la interfaz ``Iterator`` que produce un
 arreglo en cada paso de la iteración. Para cada arreglo que es parte de la
 colección se llama al método de prueba y el contenido del arreglo constituye
 sus argumentos.
 
 .. code-block:: php
-    :caption: Usando un proveedor de datos que regresa un arreglo de arreglos
+    :caption: Usar un proveedor de datos que regresa un arreglo de arreglos
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
 
     <?php
@@ -301,7 +303,7 @@ sus argumentos.
 .. code-block:: bash
 
     $ phpunit DataTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -322,7 +324,7 @@ como llave en lugar de la numeración por defecto. La salida sera más verbosa y
 contendrá el nombre del conjunto de datos que hizo fallar la prueba.
 
 .. code-block:: php
-    :caption: Usando un proveedor de datos con conjuntos de datos etiquetados
+    :caption: Usar un proveedor de datos con un conjunto de datos etiquetado
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest1.php
 
     <?php
@@ -352,7 +354,7 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
 .. code-block:: bash
 
     $ phpunit DataTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -369,7 +371,7 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
     Tests: 4, Assertions: 4, Failures: 1.
 
 .. code-block:: php
-    :caption: Usando un proveedor de datos que regresa un objeto Iterador
+    :caption: Usar un proveedor de datos que regresa un objeto Iterador
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest2.php
 
     <?php
@@ -396,7 +398,7 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
 .. code-block:: bash
 
     $ phpunit DataTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -413,7 +415,7 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
     Tests: 4, Assertions: 4, Failures: 1.
 
 .. code-block:: php
-    :caption: Clase CsvFileIterator
+    :caption: La clase CsvFileIterator
     :name: writing-tests-for-phpunit.data-providers.examples.CsvFileIterator.php
 
     <?php
@@ -467,8 +469,8 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
 Cuando un prueba recibe una entrada tanto desde un método proveedor
 de datos ``@dataProvider`` como desde una o más pruebas de las que depende
 (``@depends``), los argumentos del proveedor de datos regresarán antes que los
-argumentos de las pruebas de las que depende. Los argumentos de los que la
-prueba depende serán los mismo para cada conjunto de datos.
+argumentos de las pruebas de las que depende. Los argumentos que se toman de las
+pruebas que se marcan como dependencias serán los mismo para cada conjunto de datos.
 Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndDataProviderCombo.php`
 
 .. code-block:: php
@@ -514,7 +516,7 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 .. code-block:: bash
 
     $ phpunit --verbose DependencyAndDataProviderComboTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ...F
 
@@ -599,15 +601,16 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 
    Cuando una prueba depende de otra prueba que usa un proveedor de datos, la
    prueba dependiente será ejecutada solo cuando la prueba de la que depende es
-   exitosa para al menos uno elemento del conjunto de datos. El resultado de una
+   exitosa para al menos un elemento del conjunto de datos. El resultado de una
    prueba que usa proveedores de datos no puede ser inyectado dentro de una
    prueba dependiente.
 
 .. admonition:: Nota
 
-   Todos los proveedores de datos son ejecutados antes de la llamada al método estático ``setUpBeforeClass`` y de la primera llamada al método ``setUp``.
-   Por esta razón no es posible tener acceso a ninguna variable creada dentro
-   del proveedor de datos. Esto es necesario para que PHPUnit sea capaz
+   Todos los proveedores de datos son ejecutados antes de la llamada al método
+   estático ``setUpBeforeClass`` y de la primera llamada al método ``setUp``.
+   Por esta razón no es posible tener acceso a ninguna variable creada en estos
+   métodos desde el proveedor de datos. Esto es necesario para que PHPUnit sea capaz
    de contar el numero total de pruebas.
 
 .. _writing-tests-for-phpunit.exceptions:
@@ -620,7 +623,7 @@ muestra como usar el método ``expectException()`` para probar si una excepción
 es lanzada por el código que se está probando.
 
 .. code-block:: php
-    :caption: Usando el método expectException()
+    :caption: Usar el método expectException()
     :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php
 
     <?php
@@ -638,7 +641,7 @@ es lanzada por el código que se está probando.
 .. code-block:: bash
 
     $ phpunit ExceptionTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -654,23 +657,24 @@ es lanzada por el código que se está probando.
 
 Además del método ``expectException()`` existen los métodos
 ``expectExceptionCode()``, ``expectExceptionMessage()`` y
-``expectExceptionMessageRegExp()`` para establecer una predicción de las
+``expectExceptionMessageRegExp()`` para establecer una predicción sobre las
 excepciones lanzadas por el código que se está probando.
 
-.. admonition:: Note
+.. admonition:: Nota
 
-   Nótese que *expectExceptionMessage* asevera que el mensaje actual
+   Nótese que *expectExceptionMessage* asevera que el mensaje real
    (``$actual``) contiene el mensaje esperado (``$expected``)  y no ejecuta una
    comparación exacta de cadenas de caracteres.
 
 Alternativamente, podemos usar las anotaciones ``@expectedException``,
 ``@expectedExceptionCode``, ``@expectedExceptionMessage`` y
-``@expectedExceptionMessageRegExp`` para establecer una predicción de las excepciones lanzadas por el código que se está probando.
+``@expectedExceptionMessageRegExp`` para establecer una predicción sobre las
+excepciones lanzadas por el código que se está probando.
 El :numref:`writing-tests-for-phpunit.exceptions.examples.ExceptionTest2.php`
 muestra un ejemplo.
 
 .. code-block:: php
-    :caption: Usando la anotación @expectedException
+    :caption: Usar la anotación @expectedException
     :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest2.php
 
     <?php
@@ -689,7 +693,7 @@ muestra un ejemplo.
 .. code-block:: bash
 
     $ phpunit ExceptionTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -709,8 +713,8 @@ Probar errores de PHP
 #####################
 
 Con la configuración por defecto de PHPUnit los errores, avisos y notificaciones
-de PHP que se disparan durante la ejecución de una prueba se convierten en una
-excepción. Usando estas excepciones se puede, por ejemplo, esperar que una prueba
+de PHP que se disparan durante la ejecución de una prueba se convierten en
+excepciones. Usando estas excepciones se puede, por ejemplo, esperar que una prueba
 disparé un error de PHP, como se muestra en
 :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 
@@ -742,7 +746,7 @@ disparé un error de PHP, como se muestra en
 .. code-block:: bash
 
     $ phpunit -d error_reporting=2 ExpectedErrorTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .
 
@@ -755,10 +759,10 @@ representan respectivamente notificaciones y avisos de PHP.
 
 .. admonition:: Nota
 
-   Se debe ser tan específico como sea posible cuando se prueban excepciones.
+   Cuando se prueban excepciones se debe ser tan específico como sea posible.
    Las pruebas de clases que son muy genéricas pueden ocasionar efectos secundarios
    indeseables. De la misma forma, probar la clase ``Exception`` con
-   ``@expectedException`` o ``expectException()`` ya no es permitido.
+   ``@expectedException`` o ``expectException()`` ya no se permite.
 
 Cuando la prueba depende de funciones PHP que lanzan errores, como ``fopen``,
 puede que sea útil usar la supresión de errores mientras se prueba. Esto permite
@@ -799,7 +803,7 @@ llevaría a un ``PHPUnit\Framework\Error\Notice`` de PHPUnit.
 .. code-block:: bash
 
     $ phpunit ErrorSuppressionTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .
 
@@ -815,7 +819,7 @@ Sin la supresión de errores la prueba fallaría reportando
 Probar Salidas
 ##############
 
-A veces deseamos aseverar que la ejecución de un método, por ejemplo, genera la
+A veces deseamos aseverar que la ejecución de un método genera la
 salida prevista (por ejemplo, con ``echo`` o ``print``). La clase
 ``PHPUnit\Framework\TestCase`` usa la característica
 `Funciones de Control
@@ -828,7 +832,7 @@ prevista. Si la salida prevista no se genera, la prueba se contará como un
 fallo.
 
 .. code-block:: php
-    :caption: Probando la salida de una función o método
+    :caption: Probar la salida de una función o método
     :name: writing-tests-for-phpunit.output.examples.OutputTest.php
 
     <?php
@@ -852,7 +856,7 @@ fallo.
 .. code-block:: bash
 
     $ phpunit OutputTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .F
 
@@ -875,7 +879,7 @@ La :numref:`writing-tests-for-phpunit.output.tables.api`
 muestra los métodos que se pueden usar para probar la salida
 
 .. rst-class:: table
-.. list-table:: Métodos para probar una salida
+.. list-table:: Métodos para probar la salida
     :name: writing-tests-for-phpunit.output.tables.api
     :header-rows: 1
 
@@ -925,7 +929,7 @@ problema.
 .. code-block:: bash
 
     $ phpunit ArrayDiffTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -954,13 +958,13 @@ problema.
     Tests: 1, Assertions: 1, Failures: 1.
 
 En este ejemplo solo uno de los valores del arreglo es diferente, los otros
-valores se muestran para dar el contexto de en donde el error ocurrió.
+valores se muestran para dar el contexto y señalar donde ocurrió el error.
 
 Cuando la salida generada es demasiado larga de leer, PHPUnit la separará
 y mostrará unas pocas lineas de información alrededor de cada diferencia.
 
 .. code-block:: php
-    :caption: Salida de error cuando la comparación entre arreglos muy largos falla
+    :caption: Salida de error cuando falla la comparación entre arreglos muy largos
     :name: writing-tests-for-phpunit.error-output.examples.LongArrayDiffTest.php
 
     <?php
@@ -981,7 +985,7 @@ y mostrará unas pocas lineas de información alrededor de cada diferencia.
 .. code-block:: bash
 
     $ phpunit LongArrayDiffTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1016,7 +1020,7 @@ Casos Límites
 
 Cuando una comparación falla PHPUnit crea una representación textual
 de los valores de entrada y los compara. Debido a esta implementación
-un diff puede mostrar más problemas de los que realmente existen.
+un *diff* puede mostrar más problemas de los que realmente existen.
 
 Esto solo sucede cuando se usa assertEquals u otras funciones de comparación
 «débil» sobre arreglos u objetos.
@@ -1043,7 +1047,7 @@ Esto solo sucede cuando se usa assertEquals u otras funciones de comparación
 .. code-block:: bash
 
     $ phpunit ArrayWeakComparisonTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1073,5 +1077,4 @@ Esto solo sucede cuando se usa assertEquals u otras funciones de comparación
     Tests: 1, Assertions: 1, Failures: 1.
 
 En este ejemplo la diferencia en el primer índice, entre ``1`` y ``'1'``, se
-
 reporta aunque ``assertEquals()`` considera a estos valores como iguales.

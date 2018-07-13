@@ -13,7 +13,7 @@ pruebas con el ejecutor de pruebas desde línea de comandos:
 .. code-block:: bash
 
     $ phpunit ArrayTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ..
 
@@ -24,7 +24,7 @@ pruebas con el ejecutor de pruebas desde línea de comandos:
 Cuando se ejecuta de la manera que se muestra arriba, el ejecutor de pruebas
 desde línea de comandos buscará el archivo fuente :file:`ArrayTest.php` en la
 carpeta actual, lo cargará y esperará encontrar la clase de caso de prueba
-``ArrayTest``. Y luego se ejecutaran las pruebas de la clase.
+``ArrayTest``. Y luego se ejecutarán las pruebas de esta clase.
 
 Para cada prueba que se ejecuta, la herramienta de línea de comandos imprime
 un carácter para indicar el progreso:
@@ -35,11 +35,11 @@ un carácter para indicar el progreso:
 
 ``F``
 
-    Se imprime cuando una aserción falla al ejecutarse el método de prueba.
+    Se imprime cuando una aserción falla mientras se ejecuta un método de prueba.
 
 ``E``
 
-    Se imprime cuando ocurre un error mientras se ejecuta el método de prueba.
+    Se imprime cuando ocurre un error mientras se ejecuta un método de prueba.
 
 ``R``
 
@@ -70,12 +70,12 @@ Opciones de la línea de comandos
 ################################
 
 Vamos a dar una ojeada a las opciones del ejecutor de pruebas desde línea
-de comandos en el siguiente código:
+de comandos, veamos el siguiente código:
 
 .. code-block:: bash
 
     $ phpunit --help
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     Usage: phpunit [options] UnitTest [UnitTest.php]
            phpunit [options] <directory>
@@ -173,7 +173,7 @@ de comandos en el siguiente código:
 
     ``UnitTest`` debe ser una clase que hereda de ``PHPUnit\Framework\TestCase``
     o una clase que provee un método ``public static suite()`` que regresa un
-    objeto ``PHPUnit_Framework_Test``, por ejemplo una instancia de la clase
+    objeto ``PHPUnit\Framework\Test``, por ejemplo una instancia de la clase
     ``PHPUnit_Framework_TestSuite``.
 
 ``phpunit UnitTest UnitTest.php``
@@ -235,11 +235,11 @@ de comandos en el siguiente código:
 
 ``--filter``
 
-    Solo ejecuta las pruebas cuyo nombre coincide con un patrón de expresión
-    regular dado. Si el patrón no se encierra entre delimitadores, PHPUnit
-    cerrará el patrón dentro de delimitadores ``/``.
+    Solo ejecuta las pruebas cuyo nombre coincide con un patrón dado que está
+    basado en una expresión regular. Si el patrón no se encierra entre
+    delimitadores, PHPUnit cerrará el patrón dentro de delimitadores ``/``.
 
-    El nombre de las pruebas para hacer coincidir estarán en uno de los
+    El nombre de la prueba debe estar en uno de los
     siguientes formatos:
 
     ``TestNamespace\TestCaseClass::testMethod``
@@ -250,15 +250,15 @@ de comandos en el siguiente código:
     ``TestNamespace\TestCaseClass::testMethod with data set #0``
 
         Cuando una prueba tiene un proveedor de datos, cada iteración sobre los
-        datos trae el índice actual añadido al final del nombre de la prueba por
-        defecto.
+        datos trae el índice actual añadido al final del nombre por defecto de
+        la prueba.
 
     ``TestNamespace\TestCaseClass::testMethod with data set "my named data"``
 
-        Cuando una prueba tiene un proveedor de datos que usa conjuntos nombrados,
+        Cuando una prueba tiene un proveedor de datos que usa conjuntos etiquetados,
         cada iteración de los datos trae el nombre actual añadido al final del
-        nombre de la prueba por defecto. Ver :numref:`textui.examples.TestCaseClass.php`
-        para un ejemplo de conjunto de datos nombrados.
+        nombre por defecto de la prueba. Ver :numref:`textui.examples.TestCaseClass.php`
+        para un ejemplo de conjunto de datos etiquetados.
 
         .. code-block:: php
             :caption: Conjunto de datos nombrados
@@ -291,7 +291,7 @@ de comandos en el siguiente código:
 
     ``/path/to/my/test.phpt``
 
-        El nombre de la prueba, para una prueba PHPT, es la ruta del sistema de
+        El nombre de la prueba para una prueba PHPT es la ruta en el sistema de
         archivos.
 
     Revisar el ejemplo :numref:`textui.examples.filter-patterns`
@@ -335,13 +335,14 @@ de comandos en el siguiente código:
     Solo ejecuta las pruebas del o de los grupos especificados. Una prueba se
     puede marcar como perteneciente a un grupo usando la anotación ``@group``.
 
-    La anotación ``@author`` es un alias para ``@group`` que permite filtrar
-    las pruebas con base en sus autores.
+    Las anotaciones ``@author`` y ``@ticket`` son alias para ``@group`` que
+    respectivamente permiten filtrar las pruebas con base en sus autores o en
+    su ticket de identificación.
 
 ``--exclude-group``
 
-    Excluye las pruebas de un grupo o grupos especificados. Una prueba se puede
-    marcar como perteneciente a un grupo usando la anotación ``@group``.
+    Excluye las pruebas de un grupo o de los grupos especificados. Una prueba se
+    puede marcar como perteneciente a un grupo usando la anotación ``@group``.
 
 ``--list-groups``
 
@@ -408,7 +409,7 @@ de comandos en el siguiente código:
     -
 
       ``auto``: muestra los colores en la salida a menos que la terminal actual
-      no soporte colores o si la salida se canalizada hacia un comando o se
+      no soporte colores o si la salida se canaliza hacia un comando o si se
       redirige a un archivo.
 
     -
@@ -421,9 +422,9 @@ de comandos en el siguiente código:
 
 ``--columns``
 
-    Define el número de columnas que se usan para la salida de progreso. Si
-    ``max`` se define como valor, el número de columnas será el máximo de la
-    terminal actual.
+    Define el número de columnas que se usan para la salida que muestra el
+    progreso. Si ``max`` se define con un valor, este número de columnas será el
+    máximo de la terminal actual.
 
 ``--stderr``
 
@@ -461,14 +462,14 @@ de comandos en el siguiente código:
 
 ``--loader``
 
-    Especifica la implementación de ``PHPUnit_Runner_TestSuiteLoader`` que se
+    Especifica la implementación de ``PHPUnit\Runner\TestSuiteLoader`` que se
     usa.
 
-    El cargador de la suite de pruebas estándares buscará el archivo fuente en
+    El cargador estándar de la suite de pruebas buscará el archivo fuente en
     la carpeta actual y en cada carpeta que se especifica en la directiva
     de configuración ``include_path`` de PHP. Un nombre de clase como
-    ``Project_Package_Class`` se asocia al archivo fuente
-    :file:`Project/Package/Class.php`.
+    ``Project_Package_Class`` se pone en correspondencia con un archivo fuente
+    como :file:`Project/Package/Class.php`.
 
 ``--repeat``
 
@@ -476,13 +477,13 @@ de comandos en el siguiente código:
 
 ``--testdox``
 
-    Reporta el progreso de las pruebas como una documentación ágil. Ver
+    Reporta el progreso de las pruebas en formato TestDox. Ver
     :ref:`other-uses-for-tests` para más detalles.
 
 ``--printer``
 
     Especifica la impresora que se usa para generar el resultado. La clase
-    impresora debe extender de ``PHPUnit_Util_Printer`` e implementar la interfaz
+    impresora debe extender de ``PHPUnit\Util\Printer`` e implementar la interfaz
     ``PHPUnit\Framework\TestListener``.
 
 ``--bootstrap``
@@ -491,12 +492,16 @@ de comandos en el siguiente código:
 
 ``--configuration``, ``-c``
 
-    Leer la configuración desde el archivo XML. Ver :ref:`appendixes.configuration`
+    Lee la configuración desde el archivo XML. Ver :ref:`appendixes.configuration`
     para más detalles.
 
     Si :file:`phpunit.xml` o :file:`phpunit.xml.dist` (en este orden) existen
     en la carpeta actual de trabajo y ``--configuration`` *no* se usa, la
-    configuración se leerá automáticamente de alguno de estos archivo.
+    configuración se leerá automáticamente de estos archivo.
+
+    Si se especifica una carpeta y si :file:`phpunit.xml` o :file:`phpunit.xml.dist`
+    (en este orden) existen en la carpeta, la configuración se leerá automáticamente
+    de estos archivos.
 
 ``--no-configuration``
 
@@ -515,3 +520,43 @@ de comandos en el siguiente código:
 
     Nótese que desde la versión 4.8 las opciones se pueden colocar después de los
     argumentos.
+
+.. _textui.testdox:
+
+TestDox
+#######
+
+La característica TestDox de PHPUnit busca una clase de prueba y a todos sus
+métodos de prueba para los convierte desde «camel case» o «snake case» a oraciones:
+los métodos de prueba ``testBalanceIsInitiallyZero()`` or ``test_balance_is_initially_zero()``
+son convertido en «Balance is initially zero». Si hay varios métodos de prueba cuyos
+nombres solo se diferencian en un sufijo de uno o más dígitos, como 
+``testBalanceCannotBecomeNegative()`` y ``testBalanceCannotBecomeNegative2()``,
+las oraciones "Balance cannot become negative" aparecerá solo una vez, todo esto
+suponiendo que todas las pruebas tuvieron éxito.
+
+Veamos que aspecto tiene un documento ágil generado para la clase ``BankAccount``:
+
+.. code-block:: bash
+
+    $ phpunit --testdox BankAccountTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    BankAccount
+     ✔ Balance is initially zero
+     ✔ Balance cannot become negative
+
+Alternativamente, la documentación ágil se puede generar en formato HTML o texto
+plano y guardarlo en un archivo, esto se hace usando los argumentos 
+``--testdox-html`` y ``--testdox-text``.
+
+La Documentación Ágil se puede usar para documentar los supuestos que hacemos
+sobre los paquetes externos que usamos en nuestro proyecto.
+Cuando usamos un paquete externo estamos expuesto a que el paquete no se comporte
+de la forma esperada y, además, futuras versiones del paquete pueden cambiar de
+una manera sutil y romper nuestro código sin que nos demos cuenta de ello.
+Podemos prevenir estos riesgos escribiendo una prueba cada vez que hagamos
+una suposición. Si nuestra prueba es exitosa nuestra suposición es correcta.
+Si documentamos todas las suposiciones con pruebas, los lanzamientos futuros
+de los paquetes externos no serán causa de preocupación: si la prueba es exitosa,
+nuestro sistema debería seguir funcionando.
