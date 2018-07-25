@@ -676,10 +676,10 @@ Caso de Prueba de Base de Datos llamando al método ``createXmlDataSet($filename
 Conjunto de Datos XML MySQL
 ---------------------------
 
-Este nuevo formato es específico para `servidor de base de datos MySQL <http://www.mysql.com>`_.
+Este nuevo formato es específico para `servidor de base de datos MySQL <https://www.mysql.com>`_.
 El soporte para este formato se añadió en PHPUnit 3.5. Los archivos en este
 formato se pueden generar usando la herramiento
-`mysqldump <http://dev.mysql.com/doc/refman/5.0/en/mysqldump.html>`_.
+`mysqldump <https://dev.mysql.com/doc/refman/5.0/en/mysqldump.html>`_.
 A diferencia de los conjuntos de datos CSV, que ``mysqldump`` también soporta,
 un solo archivo en este formato pueden contener datos de varias tablas. Podemos
 crear un archivo en este formato invocando el comando ``mysqldump`` de la
@@ -881,7 +881,7 @@ directo:
          */
         public function __construct(array $data)
         {
-            foreach ($data AS $tableName => $rows) {
+            foreach ($data as $tableName => $rows) {
                 $columns = [];
                 if (isset($rows[0])) {
                     $columns = array_keys($rows[0]);

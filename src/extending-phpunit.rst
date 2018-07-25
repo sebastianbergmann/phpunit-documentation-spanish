@@ -137,47 +137,52 @@ implementación simple de la interfaz ``PHPUnit\Framework\TestListener``.
 
     class SimpleTestListener implements TestListener
     {
-        public function addError(PHPUnit\Framework\Test $test, Exception $e, $time)
+        public function addError(PHPUnit\Framework\Test $test, Exception $e, $time): void
         {
             printf("Error while running test '%s'.\n", $test->getName());
         }
 
-        public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, $time)
+        public function addWarning(PHPUnit\Framework\Test $test, PHPUnit\Framework\Warning $e, float $time): void
+        {
+            printf("Warning while running test '%s'.\n", $test->getName());
+        }
+
+        public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, $time): void
         {
             printf("Test '%s' failed.\n", $test->getName());
         }
 
-        public function addIncompleteTest(PHPUnit\Framework\Test $test, Exception $e, $time)
+        public function addIncompleteTest(PHPUnit\Framework\Test $test, Exception $e, $time): void
         {
             printf("Test '%s' is incomplete.\n", $test->getName());
         }
 
-        public function addRiskyTest(PHPUnit\Framework\Test $test, Exception $e, $time)
+        public function addRiskyTest(PHPUnit\Framework\Test $test, Exception $e, $time): void
         {
             printf("Test '%s' is deemed risky.\n", $test->getName());
         }
 
-        public function addSkippedTest(PHPUnit\Framework\Test $test, Exception $e, $time)
+        public function addSkippedTest(PHPUnit\Framework\Test $test, Exception $e, $time): void
         {
             printf("Test '%s' has been skipped.\n", $test->getName());
         }
 
-        public function startTest(PHPUnit\Framework\Test $test)
+        public function startTest(PHPUnit\Framework\Test $test): void
         {
             printf("Test '%s' started.\n", $test->getName());
         }
 
-        public function endTest(PHPUnit\Framework\Test $test, $time)
+        public function endTest(PHPUnit\Framework\Test $test, $time): void
         {
             printf("Test '%s' ended.\n", $test->getName());
         }
 
-        public function startTestSuite(PHPUnit\Framework\TestSuite $suite)
+        public function startTestSuite(PHPUnit\Framework\TestSuite $suite): void
         {
             printf("TestSuite '%s' started.\n", $suite->getName());
         }
 
-        public function endTestSuite(PHPUnit\Framework\TestSuite $suite)
+        public function endTestSuite(PHPUnit\Framework\TestSuite $suite): void
         {
             printf("TestSuite '%s' ended.\n", $suite->getName());
         }
@@ -194,9 +199,10 @@ todos los otros.
     :name: extending-phpunit.examples.ExtendedTestListener.php
 
     <?php
+    use PHPUnit\Framework\TestListener;
     use PHPUnit\Framework\TestListenerDefaultImplementation;
 
-    class ShortTestListener
+    class ShortTestListener implements TestListener
     {
         use TestListenerDefaultImplementation;
 

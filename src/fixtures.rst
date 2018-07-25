@@ -34,11 +34,11 @@ Esto no siempre es deseable o incluso posible. En el
 las pruebas para la clase ``StackTest`` de una manera que no se reusa el
 ambiente sino el código que lo crea. Primero, declaramos una variable
 de instancia, ``$stack``, que usaremos en lugar de la variable del
-método local. Luego delegamos la creación del ``array`` para el ambiente
-al método ``setUp()``. Finalmente, removemos el código redundante
+método local. Luego delegamos al método ``setUp()`` la creación del ``array``
+para el ambiente. Finalmente, removemos el código redundante
 de los métodos de prueba y usamos la variable de instancia introducida
 recientemente, ``$this->stack``, en lugar de la variable del método local
-``$stack`` con el método de aserción ``assertSame()``.
+``$stack`` en el método de aserción ``assertSame()``.
 
 .. code-block:: php
     :caption: Usar setUp() para crear el ambiente para la clase StackTest
@@ -75,18 +75,17 @@ recientemente, ``$this->stack``, en lugar de la variable del método local
             $this->assertTrue(empty($this->stack));
         }
     }
-    ?>
 
 Los métodos modelo ``setUp()`` y ``tearDown()`` se ejecutan una vez para cada
-método de prueba (y en instancias nuevas) de la clase de casos de prueba.
+método de prueba (y en instancias nuevas) de la clase de caso de prueba.
 
 Además, los métodos modelo ``setUpBeforeClass()`` y ``tearDownAfterClass()``
-se llaman respectivamente antes de que la primera prueba de la clase de casos de
-prueba se ejecute y después de que la última prueba de la clase de casos de
+se llaman respectivamente antes de que la primera prueba de la clase de caso de
+prueba se ejecute y después de que la última prueba de la clase de caso de
 prueba se haya ejecutado.
 
 El ejemplo de abajo muestra todos los métodos modelo que están disponibles
-en la clase de casos de prueba.
+en la clase de caso de prueba.
 
 .. code-block:: php
     :caption: Ejemplo que muestra todos los métodos modelo disponibles
@@ -150,7 +149,7 @@ en la clase de casos de prueba.
 .. code-block:: bash
 
     $ phpunit TemplateMethodsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     TemplateMethodsTest::setUpBeforeClass
     TemplateMethodsTest::setUp
@@ -181,15 +180,15 @@ en la clase de casos de prueba.
 Más setUp() que tearDown()
 ############################
 
-Los métodos ``setUp()`` y ``tearDown()`` son bien simétricos en la teoría pero
+Los métodos ``setUp()`` y ``tearDown()`` son simétricos en la teoría pero
 no en la práctica. En la practica, solo necesitamos implementar ``tearDown()``
 si asignamos recursos externos como archivos o *sockets* en el ``setUp()``.
-Si nuestro ``setUp()`` solo crea objetos de PHP planos, podemos ignorar en
-general el ``tearDown()``. Sin embargo, si creamos muchos objetos en nuestro
-``setUp()``, podríamos querer usar el método ``unset()`` para restablecer las
-variables que apunta a esos objetos con un ``tearDown()`` para que se puedan
-recolectar como basura. La recolección de basura de los objetos de los casos
-de prueba no es previsible.
+Si nuestro ``setUp()`` solo crea objetos de PHP planos, podemos, en la mayoría de
+los casos, ignorar el ``tearDown()``. Sin embargo, si hemos creado muchos
+objetos en el ``setUp()``, podríamos querer usar el método ``unset()`` en el
+``tearDown()`` para reiniciar las variables que están apuntando a esos objetos
+permitiendo que se puedan recolectar como basura. La recolección de basura de
+los objetos del caso de prueba no es predecible.
 
 .. _fixtures.variations:
 
@@ -215,20 +214,20 @@ Existen dos posibilidades:
 Compartir el Ambiente
 #####################
 
-Existen varias buenas razones para compartir los ambientes entre pruebas, pero
+Existen algunas buenas razones para compartir los ambientes entre pruebas, pero
 en la mayoría de los casos la necesidad de compartir un ambiente entre pruebas
-radica en un problema de diseño no resulto.
+radica en un problema de diseño no resuelto.
 
 Un buen ejemplo de un ambiente que tiene sentido compartir a través de varias
-pruebas es la conexión a base de datos: iniciamos sesión en la base de datos
+pruebas es la conexión a la base de datos: iniciamos sesión en la base de datos
 una vez y reusamos la conexión a la base de datos en lugar de crear una nueva
 conexión para cada prueba. Esto hace a las pruebas mucho más rápidas.
 
 El :numref:`fixtures.sharing-fixture.examples.DatabaseTest.php` usa los métodos
-modelo ``setUpBeforeClass()`` y ``tearDownAfterClass()`` para respectivamente
-conectarse a la base de datos antes de la primera prueba del caso de pruebas
+modelo ``setUpBeforeClass()`` y ``tearDownAfterClass()`` para, respectivamente,
+conectarse a la base de datos antes de la primera prueba del caso de prueba
 y para desconectarse de la base de datos después de la última prueba del
-caso de pruebas.
+caso de prueba.
 
 .. code-block:: php
     :caption: Compartir el ambiente de prueba entre el conjunto de pruebas
@@ -251,13 +250,12 @@ caso de pruebas.
             self::$dbh = null;
         }
     }
-    ?>
 
 Nunca es suficiente decir que compartir ambientes entre pruebas
 reduce el costo de las pruebas. El problema subyacente de diseño es que
 los objetos no están suficientemente desacoplados. Alcanzaremos mejores
 resultados resolviendo el problema de diseño subyacente y luego escribiendo
-pruebas usando esbozos (ver :ref:`test-doubles`), que creando
+pruebas usando esbozos (ver :ref:`test-doubles`), en lugar de crear
 dependencias entre pruebas en tiempo de ejecución e ignorando la oportunidad
 de mejorar el diseño.
 
@@ -305,7 +303,7 @@ los cambios de las variables globales y super-globales (``$GLOBALS``,
 ``$_SERVER``, ``$_FILES``,
 ``$_REQUEST``) no afectaban a otras pruebas.
 
-Desde la versión 5, PHPUnit no ejecuta por defecto esta operación de respaldo y
+Desde la versión 6, PHPUnit no ejecuta por defecto esta operación de respaldo y
 restauración para las variables globales y super-globales.
 Esto se puede activar usando la opción ``--globals-backup``
 o agregando ``backupGlobals="true"`` en el
@@ -348,29 +346,29 @@ operaciones de respaldo y recuperación de la siguiente manera:
 
 La anotación ``@backupStaticAttributes`` que se discute en el apéndice
 :ref:`appendixes.annotations.backupStaticAttributes`
-se puede usar para hacer un respaldo de todos los valores de las propiedades
-estáticas de todas las clases declaradas antes de cada prueba para restaurarlas
+se puede usar para hacer un respaldo antes de cada prueba de todos los valores
+de las propiedades estáticas de todas las clases declaradas para restaurarlas
 después de la prueba.
 
 Esta anotación procesa todas las clases, no solo la clase de prueba, que se
 declaran en el momento en que una prueba comienza. Esto solo aplica a las
-propiedades estáticas de clases y no a las variables estáticas que están dentro
+propiedades estáticas de la clase y no a las variables estáticas que están dentro
 de funciones.
 
 .. admonition:: Nota
 
    La operación ``@backupStaticAttributes`` se ejecuta antes de un método de
-   prueba, pero solo si esta activado. Si el valor estático fue cambiado por
+   prueba, pero solo si está activada. Si el valor estático fue cambiado por
    la ejecución previa de una prueba que no tenía la ``@backupStaticAttributes``
-   activado, entonces el valor será respaldado y restaurado -- no el valor por
+   activada, entonces el nuevo valor será respaldado y restaurado, y no el valor por
    defecto declarado originalmente. PHP no registra el valor por defecto
    declarada originalmente de ninguna variable estática.
 
-   Los mismo aplica con propiedades estáticas de clases que sean declaradas o
-   cargadas recientemente dentro de una prueba. Como sus valores son desconocidos las
-   pruebas no pueden redefinir después de su ejecución los valores por defecto
-   declarados originalmente. Cualquiera valor que es colocado pasará a las otras
-   pruebas.
+   Los mismo aplica para las propiedades estáticas de clases que fueron declaradas o
+   cargadas recientemente dentro de una prueba. Después de su ejecución, las
+   pruebas no pueden redefinir los valores por defecto declarados originalmente
+   porque estos valores originales son desconocidos. Cualquier valor que sea
+   colocado pasará a las otras pruebas.
 
    Para las pruebas unitarias, se recomienda redefinir explícitamente los valores
    de la propiedades estáticas dentro de la prueba en nuestro código de ``setUp()``

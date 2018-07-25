@@ -61,7 +61,7 @@ Se puede colocar un tiempo límite de ejecución para una prueba si el paquete
 ``PHP_Invoker`` está instalado y la extensión ``pcntl`` está disponible.
 La obligación de tener un tiempo límite se puede activar desde la línea
 de comandos con la opción ``--enforce-time-limit`` o colocando
-``beStrictAboutTestSize="true"`` en el archivo de configuración XML de
+``enforceTimeLimit="true"`` en el archivo de configuración XML de
 PHPUnit.
 
 Una prueba con la anotación ``@large`` fallará si toma más de 60 segundos
@@ -72,10 +72,15 @@ Una prueba con la anotación ``@medium`` fallará si demora más de 10 segundos
 en ejecutarse. Este tiempo de espera se puede configurar con el atributo
 ``timeoutForMediumTests`` en el archivo de configuración XML de PHPUnit.
 
-Una prueba que no tiene la anotación ``@medium`` o ``@large`` será tratada
-como si estuviera anotada con ``@small``. Una prueba pequeña fallará si toma
+Una prueba con la anotación ``@small`` fallará si toma
 más de 1 segundo en ejecutarse. Este tiempo límite se puede configurar con
 el atributo ``timeoutForSmallTests`` en el archivo de configuración XML.
+
+.. admonition:: Nota
+
+   Las pruebas se deben marcar explícitamente con la anotación ``@small``,
+   ``@medium`` o ``@large`` para habilitar los límites de ejecución.
+
 
 .. _risky-tests.global-state-manipulation:
 
