@@ -20,8 +20,8 @@ revisión se puede desactivar con la opción de línea de comandos
 o colocando ``beStrictAboutTestsThatDoNotTestAnything="false"`` en el
 archivo de configuración XML de PHPUnit.
 
-Una prueba que no ejecuta una aserción se marcaran como riesgosa cuando esta
-revisión está habilitada. Expectativas sobre la falsación de objetos o
+Una prueba que no ejecuta una aserción se marcará como riesgosa cuando esta
+revisión está habilitada. Expectativas sobre objetos falsos o
 anotaciones como @expectedException se cuentan como aserciones.
 
 .. _risky-tests.unintentionally-covered-code:
@@ -34,7 +34,7 @@ revisión se puede activar usando la opción ``--strict-coverage`` en la línea
 de comandos o colocando ``beStrictAboutCoversAnnotation="true"`` en el archivo
 de configuración XML de PHPUnit.
 
-Una prueba que tiene la anotación @covers y ejecuta código que no está listado
+Una prueba que tiene la anotación @covers y ejecuta código que no está marcado
 con las anotaciones @covers o @uses será marcada como riesgosa si
 esta revisión está activada.
 
@@ -49,7 +49,7 @@ se puede habilitar desde la línea de comandos con la opción
 en el archivo de configuración XML de PHPUnit.
 
 Una prueba que emite una salida, por ejemplo, invocando *print* en el código
-de prueba o en el código probado sera marcada como riesgosa si esta revisión
+de prueba o en el código probado será marcada como riesgosa si esta revisión
 esta habilitada.
 
 .. _risky-tests.test-execution-timeout:

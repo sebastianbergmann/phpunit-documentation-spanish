@@ -34,7 +34,7 @@ es un envoltorio alrededor de los métodos ``isTrue()`` y ``assertThat()``.
 método ``assertThat()`` para ser evaluado.
 
 .. code-block:: php
-    :caption: Los métodos assertTrue() y isTrue() de la clase PHPUnit\Framework\Assert
+    :caption: Los métodos assertTrue() y isTrue() de la clase PHPUnit\\Framework\\Assert
     :name: extending-phpunit.examples.Assert.php
 
     <?php
@@ -80,7 +80,7 @@ El :numref:`extending-phpunit.examples.IsTrue.php` muestra como la clase
 (o restricciones).
 
 .. code-block:: php
-    :caption: La clase PHPUnit\Framework\Constraint\IsTrue
+    :caption: La clase PHPUnit\\Framework\\Constraint\\IsTrue
     :name: extending-phpunit.examples.IsTrue.php
 
     <?php
@@ -217,7 +217,7 @@ PHPUnit para adjuntar nuestro escucha de pruebas a la ejecución de una prueba.
 
 .. _extending-phpunit.PHPUnit_Framework_Test:
 
-Implementar PHPUnit\Framework\Test
+Implementar PHPUnit\\Framework\\Test
 ##################################
 
 La interfaz ``PHPUnit\Framework\Test`` es pequeña y fácil de implementar.

@@ -51,8 +51,8 @@ Proveedores Soportados para las Pruebas de la Base de Datos
 ###########################################################
 
 Actualmente DbUnit soporta MySQL, PostgreSQL, Oracle y SQLite. Si se integra
-`Zend Framework <http://framework.zend.com>`_ o
-`Doctrine 2 <http://www.doctrine-project.org>`_
+`Zend Framework <https://framework.zend.com>`_ o
+`Doctrine 2 <https://www.doctrine-project.org>`_
 DbUnit puede acceder a otros sistemas de base de datos como IBM DB2 o
 Microsoft SQL Server.
 
@@ -119,7 +119,7 @@ tanto código como sea posible con pruebas que no interactuaran con la
 base de datos, podemos fácilmente terminar en menos de un minuto un conjunto
 grande de pruebas.
 
-El conjunto de pruebas del proyecto `Doctrine 2 <http://www.doctrine-project.org>`_',
+El conjunto de pruebas del proyecto `Doctrine 2 <https://www.doctrine-project.org>`_',
 por ejemplo, tiene actualmente cerca de 1000 pruebas
 donde casi la mitad de ellas acceden a la base de datos, su ejecución contra
 una base de datos MySQL en una computadora de escritorio estándar es de 15
@@ -313,7 +313,7 @@ de datos.
 #.
 
    Si usamos bibliotecas como
-   `Doctrine 2 <http://www.doctrine-project.org>`_ o
+   `Doctrine 2 <https://www.doctrine-project.org>`_ o
    `Propel <http://www.propelorm.org/>`_
    podemos usar sus APIs para crear una sola vez el esquema de base de datos
    que necesitamos antes de ejecutar las pruebas. Podemos usar las capacidades
@@ -1557,7 +1557,7 @@ estén disponibles cuando las pruebas comiencen. La base de datos,
 tablas, secuencias, lanzadores y vistas se deben crear antes de
 ejecutar el conjunto de pruebas.
 
-`Doctrine 2 <http://www.doctrine-project.org>`_ o
+`Doctrine 2 <https://www.doctrine-project.org>`_ o
 `eZ Components <http://www.ezcomponents.org>`_ tienen
 poderosas herramientas que permiten crear el esquema de base
 de datos desde una estructura de datos predefinida. Sin embargo,

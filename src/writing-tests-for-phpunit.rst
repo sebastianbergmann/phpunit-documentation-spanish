@@ -608,7 +608,7 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
 .. admonition:: Nota
 
    Todos los proveedores de datos son ejecutados antes de la llamada al método
-   estático ``setUpBeforeClass`` y de la primera llamada al método ``setUp``.
+   estático ``setUpBeforeClass()`` y de la primera llamada al método ``setUp()``.
    Por esta razón no es posible tener acceso a ninguna variable creada en estos
    métodos desde el proveedor de datos. Esto es necesario para que PHPUnit sea capaz
    de contar el numero total de pruebas.
@@ -1022,7 +1022,7 @@ Cuando una comparación falla PHPUnit crea una representación textual
 de los valores de entrada y los compara. Debido a esta implementación
 un *diff* puede mostrar más problemas de los que realmente existen.
 
-Esto solo sucede cuando se usa assertEquals u otras funciones de comparación
+Esto solo sucede cuando se usa ``assertEquals()`` u otras funciones de comparación
 «débil» sobre arreglos u objetos.
 
 .. code-block:: php

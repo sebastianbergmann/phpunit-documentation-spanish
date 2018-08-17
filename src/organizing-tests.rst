@@ -41,12 +41,12 @@ del paquete y de la estructura de clases del Sistema Bajo Prueba, en ingles
     `-- autoload.php
 
 Para ejecutar todas las pruebas de la biblioteca solo necesitamos apuntar el
-ejecutor de pruebas en línea de comandos a la carpeta de pruebas:
+ejecutor de pruebas en línea de comandos a la carpeta donde están las pruebas:
 
 .. code-block:: bash
 
     $ phpunit --bootstrap src/autoload.php tests
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann.
 
     .................................
 
@@ -59,13 +59,13 @@ ejecutor de pruebas en línea de comandos a la carpeta de pruebas:
    Si apuntamos el ejecutor de pruebas en línea de comandos a la carpeta, él
    buscará los archivos :file:`*Test.php`.
 
-Para ejecutar solamente las pruebas que están en la clase de pruebas ``CurrencyTest``
+Para ejecutar solamente las pruebas que están en la clase de prueba ``CurrencyTest``
 del archivo :file:`tests/CurrencyTest.php`, podemos usar el siguiente comando:
 
 .. code-block:: bash
 
     $ phpunit --bootstrap src/autoload.php tests/CurrencyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann.
 
     ........
 
@@ -79,7 +79,7 @@ opción ``--filter``:
 .. code-block:: bash
 
     $ phpunit --bootstrap src/autoload.php --filter testObjectCanBeConstructedForValidConstructorArgument tests
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann.
 
     ..
 
@@ -104,7 +104,7 @@ El archivo de configuración XML de PHPUnit (:ref:`appendixes.configuration`)
 se puede usar, además, para componer una suite de prueba. El
 :numref:`organizing-tests.xml-configuration.examples.phpunit.xml`
 muestra un archivo :file:`phpunit.xml` que agregará todas las clases que
-se encuentran en los archivos :file:`*Test.php` cuando se recorre recursivamente
+se encuentran en los archivos :file:`*Test.php` luego de recorrer recursivamente
 la carpeta :file:`tests`.
 
 .. code-block:: php
@@ -120,8 +120,8 @@ la carpeta :file:`tests`.
     </phpunit>
 
 Si :file:`phpunit.xml` o :file:`phpunit.xml.dist` (en este orden) existen
-en la carpeta actual y la opción ``--configuration`` *no* se usa, la configuración
-será leída automáticamente del aquellos archivos.
+en la carpeta de trabajo actual y la opción ``--configuration`` *no* se usa,
+la configuración será leída automáticamente del aquellos archivos.
 
 Se puede hacer explícito el orden en que las pruebas se ejecutan:
 
