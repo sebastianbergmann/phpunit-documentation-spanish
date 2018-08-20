@@ -12,7 +12,9 @@ Pruebas Incompletas
 ###################
 
 Cuando estamos trabajando con una nueva clase para un caso de prueba, podríamos
-querer comenzar a escribir una método de prueba vacío de la siguiente manera:
+querer escribir un método de prueba vacío y de esta manera mantener una lista 
+con las pruebas que debemos escribir, en este caso podríamos comenzar de la 
+siguiente manera:
 
 .. code-block:: php
 
@@ -20,12 +22,12 @@ querer comenzar a escribir una método de prueba vacío de la siguiente manera:
     {
     }
 
-para mantener el control de las pruebas que hemos escrito. El problema con
+El problema con
 los métodos de prueba vacíos es que son interpretados como exitosos por
 el framework PHPUnit. Este error en la interpretación lleva a que el reporte
 de la prueba sea inútil, porque no podemos ver si la prueba fue realmente
 exitosa o solo no está implementada. Llamar a ``$this->fail()`` en un
-método de prueba no implementado no es de ayuda, pues, la prueba será
+método de prueba no implementado no nos ayudará, pues, la prueba será
 interpretada como una falla. Lo que sería tan incorrecto como interpretar
 una prueba no implementada como exitosa.
 
@@ -39,8 +41,8 @@ La clase ``PHPUnit\Framework\IncompleteTestError`` es la implementación estánd
 de esta interfaz.
 
 El :numref:`incomplete-and-skipped-tests.incomplete-tests.examples.SampleTest.php`
-muestra una clase para un caso de prueba, ``SampleTest``, que contiene un
-método de prueba ``testSomething()``. Mediante el llamado del método
+muestra una clase para un caso de prueba, ``SampleTest``, que contiene el
+método de prueba ``testSomething()``. Mediante el llamado al método
 ``markTestIncomplete()`` (que lanza automáticamente una excepción
 ``PHPUnit\Framework\IncompleteTestError``) en el método de prueba, conseguimos
 marcar la prueba como incompleta.
@@ -73,7 +75,7 @@ ejemplo:
 .. code-block:: bash
 
     $ phpunit --verbose SampleTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     I
 
@@ -106,7 +108,7 @@ se muestra la API para marcar las pruebas como incompletas.
 
 .. _incomplete-and-skipped-tests.skipping-tests:
 
-Omitir las pruebas
+Omitir las Pruebas
 ##################
 
 No todas la pruebas se pueden ejecutar en cualquier entorno. Consideremos por
@@ -116,7 +118,7 @@ un controlador MySQL se pueden ejecutar solamente, por supuesto, si un servidor
 MySQL está disponible.
 
 El :numref:`incomplete-and-skipped-tests.skipping-tests.examples.DatabaseTest.php`
-muestra una clase para un caso de prueba, ``DatabaseTest``, que contiene un
+muestra una clase para un caso de prueba, ``DatabaseTest``, que contiene el
 método de prueba, ``testConnection()``. En el método modelo ``setUp()`` de la
 clase de caso de prueba revisamos si la extensión MySQLi está disponible y
 usamos el método ``markTestSkipped()`` para saltar la prueba si no está
@@ -153,7 +155,7 @@ ejemplo:
 .. code-block:: bash
 
     $ phpunit --verbose DatabaseTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     S
 
