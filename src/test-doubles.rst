@@ -48,7 +48,7 @@ esas implementaciones simuladas para que regresen un valor cuando sean llamadas.
 
 .. admonition:: Limitaciones: métodos final, private y static
 
-   Nótese que los métodos ``final``, ``private``, ``protected`` y ``static``
+   Nótese que los métodos ``final``, ``private`` y ``static``
    no se pueden esbozar, *stubbed*, o simular *mocked*.
    La funcionalidad de dobles de prueba de PHPUnit ignora a estos métodos
    que mantienen su comportamiento original excepto los métodos ``static``

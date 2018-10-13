@@ -6,19 +6,18 @@
 Probar Bases de Datos
 =====================
 
-Muchos ejemplos, para principiantes y usuarios intermedios, de pruebas unitarias
-en cualquier lenguaje de programación sugieren que es absolutamente fácil
-probar la lógica de la aplicación con pruebas simples. Pero para aplicaciones
+Muchos ejemplos de pruebas unitarias para principiantes y usuarios intermedios 
+de cualquier lenguaje de programación sugieren que es absolutamente fácil
+probar la lógica de la aplicación usando pruebas simples. Pero para aplicaciones
 centradas en base de datos esto está muy lejos de la realidad. Basta comenzar
 a usar WordPress, TYPO3 o Symfony con Doctrine o Propel, por ejemplo, para
 experimentar rápidamente considerables problemas con PHPUnit
 porque la base de datos está estrechamente vinculada con estas bibliotecas.
 
-
 .. admonition:: Nota
 
    Debemos asegurarnos de tener instalada la extensión de PHP ``pdo`` y la
-   extensión específica para la base de datos tal como ``pdo_mysql``. De lo
+   extensión específica para la base de datos, como ``pdo_mysql``. De lo
    contrario los ejemplos que se muestran abajo no van a funcionar.
 
 Probablemente conoces el escenario, por tu trabajo diario y por tus proyectos,
@@ -43,7 +42,8 @@ PHPUnit y quedamos atrapados con uno de los siguientes problemas:
 
 La extensión DbUnit simplifica considerablemente la configuración de la base
 de datos para las pruebas y permite verificar el contenido de una base de datos
-después de ejecutar una serie de operaciones.
+después de ejecutar una serie de operaciones. La instalación de la extensión DbUnit
+es fácil y está documentada en :ref:`installation.optional-packages`.
 
 .. _database.supported-vendors-for-database-testing:
 
@@ -63,8 +63,8 @@ Dificultades al Probar Bases de Datos
 
 Existe una buena razón para que todos los ejemplos de pruebas unitarias
 no incluyan interacciones con la base de datos: esos tipos de pruebas son
-tanto complejas de configurar como de mantener. Mientras se prueba contra
-la base de datos necesitamos tener cuidado con las siguientes variables:
+tanto complejas de configurar como de mantener. Cuando se prueba una
+base de datos necesitamos tener cuidado con las siguientes variables:
 
 -
 
@@ -86,7 +86,7 @@ Como muchas APIs de base de datos, como PDO, MySQLi o ICI8, son incomodas
 de usar y de escritura verbosa, hacer estos pasos manualmente es
 definitivamente una pesadilla.
 
-Probar el código debe ser lo más corto y preciso posible por varias razones:
+Probar código debe ser lo más corto y preciso posible por varias razones:
 
 -
 
@@ -102,13 +102,13 @@ Además, no debemos olvidar que la base de datos es esencialmente una variable
 global de entrada para nuestro código. Dos pruebas de nuestro conjunto de pruebas
 se pueden ejecutar contra la misma base de datos, posiblemente usando los datos
 varias veces. Fallas en la primera prueba puede fácilmente afectar el resultado
-de las siguientes pruebas haciendo nuestra experiencia con las pruebas muy
-difícil. La limpieza, uno de los paso anteriores, tiene mucha
-importancia para resolver el problema de «una base de datos como una
+de las siguientes pruebas, haciendo muy difícil nuestra experiencia con las pruebas.
+La limpieza, uno de los pasos mencionados anteriormente, tiene mucha
+importancia para resolver el problema de: «una base de datos como una
 entrada global».
 
-Cuando se prueban bases de datos, DbUnit ayuda a simplificar todos estos
-problemas de una manera elegante
+Cuando se prueban bases de datos DbUnit ayuda a simplificar todos estos
+problemas de una manera elegante.
 
 En lo que PHPUnit no puede ayudar es con el hecho de que las pruebas a bases
 de datos son mucho más lentas comparadas con las pruebas que no usan bases
@@ -130,7 +130,7 @@ segundos.
 Las cuatro etapas de las pruebas con base de datos
 ##################################################
 
-En su libro sobre Patrones de Prueba xUnit Gerard Meszaros lista las cuatro
+En su libro sobre Patrones de Prueba xUnit Gerard Meszaros señala las cuatro
 etapas de una prueba unitaria:
 
 #.
@@ -154,8 +154,8 @@ etapas de una prueba unitaria:
     Un ambiente describe el estado inicial en que está nuestra aplicación y
     su base de datos cuando se ejecuta la prueba.
 
-Probar la base de datos exige que se utilice al menos una configuración
-y un desmontaje para limpiar y escribir los datos iniciales dentro de las
+Probar la base de datos exige que se utilice al menos una configuración (setup)
+y un desmontaje (teardown) para limpiar y escribir los datos iniciales dentro de las
 tablas. La extensión de base de datos tiene una buena razón para revertir
 los cuatro etapas de una prueba de base de datos, el siguiente flujo de
 trabajo se ejecuta en cada prueba:
@@ -213,7 +213,6 @@ la clase ``PHPUnit\Framework\TestCase`` de la siguiente manera:
             $this->assertSame(2, 1 + 1);
         }
     }
-    ?>
 
 Si queremos probar código que trabaja con la Extensión de Base de Datos
 la configuración es un poco más compleja y debemos extender de una *TestCase*
@@ -247,7 +246,6 @@ abstracta diferente e implementando los métodos abstractos
             return $this->createFlatXMLDataSet(dirname(__FILE__).'/_files/guestbook-seed.xml');
         }
     }
-    ?>
 
 .. _database.implementing-getconnection:
 
@@ -259,15 +257,16 @@ la Extensión de Base de Datos de PHPUnit necesita acceder a una conexión
 de base de datos abstraída del proveedor a través de la biblioteca PDO.
 Es importante notar que nuestra aplicación no necesita estar basada en
 PDO para usar la extensión de base de datos de PHPUnit, la conexión
-solo se usa para limpiar y aplicar la configuración.
+solo se usa para limpiar y aplicar la configuración inicial o ambiente.
 
-En el ejemplo anterior creamos una conexión SQL en memoria que
-y le pasamos el método ``createDefaultDBConnection`` que envuelve
-la instancia PDO y un segundo parámetro (el nombre de la base de datos)
-en una capa de abstracción muy simple para conexiones de base de datos del tipo
+En el ejemplo anterior creamos una conexión Sqlite en memoria
+que pasamos al método ``createDefaultDBConnection`` y que, además, envuelve
+la instancia PDO, como segundo parámetro pasamos el nombre de la base de datos.
+Todo esto se hace
+usando una capa de abstracción muy simple para conexiones de base de datos del tipo
 ``PHPUnit\DbUnit\Database\Connection``.
 
-La sección «Usar la API de Conexión de Base de Data» explica la API de esta
+La sección «Usar la API de Conexión de Base de Datos» explica la API de esta
 interfaz y como podemos hacer el mejor uso de ella.
 
 .. _database.implementing-getdataset:
@@ -277,8 +276,8 @@ Implementando getDataSet()
 
 El método ``getDataSet()`` define como debe ser el estado inicial de la base de
 datos antes de que cada prueba sea ejecutada. El estado de la base de datos es
-abstraído a través de los concepto DataSet (Conjunto de Datos) y DataTable (Tabla
-de Datos) que son representados por las interfaces
+abstraído a través de los concepto *DataSet* (Conjunto de Datos) y *DataTable*
+(Tabla de Datos) que son representados por las interfaces
 ``PHPUnit\DbUnit\DataSet\IDataSet`` y
 ``PHPUnit\DbUnit\DataSet\IDataTable``. La siguiente sección describe
 en detalles como estos conceptos trabajan y que beneficios trae su uso en las
@@ -286,7 +285,7 @@ pruebas de base de datos.
 
 Para la implementación solo necesitamos saber que el método ``getDataSet()``
 se llama una vez durante el ``setUp()`` para traer el conjunto de datos de la
-ambientación e insertarlos en la base de datos. En el ejemplo estamos usando
+ambientación para luego insertarlos en la base de datos. En el ejemplo estamos usando
 el método de fábrica ``createFlatXMLDataSet($filename)`` que representa un
 conjunto de datos por medio de una representación XML.
 
@@ -296,7 +295,7 @@ conjunto de datos por medio de una representación XML.
 ==================================================
 
 PHPUnit asume que el esquema de base de datos con todas sus tablas, lanzadores,
-secuencias y vistas están creadas antes de que la prueba sea ejecutada. Esto
+secuencias y vistas está creado antes de que la prueba sea ejecutada. Esto
 significa que como desarrolladores debemos asegurar que la base de datos está
 correctamente configurada antes de ejecutar el paquete de pruebas.
 
@@ -305,9 +304,9 @@ de datos.
 
 #.
 
-   Si estamos usando una base de datos persistente (no SQLite en memoria) podemos
-   con facilidad configurar la base de datos una solo vez con herramientas
-   como phpMyAdmin para MySQL y reusar la base de datos en cada ejecución de
+   Si estamos usando una base de datos persistente (no SQLite en memoria) podemos,
+   con facilidad, configurar la base de datos una solo vez con herramientas
+   como phpMyAdmin para MySQL y usar la misma base de datos en cada ejecución de
    una prueba.
 
 #.

@@ -2198,6 +2198,10 @@ sustitutos:
 
   ``%c``: Un solo carácter de cualquier tipo.
 
+-
+
+  ``%%``: Un carácter literal de porcentaje: ``%``.
+
 .. _appendixes.assertions.assertStringMatchesFormatFile:
 
 assertStringMatchesFormatFile()
