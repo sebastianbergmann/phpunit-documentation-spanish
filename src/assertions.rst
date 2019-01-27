@@ -70,7 +70,7 @@ argumentos.
 .. code-block:: bash
 
     $ phpunit ArrayHasKeyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -116,7 +116,7 @@ mismos argumentos.
 .. code-block:: bash
 
     $ phpunit ClassHasAttributeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -163,7 +163,7 @@ de arreglos.
 .. code-block:: bash
 
     $ phpunit ArraySubsetTest
-    PHPUnit 7.0.0 by Sebastian Bergmann.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -214,7 +214,7 @@ no existe.
 .. code-block:: bash
 
     $ phpunit ClassHasStaticAttributeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -235,7 +235,7 @@ no existe.
 assertContains()
 ################
 
-``assertContains(mixed $needle, Iterator|array $haystack[, string $message = ''])``
+``assertContains(mixed $needle, iterable $haystack[, string $message = ''])``
 
 Reporta un error identificado por el ``$message`` si ``$needle`` no es un elemento
 de ``$haystack``.
@@ -264,7 +264,7 @@ clase u objeto como el lugar donde buscar, *haystack*.
 .. code-block:: bash
 
     $ phpunit ContainsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -305,7 +305,7 @@ Si ``$ignoreCase`` es ``true``, la prueba será insensible a mayúsculas y minú
 .. code-block:: bash
 
     $ phpunit ContainsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -344,7 +344,7 @@ Si ``$ignoreCase`` es ``true``, la prueba será insensible a mayúsculas y minú
 .. code-block:: bash
 
     $ phpunit ContainsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F.
 
@@ -365,7 +365,7 @@ Si ``$ignoreCase`` es ``true``, la prueba será insensible a mayúsculas y minú
 assertContainsOnly()
 ####################
 
-``assertContainsOnly(string $type, Iterator|array $haystack[, boolean $isNativeType = null, string $message = ''])``
+``assertContainsOnly(string $type, iterable $haystack[, boolean $isNativeType = null, string $message = ''])``
 
 Reporta un error identificado por el ``$message`` si ``$haystack`` no contiene
 solamente variables del tipo ``$type``.
@@ -397,7 +397,7 @@ envoltorios convenientes que usan un atributo ``public``, ``protected`` o
 .. code-block:: bash
 
     $ phpunit ContainsOnlyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -448,7 +448,7 @@ solamente instancias de la clase ``$classname``.
 .. code-block:: bash
 
     $ phpunit ContainsOnlyInstancesOfTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -495,7 +495,7 @@ argumentos.
 .. code-block:: bash
 
     $ phpunit CountTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -542,7 +542,7 @@ argumentos.
 .. code-block:: bash
 
     $ phpunit DirectoryExistsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -589,7 +589,7 @@ mismos argumentos.
 .. code-block:: bash
 
     $ phpunit DirectoryIsReadableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -636,7 +636,7 @@ mismos argumentos.
 .. code-block:: bash
 
     $ phpunit DirectoryIsWritableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -685,7 +685,7 @@ apropiados para ser usados con atributos de tipo ``public``, ``protected`` o
 .. code-block:: bash
 
     $ phpunit EmptyTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -772,7 +772,7 @@ en ``$actualElement`` no es igual a la estructura XML del DOMElement en
 .. code-block:: bash
 
     $ phpunit EqualXMLStructureTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     FFFF
 
@@ -859,7 +859,7 @@ una clase u objeto para el valor real
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     FFF
 
@@ -935,7 +935,7 @@ para entender porqué ``$delta`` es necesario.
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     .F
 
@@ -981,7 +981,7 @@ del documento XML representado por los dos objectos DOMDocument ``$expected`` y
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1038,7 +1038,7 @@ y ``$actual`` no tienen valores de atributos iguales.
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1086,7 +1086,7 @@ y ``$actual`` no son iguales.
 .. code-block:: bash
 
     $ phpunit EqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1141,7 +1141,7 @@ Reporta un error identificado por el ``$message`` si ``$condition`` es ``true``.
 .. code-block:: bash
 
     $ phpunit FalseTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1187,7 +1187,7 @@ Reporta un error identificado por el ``$message`` si the archivo especificado en
 .. code-block:: bash
 
     $ phpunit FileEqualsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1239,7 +1239,7 @@ Reporta un error identificado por el ``$message`` si the archivo especificado en
 .. code-block:: bash
 
     $ phpunit FileExistsTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1285,7 +1285,7 @@ en ``$filename`` no es un archivo o no es legible.
 .. code-block:: bash
 
     $ phpunit FileIsReadableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1331,7 +1331,7 @@ Reporta un error identificado por el ``$message`` si el archivo especificado en
 .. code-block:: bash
 
     $ phpunit FileIsWritableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1378,7 +1378,7 @@ no es mayor que el valor de ``$expected``.
 .. code-block:: bash
 
     $ phpunit GreaterThanTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1426,7 +1426,7 @@ valor real.
 .. code-block:: bash
 
     $ phpunit GreaterThanOrEqualTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1471,7 +1471,7 @@ Reporta un error identificado por el ``$message`` si ``$variable`` es not ``INF`
 .. code-block:: bash
 
     $ phpunit InfiniteTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1521,7 +1521,7 @@ envoltorios convenientes que se pueden aplicar a un atributo ``public``,
 .. code-block:: bash
 
     $ phpunit InstanceOfTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1539,39 +1539,77 @@ envoltorios convenientes que se pueden aplicar a un atributo ``public``,
 
 .. _appendixes.assertions.assertInternalType:
 
-assertInternalType()
-####################
+assertIsArray()
+###############
 
-``assertInternalType($expected, $actual[, $message = ''])``
+``assertIsArray($actual[, $message = ''])``
 
-Reporta un error identificado por el ``$message`` si ``$actual`` no es del tipo
-``$expected``.
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``array``.
 
-``assertNotInternalType()`` es el inverso de esta aserción y toma los mismos argumentos.
-
-``assertAttributeInternalType()`` y ``assertAttributeNotInternalType()`` son
-envoltorios convenientes que se pueden aplicar a un atributo ``public``,
-``protected`` o ``private`` de una clase u objeto.
+``assertIsNotArray()`` is the inverse of this assertion and takes the same arguments.
 
 .. code-block:: php
-    :caption: Uso del método assertInternalType()
-    :name: appendixes.assertions.assertInternalType.example
+    :caption: Usage of assertIsArray()
+    :name: appendixes.assertions.assertIsArray.example
 
     <?php
     use PHPUnit\Framework\TestCase;
 
-    class InternalTypeTest extends TestCase
+    class ArrayTest extends TestCase
     {
         public function testFailure()
         {
-            $this->assertInternalType('string', 42);
+            $this->assertIsArray(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit ArrayTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) ArrayTest::testFailure
+    Failed asserting that null is of type "array".
+
+    /home/sb/ArrayTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsBool()
+##############
+
+``assertIsBool($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``bool``.
+
+``assertIsNotBool()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Uso del método assertIsBool()
+    :name: appendixes.assertions.assertIsBool.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class BoolTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsBool(null);
         }
     }
 
 .. code-block:: bash
 
     $ phpunit InternalTypeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1583,6 +1621,393 @@ envoltorios convenientes que se pueden aplicar a un atributo ``public``,
     Failed asserting that 42 is of type "string".
 
     /home/sb/InternalTypeTest.php:6
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsCallable()
+##################
+
+``assertIsCallable($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``callable``.
+
+``assertIsNotCallable()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsCallable()
+    :name: appendixes.assertions.assertIsCallable.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class CallableTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsCallable(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit CallableTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) CallableTest::testFailure
+    Failed asserting that null is of type "callable".
+
+    /home/sb/CallableTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsFloat()
+###############
+
+``assertIsFloat($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``float``.
+
+``assertIsNotFloat()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsFloat()
+    :name: appendixes.assertions.assertIsFloat.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class FloatTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsFloat(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit FloatTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) FloatTest::testFailure
+    Failed asserting that null is of type "float".
+
+    /home/sb/FloatTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsInt()
+#############
+
+``assertIsInt($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``int``.
+
+``assertIsNotInt()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsInt()
+    :name: appendixes.assertions.assertIsInt.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class IntTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsInt(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit IntTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) IntTest::testFailure
+    Failed asserting that null is of type "int".
+
+    /home/sb/IntTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsIterable()
+##################
+
+``assertIsIterable($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``iterable``.
+
+``assertIsNotIterable()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsIterable()
+    :name: appendixes.assertions.assertIsIterable.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class IterableTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsIterable(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit IterableTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) IterableTest::testFailure
+    Failed asserting that null is of type "iterable".
+
+    /home/sb/IterableTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsNumeric()
+#################
+
+``assertIsNumeric($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``numeric``.
+
+``assertIsNotNumeric()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsNumeric()
+    :name: appendixes.assertions.assertIsNumeric.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class NumericTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsNumeric(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit NumericTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) NumericTest::testFailure
+    Failed asserting that null is of type "numeric".
+
+    /home/sb/NumericTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsObject()
+################
+
+``assertIsObject($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``object``.
+
+``assertIsNotObject()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsObject()
+    :name: appendixes.assertions.assertIsObject.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class ObjectTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsObject(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit ObjectTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) ObjectTest::testFailure
+    Failed asserting that null is of type "object".
+
+    /home/sb/ObjectTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsResource()
+##################
+
+``assertIsResource($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``resource``.
+
+``assertIsNotResource()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsResource()
+    :name: appendixes.assertions.assertIsResource.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class ResourceTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsResource(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit ResourceTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) ResourceTest::testFailure
+    Failed asserting that null is of type "resource".
+
+    /home/sb/ResourceTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsScalar()
+################
+
+``assertIsScalar($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``scalar``.
+
+``assertIsNotScalar()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsScalar()
+    :name: appendixes.assertions.assertIsScalar.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class ScalarTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsScalar(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit ScalarTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) ScalarTest::testFailure
+    Failed asserting that null is of type "scalar".
+
+    /home/sb/ScalarTest.php:8
+
+    FAILURES!
+    Tests: 1, Assertions: 1, Failures: 1.
+
+assertIsString()
+################
+
+``assertIsString($actual[, $message = ''])``
+
+Reports an error identified by ``$message`` if ``$actual`` is not of type ``string``.
+
+``assertIsNotString()`` is the inverse of this assertion and takes the same arguments.
+
+.. code-block:: php
+    :caption: Usage of assertIsString()
+    :name: appendixes.assertions.assertIsString.example
+
+    <?php
+    use PHPUnit\Framework\TestCase;
+
+    class StringTest extends TestCase
+    {
+        public function testFailure()
+        {
+            $this->assertIsString(null);
+        }
+    }
+
+.. code-block:: bash
+
+    $ phpunit StringTest
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
+
+    F
+
+    Time: 0 seconds, Memory: 5.00Mb
+
+    There was 1 failure:
+
+    1) StringTest::testFailure
+    Failed asserting that null is of type "string".
+
+    /home/sb/StringTest.php:8
 
     FAILURES!
     Tests: 1, Assertions: 1, Failures: 1.
@@ -1617,7 +2042,7 @@ especificada en ``$filename`` no se puede leer.
 .. code-block:: bash
 
     $ phpunit IsReadableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1663,7 +2088,7 @@ especificada en ``$filename`` no se puede escribir.
 .. code-block:: bash
 
     $ phpunit IsWritableTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1708,7 +2133,7 @@ no coincide con el valor de ``$expectedFile``.
 .. code-block:: bash
 
     $ phpunit JsonFileEqualsJsonFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1754,7 +2179,7 @@ no coincide con el valor de ``$expectedFile``.
 .. code-block:: bash
 
     $ phpunit JsonStringEqualsJsonFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1801,7 +2226,7 @@ no coincide con el valor de ``$expectedJson``.
 .. code-block:: bash
 
     $ phpunit JsonStringEqualsJsonStringTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1855,7 +2280,7 @@ es menor que el valor de ``$expected``.
 .. code-block:: bash
 
     $ phpunit LessThanTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1903,7 +2328,7 @@ valor real.
 .. code-block:: bash
 
     $ phpunit LessThanOrEqualTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1946,7 +2371,7 @@ Reporta un error identificado por el ``$message`` si ``$variable`` no es ``NAN``
 .. code-block:: bash
 
     $ phpunit NanTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -1991,7 +2416,7 @@ Reporta un error identificado por el ``$message`` si ``$variable`` no es ``null`
 .. code-block:: bash
 
     $ phpunit NotNullTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2037,7 +2462,7 @@ no existe.
 .. code-block:: bash
 
     $ phpunit ObjectHasAttributeTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2083,7 +2508,7 @@ la expresión regular ``$pattern``.
 .. code-block:: bash
 
     $ phpunit RegExpTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2129,7 +2554,7 @@ el formato dado en ``$format``.
 .. code-block:: bash
 
     $ phpunit StringMatchesFormatTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2233,7 +2658,7 @@ mismos argumentos.
 .. code-block:: bash
 
     $ phpunit StringMatchesFormatFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2284,7 +2709,7 @@ objeto como el valor real.
 .. code-block:: bash
 
     $ phpunit SameTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2323,7 +2748,7 @@ y ``$actual`` no hacen referencia al mismo objeto.
 .. code-block:: bash
 
     $ phpunit SameTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2369,7 +2794,7 @@ Reporta un error identificado por el ``$message`` si ``$string`` no termina en
 .. code-block:: bash
 
     $ phpunit StringEndsWithTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2415,7 +2840,7 @@ Reporta un error identificado por el ``$message`` si el archivo especificado en
 .. code-block:: bash
 
     $ phpunit StringEqualsFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2467,7 +2892,7 @@ con el ``$prefix``.
 .. code-block:: bash
 
     $ phpunit StringStartsWithTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2564,7 +2989,7 @@ clases disponibles en ``PHPUnit\Framework\Constraint``.
       - Constraint that asserts that the class has a given attribute.
     * - ``PHPUnit\Framework\Constraint\ClassHasStaticAttribute classHasStaticAttribute(string $attributeName)``
       - Constraint that asserts that the class has a given static attribute.
-    * - ``PHPUnit\Framework\Constraint\ObjectHasAttribute objecthasAttribute(string $attributeName)``
+    * - ``PHPUnit\Framework\Constraint\ObjectHasAttribute objectHasAttribute(string $attributeName)``
       - Constraint that asserts that the object has a given attribute.
     * - ``PHPUnit\Framework\Constraint\IsIdentical identicalTo(mixed $value)``
       - Constraint that asserts that one value is identical to another.
@@ -2628,7 +3053,7 @@ Reporta un error identificado por el ``$message`` si ``$condition`` es ``false``
 .. code-block:: bash
 
     $ phpunit TrueTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2675,7 +3100,7 @@ no es igual al documento XML en ``$expectedFile``.
 .. code-block:: bash
 
     $ phpunit XmlFileEqualsXmlFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2729,7 +3154,7 @@ Reporta un error identificado por el ``$message`` si the XML document in ``$actu
 .. code-block:: bash
 
     $ phpunit XmlStringEqualsXmlFileTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 
@@ -2783,7 +3208,7 @@ Reporta un error identificado por el ``$message`` si the XML document in ``$actu
 .. code-block:: bash
 
     $ phpunit XmlStringEqualsXmlStringTest
-    PHPUnit 7.0.0 by Sebastian Bergmann and contributors.
+    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     F
 

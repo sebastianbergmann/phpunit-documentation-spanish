@@ -323,7 +323,7 @@ de datos.
 
 Consejo: Usemos nuestro propio Caso Abstracto de Prueba de Base de Datos
 ========================================================================
-
+@TODO
 Del ejemplo previo de implementación podemos ver fácilmente que el método
 ``getConnection()`` es muy estático y podría usarse en diferentes casos de prueba
 de base de datos. Además, para mantener el buen rendimiento de nuestras pruebas

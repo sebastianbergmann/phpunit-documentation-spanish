@@ -287,13 +287,3 @@ Los siguientes paquetes opcionales están disponibles:
 
         composer require --dev phpunit/php-invoker
 
-``DbUnit``
-
-    Porte de DbUnit a PHP/PHPUnit para dar soporte a pruebas con interacción con base de datos.
-    
-    Este paquete no está incluido en la distribución PHAR de PHPUnit. Puede ser instalado
-    via Composer usando el siguiente comando
-
-    .. code-block:: bash
-
-        composer require --dev phpunit/dbunit

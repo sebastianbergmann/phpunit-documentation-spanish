@@ -137,7 +137,7 @@ implementación simple de la interfaz ``PHPUnit\Framework\TestListener``.
 
     class SimpleTestListener implements TestListener
     {
-        public function addError(PHPUnit\Framework\Test $test, Exception $e, $time): void
+        public function addError(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Error while running test '%s'.\n", $test->getName());
         }
@@ -147,22 +147,22 @@ implementación simple de la interfaz ``PHPUnit\Framework\TestListener``.
             printf("Warning while running test '%s'.\n", $test->getName());
         }
 
-        public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, $time): void
+        public function addFailure(PHPUnit\Framework\Test $test, PHPUnit\Framework\AssertionFailedError $e, float $time): void
         {
             printf("Test '%s' failed.\n", $test->getName());
         }
 
-        public function addIncompleteTest(PHPUnit\Framework\Test $test, Exception $e, $time): void
+        public function addIncompleteTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Test '%s' is incomplete.\n", $test->getName());
         }
 
-        public function addRiskyTest(PHPUnit\Framework\Test $test, Exception $e, $time): void
+        public function addRiskyTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Test '%s' is deemed risky.\n", $test->getName());
         }
 
-        public function addSkippedTest(PHPUnit\Framework\Test $test, Exception $e, $time): void
+        public function addSkippedTest(PHPUnit\Framework\Test $test, \Throwable $e, float $time): void
         {
             printf("Test '%s' has been skipped.\n", $test->getName());
         }
@@ -172,7 +172,7 @@ implementación simple de la interfaz ``PHPUnit\Framework\TestListener``.
             printf("Test '%s' started.\n", $test->getName());
         }
 
-        public function endTest(PHPUnit\Framework\Test $test, $time): void
+        public function endTest(PHPUnit\Framework\Test $test, float $time): void
         {
             printf("Test '%s' ended.\n", $test->getName());
         }
@@ -271,19 +271,17 @@ donde el primer valor es el valor esperado y el segundo es el valor real.
                 }
 
                 catch (PHPUnit\Framework\AssertionFailedError $e) {
-                    $stopTime = PHP_Timer::stop();
                     $result->addFailure($this, $e, $stopTime);
                 }
 
                 catch (Exception $e) {
-                    $stopTime = PHP_Timer::stop();
                     $result->addError($this, $e, $stopTime);
                 }
 
-                if ($stopTime === null) {
+                finally {
                     $stopTime = PHP_Timer::stop();
                 }
-
+                
                 $result->endTest($this, $stopTime);
             }
 
