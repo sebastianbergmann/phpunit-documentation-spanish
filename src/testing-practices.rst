@@ -2,116 +2,121 @@
 
 .. _testing-practices:
 
-=================
-Testing Practices
-=================
+======================
+Prácticas para Pruebas
+======================
 
     *Erich Gamma*:
+    
+    Siempre puedes escribir más pruebas. Sin embargo, rápidamente encontrarás
+    que sólo una fracción de las pruebas que puedas imaginar es realmente 
+    útil. Lo que tú quieres es escribir pruebas fallen aun cuando pienses
+    que deberían funcionar, o pruebas pasen exitosamente aunque pienses que
+    deberían fallar.
+    Otra manera de pensar de ello es en términos de costo/beneficio: tú quieres
+    escribir pruebas que te retribuirán información.   
 
-    You can always write more tests. However, you will quickly find that
-    only a fraction of the tests you can imagine are actually useful. What
-    you want is to write tests that fail even though you think they should
-    work, or tests that succeed even though you think they should fail.
-    Another way to think of it is in cost/benefit terms. You want to write
-    tests that will pay you back with information.
 
 .. _testing-practices.during-development:
 
-During Development
-##################
+Durante el Desarrollo
+#####################
 
-When you need to make a change to the internal structure of the software
-you are working on to make it easier to understand and cheaper to modify
-without changing its observable behavior, a test suite is invaluable in
-applying these so called `refactorings <http://martinfowler.com/bliki/DefinitionOfRefactoring.html>`_
-safely. Otherwise, you might not notice the system breaking while you
-are carrying out the restructuring.
+Cuando necesitas hacer un cambio a una estructura interna del software en el 
+que estás trabajando para hacerlo más fácil de entender y modificarlo sin 
+cambiar su comportamiento observable, un suite de pruebas es invaluable a la
+hora de aplicar esas llamadas `refactorizaciones <http://martinfowler.com/bliki/DefinitionOfRefactoring.html>`_
+de manera segura. De otro modo, podrías notar que el sistema se rompe mientras
+estás llevando a cabo la reestructuración.
 
-The following conditions will help you to improve the code and design
-of your project, while using unit tests to verify that the refactoring's
-transformation steps are, indeed, behavior-preserving and do not
-introduce errors:
-
-#.
-
-   All unit tests run correctly.
+Las siguientes condiciones te ayudarán a mejorar el código y diseño de tu
+proyecto mientras usas pruebas unitarias para verificar que, en efecto, los pasos
+de transformación de la refactorización preservan el comportamiento y no 
+introducen errores:
 
 #.
 
-   The code communicates its design principles.
+   Todas las pruebas unitarias se ejecutan correctamente.
 
 #.
 
-   The code contains no redundancies.
+   El código comunica sus principios de diseño.
 
 #.
 
-   The code contains the minimal number of classes and methods.
+   El código no contiene redundancias.
 
-When you need to add new functionality to the system, write the tests
-first. Then, you will be done developing when the test runs. This
-practice will be discussed in detail in the next chapter.
+#.
+
+   El código contiene el mínimo número de clases y métodos.
+
+Cuando necesitas agregar una nueva funcionalidad al sistema, escribe las pruebas 
+primero. Entonces habrás terminado de desarrollar cuando las pruebas se ejecuten.
+Esta práctica será discutida en más detalle en el siguiente capítulo.
+
 
 .. _testing-practices.during-debugging:
 
-During Debugging
-################
+Durante la Depuración
+#####################
 
-When you get a defect report, your impulse might be to fix the defect as
-quickly as possible. Experience shows that this impulse will not serve
-you well; it is likely that the fix for the defect causes another
-defect.
+Cuando tienes un reporte de defecto, tu impulso podría ser corregir el defecto lo
+más rápido posible. La experiencia muestra que este impulso no te servirá bien; 
+es como cuando la corrección del defecto causa otro defecto.
 
-You can hold your impulse in check by doing the following:
-
-#.
-
-   Verify that you can reproduce the defect.
+Puedes mantener tu impulso bajo control haciendo lo siguiente:
 
 #.
 
-   Find the smallest-scale demonstration of the defect in the code.
-   For example, if a number appears incorrectly in an output, find the
-   object that is computing that number.
+   Verifica que puedes reproducir el defecto.
 
 #.
 
-   Write an automated test that fails now but will succeed when the
-   defect is fixed.
+   Encuentra la demostración en más pequeña escala del defecto en el código. Por 
+   ejemplo, si un número aparece incorrectamente en una salida, encuentra el objeto
+   que computa ese número.
 
 #.
 
-   Fix the defect.
+   Escribe una prueba automatizada que falle, pero que sea exitosa cuando el defecto 
+   esté corregido.
 
-Finding the smallest reliable reproduction of the defect gives you the
-opportunity to really examine the cause of the defect. The test you
-write will improve the chances that when you fix the defect, you really
-fix it, because the new test reduces the likelihood of undoing the fix
-with future code changes. All the tests you wrote before reduce the
-likelihood of inadvertently causing a different problem.
+#.
+
+   Corrige el defecto.
+
+Encontrar la reproducción más pequeña confiable del defecto te da la oportunidad de 
+examinar realmente la causa del defecto. La prueba que escribas mejorará las 
+probabilidades de que cuando corrijas el defecto, realmente lo corrijas, porque la 
+nueva prueba reduce la probabilidad de deshacer la corrección con futuros cambios
+al código. Todas las pruebas que escribiste antes reducen la probabilidad de causar,
+inadvertidamente, un problema diferente.
+
 
     *Benjamin Smedberg*:
 
-    Unit testing offers many advantages:
+    Las pruebas unitarias ofrecen muchas ventajas:
 
     -
 
-      Testing gives code authors and reviewers confidence that patches produce the correct results.
+      Las pruebas dan a los autores del código y a los revisores la confianza de que 
+      esos parches producen los resultados esperados.
 
     -
 
-      Authoring testcases is a good impetus for developers to discover edge cases.
+      Crear casos de prueba es un buen impulso para que los desarrolladores descubran 
+      casos límite.
 
     -
 
-      Testing provides a good way to catch regressions quickly, and to make sure that no regression will be repeated twice.
+      Las pruebas proveen una buena manera de capturar regresiones rápidamente y 
+      asegurarse de que ninguna de éstas se repita dos veces.
 
     -
 
-      Unit tests provide working examples for how to use an API and can significantly aid documentation efforts.
+      Las pruebas unitarias proveen ejemplos funcionales de cómo usar una API y puede 
+      ayudar significativamente los esfuerzos de documentación.
 
-    Overall, integrated unit testing makes the cost and risk of any
-    individual change smaller. It will allow the project to make \[...]
-    major architectural improvements \[...] quickly and confidently.
-
-
+    En conjunto, las pruebas unitarias integradas hacen más pequeño el costo y el riesgo de 
+    cualquier cambio pequeño Permitirá al proyecto hacer \[...] mayores mejoras en su
+    arquitectura \[...] de forma rápida y confiable.
