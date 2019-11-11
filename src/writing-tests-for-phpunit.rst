@@ -54,11 +54,12 @@ escribir pruebas con PHPUnit:
             $this->assertSame(0, count($stack));
         }
     }
+
 |
     *Martin Fowler*:
 
-    Siempre que estés intentando escribir algo en una sentencia ``print`` o una
-    expresión depuradora, escribe en su lugar un prueba.
+    Siempre que estés intentando escribir algo en una sentencia ``print`` o
+    en una expresión depuradora, escribe en su lugar una prueba.
 
 .. _writing-tests-for-phpunit.test-dependencies:
 
@@ -69,14 +70,14 @@ Dependencia de Pruebas
 
     Las pruebas unitarias son principalmente escritas como una buena práctica
     para ayudar a los desarrolladores a identificar y corregir errores,
-    refactorizar el código y sirve como documentación de la parte del software
+    refactorizar el código y como documentación de la parte del software
     bajo prueba. Para alcanzar estos beneficios, las pruebas unitarias deberían
     idealmente cubrir todos los posibles caminos en un programa. Una prueba
     unitaria cubre generalmente una ruta de acción específica de un método o
     función. Sin embargo un método de prueba no es necesariamente una entidad
     encapsulada e independiente. A veces existen dependencias implícitas entre
-    los métodos de prueba, escondidas en el escenario de implementación de una
-    prueba.
+    los métodos de prueba, dependencias escondidas en el escenario de
+    implementación de una prueba.
 
 PHPUnit soporta la declaración de dependencias explícitas entre métodos de
 prueba. Estas dependencias no definen el orden en que los métodos de pruebas
@@ -179,7 +180,7 @@ de los defectos, aprovechando las dependencias entre pruebas, como se muestra en
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --verbose DependencyFailureTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -244,7 +245,7 @@ Ver :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
          }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --verbose MultipleDependenciesTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -300,7 +301,7 @@ sus argumentos.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -351,7 +352,7 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -395,7 +396,7 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -513,7 +514,7 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --verbose DependencyAndDataProviderComboTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -578,7 +579,7 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
      }
 
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit DataTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -638,7 +639,7 @@ es lanzada por el código que se está probando.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ExceptionTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -662,60 +663,19 @@ excepciones lanzadas por el código que se está probando.
 
 .. admonition:: Nota
 
-   Nótese que *expectExceptionMessage* asevera que el mensaje real
+   Nótese que ``expectExceptionMessage()`` asevera que el mensaje real
    (``$actual``) contiene el mensaje esperado (``$expected``)  y no ejecuta una
    comparación exacta de cadenas de caracteres.
 
-Alternativamente, podemos usar las anotaciones ``@expectedException``,
-``@expectedExceptionCode``, ``@expectedExceptionMessage`` y
-``@expectedExceptionMessageRegExp`` para establecer una predicción sobre las
-excepciones lanzadas por el código que se está probando.
-El :numref:`writing-tests-for-phpunit.exceptions.examples.ExceptionTest2.php`
-muestra un ejemplo.
-
-.. code-block:: php
-    :caption: Usar la anotación @expectedException
-    :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest2.php
-
-    <?php
-    use PHPUnit\Framework\TestCase;
-
-    class ExceptionTest extends TestCase
-    {
-        /**
-         * @expectedException InvalidArgumentException
-         */
-        public function testException()
-        {
-        }
-    }
-
-.. code-block:: bash
-
-    $ phpunit ExceptionTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    F
-
-    Time: 0 seconds, Memory: 4.75Mb
-
-    There was 1 failure:
-
-    1) ExceptionTest::testException
-    Failed asserting that exception of type "InvalidArgumentException" is thrown.
-
-    FAILURES!
-    Tests: 1, Assertions: 1, Failures: 1.
-
 .. _writing-tests-for-phpunit.errors:
 
-Probar errores de PHP
-#####################
+Probar los errores, avisos y notificaciones de PHP
+##################################################
 
 Con la configuración por defecto de PHPUnit los errores, avisos y notificaciones
 de PHP que se disparan durante la ejecución de una prueba se convierten en
 excepciones. Usando estas excepciones se puede, por ejemplo, esperar que una prueba
-disparé un error de PHP, como se muestra en
+disparé un error, una aviso o una notificación de PHP, como se muestra en
 :numref:`writing-tests-for-phpunit.exceptions.examples.ErrorTest.php`.
 
 .. admonition:: Nota
@@ -726,48 +686,72 @@ disparé un error de PHP, como se muestra en
    configurado para eliminar los tipos de errores que estamos probando.
 
 .. code-block:: php
-    :caption: Esperar un error de PHP usando @expectedException
+    :caption: Esperar errores, avisos y notificaciones de PHP
     :name: writing-tests-for-phpunit.exceptions.examples.ErrorTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ExpectedErrorTest extends TestCase
+    final class ErrorTest extends TestCase
     {
-        /**
-         * @expectedException PHPUnit\Framework\Error\Error
-         */
-        public function testFailingInclude()
+        public function testDeprecationCanBeExpected(): void
         {
-            include 'not_existing_file.php';
+            $this->expectDeprecation();
+
+            // Optionally test that the message is equal to a string
+            $this->expectDeprecationMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectDeprecationMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_DEPRECATED);
+        }
+
+        public function testNoticeCanBeExpected(): void
+        {
+            $this->expectNotice();
+
+            // Optionally test that the message is equal to a string
+            $this->expectNoticeMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectNoticeMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_NOTICE);
+        }
+
+        public function testWarningCanBeExpected(): void
+        {
+            $this->expectWarning();
+
+            // Optionally test that the message is equal to a string
+            $this->expectWarningMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectWarningMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_WARNING);
+        }
+
+        public function testErrorCanBeExpected(): void
+        {
+            $this->expectError();
+
+            // Optionally test that the message is equal to a string
+            $this->expectErrorMessage('foo');
+
+            // Or optionally test that the message matches a regular expression
+            $this->expectErrorMessageMatches('/foo/');
+
+            \trigger_error('foo', \E_USER_ERROR);
         }
     }
 
-.. code-block:: bash
-
-    $ phpunit -d error_reporting=2 ExpectedErrorTest
-    PHPUnit |version|.0 by Sebastian Bergmann and contributors.
-
-    .
-
-    Time: 0 seconds, Memory: 5.25Mb
-
-    OK (1 test, 1 assertion)
-
-``PHPUnit\Framework\Error\Notice`` y ``PHPUnit\Framework\Error\Warning``
-representan respectivamente notificaciones y avisos de PHP.
-
-.. admonition:: Nota
-
-   Cuando se prueban excepciones se debe ser tan específico como sea posible.
-   Las pruebas de clases que son muy genéricas pueden ocasionar efectos secundarios
-   indeseables. De la misma forma, probar la clase ``Exception`` con
-   ``@expectedException`` o ``expectException()`` ya no se permite.
-
-Cuando la prueba depende de funciones PHP que lanzan errores, como ``fopen``,
-puede que sea útil usar la supresión de errores mientras se prueba. Esto permite
+Cuando la prueba depende de funciones «built-in» de PHP que podrían lanzan
+errores, como ``fopen()``,
+puede ser útil usar la supresión de errores mientras se prueba. Esto permite
 revisar los valores retornados que sin la supresión de las notificaciones
-llevaría a un ``PHPUnit\Framework\Error\Notice`` de PHPUnit.
+llevaría a un excepción lanzada por el gestor de errores de PHPUnit.
 
 .. code-block:: php
     :caption: Probar valores de retorno de un código que usa errores de PHP
@@ -800,7 +784,7 @@ llevaría a un ``PHPUnit\Framework\Error\Notice`` de PHPUnit.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ErrorSuppressionTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -897,7 +881,7 @@ muestra los métodos que se pueden usar para probar la salida
 
 .. admonition:: Nota
 
-   Una prueba que emite una salida fallará de modo estricto.
+   Una prueba que emite una salida fallará en el modo estricto.
 
 .. _writing-tests-for-phpunit.error-output:
 
@@ -926,7 +910,7 @@ problema.
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ArrayDiffTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -982,7 +966,7 @@ y mostrará unas pocas lineas de información alrededor de cada diferencia.
     }
     ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit LongArrayDiffTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -1019,7 +1003,7 @@ Casos Límites
 =============
 
 Cuando una comparación falla PHPUnit crea una representación textual
-de los valores de entrada y los compara. Debido a esta implementación
+de los valores de entrada y los compara. Debido a esta implementación,
 un *diff* puede mostrar más problemas de los que realmente existen.
 
 Esto solo sucede cuando se usa ``assertEquals()`` u otras funciones de comparación
