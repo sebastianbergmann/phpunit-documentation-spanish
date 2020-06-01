@@ -11,7 +11,7 @@ Instalar PHPUnit
 Requisitos
 ##########
 
-PHPUnit |version| requiere PHP 7.2. Se recomienda encarecidamente usar la última
+PHPUnit |version| requiere PHP 7.3. Se recomienda encarecidamente usar la última
 versión de PHP.
 
 PHPUnit requiere las extensiones `dom <http://php.net/manual/es/dom.setup.php>`_
@@ -50,9 +50,9 @@ será necesario permitir la ejecución de archivos PHAR modificando el archivo
 
     suhosin.executor.include.whitelist = phar
 
-El archivo PHAR de PHPUnit se puede usar inmediatamente despues de descargado:
+El archivo PHAR de PHPUnit se puede usar inmediatamente después de descargado:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ wget https://phar.phpunit.de/phpunit-|version|.phar
     $ php phpunit-|version|.phar --version
@@ -60,7 +60,7 @@ El archivo PHAR de PHPUnit se puede usar inmediatamente despues de descargado:
 
 Es una práctica común ejecutar directamente el archivo PHAR:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ wget https://phar.phpunit.de/phpunit-|version|.phar
     $ chmod +x phpunit-|version|.phar
@@ -70,14 +70,14 @@ Es una práctica común ejecutar directamente el archivo PHAR:
 
 .. _installation.phar.verification:
 
-Verificar Publicaciones de PHPUnit PHAR
-=======================================
+Verificar Lanzamientos de PHPUnit PHAR
+======================================
 
 Todas las versiones de código distribuido por el Proyecto PHPUnit
 están firmadas por el «release manager» designado para el lanzamiento. Firmas
 PGP y SHA1 están disponibles para verificación en `phar.phpunit.de <https://phar.phpunit.de/>`_.
 
-Los siguientes ejemplos detallan cómo funciona la verificación de un lanzamiento.
+El siguiente ejemplo detalla cómo funciona la verificación de un lanzamiento.
 Iniciemos por descargar el archivo :file:`phpunit.phar` así como también su
 firma PGP :file:`phpunit.phar.asc`:
 
@@ -95,11 +95,11 @@ contra su firma (:file:`phpunit-x.y.phar.asc`):
     gpg: Signature made Sat 19 Jul 2014 01:28:02 PM CEST using RSA key ID 6372C20A
     gpg: Can't check signature: public key not found
 
-No tenemos la clave pública del «release manager» (``6372C20A``) en nuestro sistema
-local. Para continuar con la verificación necesitamos recuperar la clave pública
-del «release manager» desde un servidor de claves. Uno de esos servidores
-es :file:`pgp.uni-mainz.de`. Los servidores de claves públicas están enlazados
-entre ellos, así que es posible conectarte a cualquier servidor de claves.
+No tenemos la llave pública del «release manager» (``6372C20A``) en nuestro sistema
+local. Para continuar con la verificación necesitamos recuperar la llave pública
+del «release manager» desde un servidor de llaves. Uno de esos servidores
+es :file:`pgp.uni-mainz.de`. Los servidores de llaves públicas están enlazados
+entre ellos, así que es posible conectarte a cualquier servidor de llaves.
 
 .. parsed-literal::
 
@@ -111,10 +111,10 @@ entre ellos, así que es posible conectarte a cualquier servidor de claves.
     gpg:               imported: 1
     gpg: no ultimately trusted keys found
 
-Ahora hemos recibido una clave pública para una entidad conocida como
+Ahora hemos recibido una llave pública para una entidad conocida como
 "Sebastian Bergmann <sb@sebastian-bergmann.de>". Sin embargo, no tenemos
-manera de verificar que esta clave fue creada por la persona conocida como
-Sebastian Bergmann. Pero, intentemos verificar nuevamente la firma de la versión.
+manera de verificar que esta llave fue creada por la persona conocida como
+Sebastian Bergmann. Pero, intentemos verificar nuevamente la firma del lanzamiento.
 
 .. parsed-literal::
 
@@ -130,16 +130,16 @@ Sebastian Bergmann. Pero, intentemos verificar nuevamente la firma de la versió
     gpg:          There is no indication that the signature belongs to the owner.
     Primary key fingerprint: D840 6D0D 8294 7747 2937  7831 4AA3 9408 6372 C20A
 
-En este punto, la firma es buena pero no confiamos en esta clave. Una firma
+En este punto, la firma es buena pero no confiamos en esta llave. Una firma
 buena significa que el archivo no ha sido manipulado. Sin embargo, debido a la
-naturaleza de la criptografía de clave pública, también necesitas verificar que
-la clave ``6372C20A`` fue creada por el auténtico Sebastian Bergmann.
+naturaleza de la criptografía de llave pública, también necesitas verificar que
+la llave ``6372C20A`` fue creada por el auténtico Sebastian Bergmann.
 
-Cualquier atacante puede crear una clave pública y subirla a los servidores
-de clave pública. Entonces, ellos puede crear versiones maliciosas firmadas
-con esta clave falsa. Entonces, si intentas verificar la firma de esta versión
-corrupta, va a resultar exitosa a pesar de que la clave no era la clave «auténtica».
-Por lo tanto, necesitas validar la autenticidad de esta clave. Sin embargo, validar la
+Cualquier atacante puede crear una llave pública y subirla a los servidores
+de llave pública. Entonces, ellos puede crear versiones maliciosas firmadas
+con esta llave falsa. Si intentas verificar la firma de esta versión
+corrupta, va a resultar exitosa a pesar de que la llave no era la llave «auténtica».
+Por lo tanto, necesitas validar la autenticidad de esta llave. Sin embargo, validar la
 autenticidad de una clave pública está fuera del ámbito de esta documentación.
 
 La verificación manual de la autenticidad e integridad del archivo PHAR
@@ -176,3 +176,18 @@ la versión especifica de PHPUnit que necesitamos en la carpeta ``tools`` del
 proyecto (que es gestionada por PHIVE) o, en el caso de que usemos Composer,
 agregando la versión especifica de PHPUnit que necesitamos en el archivo
 ``composer.json`` del proyecto.
+
+Webserver
+#########
+
+PHPUnit es un *framework* para escribir pruebas y posee una herramienta en
+línea de comandos para ejecutarlas. Escribir y ejecutar pruebas es una actividad
+de la etapa de desarrollo. No hay razón para instalar PHPUnit en un servidor
+web.
+
+**Si subimos PHPUnit a un servidor web nuestro proceso de desarrollo estará roto.
+Además, si nuestra carpeta** ``vendor`` **es accesible a través de nuestro
+servidor web entonces nuestro proceso de desarrollo también estará roto**.
+
+Observemos que si subimos PHPUnit a un servidor web «cosas malas» pueden pasar.
+`Estás advertido. <https://thephp.cc/news/2020/02/phpunit-a-security-risk>`_
