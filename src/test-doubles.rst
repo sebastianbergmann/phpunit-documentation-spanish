@@ -1097,7 +1097,7 @@ La estrategia de arriba tiene varias desventajas:
 -
 
   Como con cualquier recurso externo, podría haber problemas de intermitencia
-  con el sistema de archivos. Esto hace fragiles a las pruebas que
+  con el sistema de archivos. Esto hace frágiles a las pruebas que
   interactuaran con el sistema de archivos.
 
 -

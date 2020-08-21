@@ -552,7 +552,7 @@ anotación ``@group`` de la siguiente manera:
         }
 
         /**
-         * @group regresssion
+         * @group regression
          * @group bug2204
          */
         public function testSomethingElse()
