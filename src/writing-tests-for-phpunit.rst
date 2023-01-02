@@ -36,12 +36,12 @@ escribir pruebas con PHPUnit:
     :caption: Probando operaciones sobre un arreglo con PHPUnit
     :name: writing-tests-for-phpunit.examples.StackTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
-        public function testPushAndPop()
+        public function testPushAndPop(): void
         {
             $stack = [];
             $this->assertSame(0, count($stack));
@@ -68,7 +68,7 @@ Dependencia de Pruebas
 
     *Adrian Kuhn et. al.*:
 
-    Las pruebas unitarias son principalmente escritas como una buena práctica
+    Las pruebas unitarias se escriben principalmente como una buena práctica
     para ayudar a los desarrolladores a identificar y corregir errores,
     refactorizar el código y como documentación de la parte del software
     bajo prueba. Para alcanzar estos beneficios, las pruebas unitarias deberían
@@ -102,12 +102,12 @@ la anotación ``@depends`` para expresar dependencias entre métodos de prueba.
     :caption: Usar la anotación ``@depends`` para expresar dependencias
     :name: writing-tests-for-phpunit.examples.StackTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
-        public function testEmpty()
+        public function testEmpty(): array
         {
             $stack = [];
             $this->assertEmpty($stack);
@@ -118,7 +118,7 @@ la anotación ``@depends`` para expresar dependencias entre métodos de prueba.
         /**
          * @depends testEmpty
          */
-        public function testPush(array $stack)
+        public function testPush(array $stack): array
         {
             array_push($stack, 'foo');
             $this->assertSame('foo', $stack[count($stack)-1]);
@@ -130,7 +130,7 @@ la anotación ``@depends`` para expresar dependencias entre métodos de prueba.
         /**
          * @depends testPush
          */
-        public function testPop(array $stack)
+        public function testPop(array $stack): void
         {
             $this->assertSame('foo', array_pop($stack));
             $this->assertEmpty($stack);
@@ -162,12 +162,12 @@ de los defectos, aprovechando las dependencias entre pruebas, como se muestra en
     :caption: Aprovechar las dependencias entre pruebas
     :name: writing-tests-for-phpunit.examples.DependencyFailureTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DependencyFailureTest extends TestCase
+    final class DependencyFailureTest extends TestCase
     {
-        public function testOne()
+        public function testOne(): void
         {
             $this->assertTrue(false);
         }
@@ -175,7 +175,7 @@ de los defectos, aprovechando las dependencias entre pruebas, como se muestra en
         /**
          * @depends testOne
          */
-        public function testTwo()
+        public function testTwo(): void
         {
         }
     }
@@ -217,20 +217,22 @@ Ver :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
     :caption: Prueba con multiples dependencias
     :name: writing-tests-for-phpunit.examples.MultipleDependencies.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class MultipleDependenciesTest extends TestCase
+    final class MultipleDependenciesTest extends TestCase
     {
-        public function testProducerFirst()
+        public function testProducerFirst(): string
         {
             $this->assertTrue(true);
+
             return 'first';
         }
 
-        public function testProducerSecond()
+        public function testProducerSecond(): string
         {
             $this->assertTrue(true);
+
             return 'second';
         }
 
@@ -238,11 +240,11 @@ Ver :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
          * @depends testProducerFirst
          * @depends testProducerSecond
          */
-         public function testConsumer($a, $b)
-         {
-             $this->assertSame('first', $a);
-             $this->assertSame('second', $b);
-         }
+        public function testConsumer(string $a, string $b): void
+        {
+            $this->assertSame('first', $a);
+            $this->assertSame('second', $b);
+        }
     }
 
 .. parsed-literal::
@@ -254,7 +256,7 @@ Ver :numref:`writing-tests-for-phpunit.examples.MultipleDependencies.php`
 
     Time: 0 seconds, Memory: 3.25Mb
 
-    OK (3 tests, 3 assertions)
+    OK (3 tests, 4 assertions)
 
 .. _writing-tests-for-phpunit.data-providers:
 
@@ -268,7 +270,7 @@ El método proveedor de datos que queremos usar se especifica con la anotación
 ``@dataProvider``.
 
 Un método proveedor de datos debe ser ``public`` y retornar una arreglo de
-arreglos o un objeto que implementa la interfaz ``Iterator`` que produce un
+arreglos o un objeto que implementa la interfaz ``Iterator`` y produce un
 arreglo en cada paso de la iteración. Para cada arreglo que es parte de la
 colección se llama al método de prueba y el contenido del arreglo constituye
 sus argumentos.
@@ -277,20 +279,20 @@ sus argumentos.
     :caption: Usar un proveedor de datos que regresa un arreglo de arreglos
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): array
         {
             return [
                 [0, 0, 0],
@@ -321,27 +323,27 @@ sus argumentos.
     Tests: 4, Assertions: 4, Failures: 1.
 
 Cuando se usa un gran número de datos es útil colocar una cadena de caracteres
-como llave en lugar de la numeración por defecto. La salida sera más verbosa y
+como llave en lugar de la numeración por defecto. La salida será más verbosa y
 contendrá el nombre del conjunto de datos que hizo fallar la prueba.
 
 .. code-block:: php
     :caption: Usar un proveedor de datos con un conjunto de datos etiquetado
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest1.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): array
         {
             return [
                 'adding zeros'  => [0, 0, 0],
@@ -371,26 +373,31 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
     FAILURES!
     Tests: 4, Assertions: 4, Failures: 1.
 
+.. admonition:: Nota
+
+    Con la anotación :ref:`appendixes.annotations.testdox` podemos hacer que la salida sea más
+    abundante definiendo una oración y usando los nombres de los parámetros como comodín
+    (``$a``, ``$b`` y ``$expected`` en el ejemplo de arriba). Además,  siempre que el conjunto
+    de datos tenga nombre podemos hace referencia al nombre del conjunto de datos con ``$_dataName``.
+
 .. code-block:: php
     :caption: Usar un proveedor de datos que regresa un objeto Iterador
     :name: writing-tests-for-phpunit.data-providers.examples.DataTest2.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    require 'CsvFileIterator.php';
-
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionProvider()
+        public function additionProvider(): CsvFileIterator
         {
             return new CsvFileIterator('data.csv');
         }
@@ -419,16 +426,16 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
     :caption: La clase CsvFileIterator
     :name: writing-tests-for-phpunit.data-providers.examples.CsvFileIterator.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class CsvFileIterator implements Iterator
+    final class CsvFileIterator implements Iterator
     {
-        protected $file;
-        protected $key = 0;
-        protected $current;
+        private $file;
+        private $key = 0;
+        private $current;
 
-        public function __construct($file)
+        public function __construct(string $file)
         {
             $this->file = fopen($file, 'r');
         }
@@ -438,31 +445,42 @@ contendrá el nombre del conjunto de datos que hizo fallar la prueba.
             fclose($this->file);
         }
 
-        public function rewind()
+        public function rewind(): void
         {
             rewind($this->file);
+
             $this->current = fgetcsv($this->file);
+
+            if (is_array($this->current)) {
+                $this->current = array_map('intval', $this->current);
+            }
+
             $this->key = 0;
         }
 
-        public function valid()
+        public function valid(): bool
         {
             return !feof($this->file);
         }
 
-        public function key()
+        public function key(): int
         {
             return $this->key;
         }
 
-        public function current()
+        public function current(): array
         {
             return $this->current;
         }
 
-        public function next()
+        public function next(): void
         {
             $this->current = fgetcsv($this->file);
+
+            if (is_array($this->current)) {
+                $this->current = array_map('intval', $this->current);
+            }
+
             $this->key++;
         }
     }
@@ -478,25 +496,27 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     :caption: Combinación de @depends y @dataProvider en una misma prueba
     :name: writing-tests-for-phpunit.data-providers.examples.DependencyAndDataProviderCombo.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DependencyAndDataProviderComboTest extends TestCase
+    final class DependencyAndDataProviderComboTest extends TestCase
     {
-        public function provider()
+        public function provider(): array
         {
             return [['provider1'], ['provider2']];
         }
 
-        public function testProducerFirst()
+        public function testProducerFirst(): string
         {
             $this->assertTrue(true);
+
             return 'first';
         }
 
-        public function testProducerSecond()
+        public function testProducerSecond(): string
         {
             $this->assertTrue(true);
+
             return 'second';
         }
 
@@ -505,7 +525,7 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
          * @depends testProducerSecond
          * @dataProvider provider
          */
-        public function testConsumer()
+        public function testConsumer(): void
         {
             $this->assertSame(
                 ['provider1', 'first', 'second'],
@@ -545,21 +565,21 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
     :caption: Usar multiples proveedores de datos para una sola prueba
     :name: writing-tests-for-phpunit.data-providers.examples2.DataTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DataTest extends TestCase
+    final class DataTest extends TestCase
     {
         /**
          * @dataProvider additionWithNonNegativeNumbersProvider
          * @dataProvider additionWithNegativeNumbersProvider
          */
-        public function testAdd($a, $b, $expected)
+        public function testAdd(int $a, int $b, int $expected): void
         {
             $this->assertSame($expected, $a + $b);
         }
 
-        public function additionWithNonNegativeNumbersProvider()
+        public function additionWithNonNegativeNumbersProvider(): array
         {
             return [
                 [0, 1, 1],
@@ -568,7 +588,7 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             ];
         }
 
-        public function additionWithNegativeNumbersProvider()
+        public function additionWithNegativeNumbersProvider(): array
         {
             return [
                 [-1, 1, 0],
@@ -577,7 +597,6 @@ Ver :numref:`writing-tests-for-phpunit.data-providers.examples.DependencyAndData
             ];
         }
      }
-
 
 .. parsed-literal::
 
@@ -627,17 +646,16 @@ es lanzada por el código que se está probando.
     :caption: Usar el método expectException()
     :name: writing-tests-for-phpunit.exceptions.examples.ExceptionTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ExceptionTest extends TestCase
+    final class ExceptionTest extends TestCase
     {
-        public function testException()
+        public function testException(): void
         {
             $this->expectException(InvalidArgumentException::class);
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -658,13 +676,13 @@ es lanzada por el código que se está probando.
 
 Además del método ``expectException()`` existen los métodos
 ``expectExceptionCode()``, ``expectExceptionMessage()`` y
-``expectExceptionMessageRegExp()`` para establecer una predicción sobre las
+``expectExceptionMessageMatches()`` para establecer una predicción sobre las
 excepciones lanzadas por el código que se está probando.
 
 .. admonition:: Nota
 
    Nótese que ``expectExceptionMessage()`` asevera que el mensaje real
-   (``$actual``) contiene el mensaje esperado (``$expected``)  y no ejecuta una
+   (``$actual``) contiene el mensaje esperado (``$expected``) y no ejecuta una
    comparación exacta de cadenas de caracteres.
 
 .. _writing-tests-for-phpunit.errors:
@@ -757,12 +775,12 @@ llevaría a un excepción lanzada por el gestor de errores de PHPUnit.
     :caption: Probar valores de retorno de un código que usa errores de PHP
     :name: writing-tests-for-phpunit.exceptions.examples.TriggerErrorReturnValue.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ErrorSuppressionTest extends TestCase
+    final class ErrorSuppressionTest extends TestCase
     {
-        public function testFileWriting()
+        public function testFileWriting(): void
         {
             $writer = new FileWriter;
 
@@ -770,13 +788,13 @@ llevaría a un excepción lanzada por el gestor de errores de PHPUnit.
         }
     }
 
-    class FileWriter
+    final class FileWriter
     {
         public function write($file, $content)
         {
             $file = fopen($file, 'w');
 
-            if($file == false) {
+            if ($file === false) {
                 return false;
             }
 
@@ -812,32 +830,34 @@ de PHP para proporcionar la funcionalidad que se necesita para esta tarea.
 
 El :numref:`writing-tests-for-phpunit.output.examples.OutputTest.php`
 muestra como usar el método ``expectOutputString()`` para establecer la salida
-prevista. Si la salida prevista no se genera, la prueba se contará como un
+prevista. Si la salida prevista no se genera entonces la prueba se contará como un
 fallo.
 
 .. code-block:: php
     :caption: Probar la salida de una función o método
     :name: writing-tests-for-phpunit.output.examples.OutputTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class OutputTest extends TestCase
+    final class OutputTest extends TestCase
     {
-        public function testExpectFooActualFoo()
+        public function testExpectFooActualFoo(): void
         {
             $this->expectOutputString('foo');
+
             print 'foo';
         }
 
-        public function testExpectBarActualBaz()
+        public function testExpectBarActualBaz(): void
         {
             $this->expectOutputString('bar');
+
             print 'baz';
         }
     }
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit OutputTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -896,12 +916,12 @@ problema.
     :caption: Salida de error generada cuando la comparación entre arreglos falla
     :name: writing-tests-for-phpunit.error-output.examples.ArrayDiffTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayDiffTest extends TestCase
+    final class ArrayDiffTest extends TestCase
     {
-        public function testEquality()
+        public function testEquality(): void
         {
             $this->assertSame(
                 [1, 2,  3, 4, 5, 6],
@@ -951,12 +971,12 @@ y mostrará unas pocas lineas de información alrededor de cada diferencia.
     :caption: Salida de error cuando falla la comparación entre arreglos muy largos
     :name: writing-tests-for-phpunit.error-output.examples.LongArrayDiffTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class LongArrayDiffTest extends TestCase
+    final class LongArrayDiffTest extends TestCase
     {
-        public function testEquality()
+        public function testEquality(): void
         {
             $this->assertSame(
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,  3, 4, 5, 6],
@@ -964,7 +984,6 @@ y mostrará unas pocas lineas de información alrededor de cada diferencia.
             );
         }
     }
-    ?>
 
 .. parsed-literal::
 
@@ -1013,12 +1032,12 @@ Esto solo sucede cuando se usa ``assertEquals()`` u otras funciones de comparaci
     :caption: Caso límite al generar la diferencia cuando se usa comparación débil
     :name: writing-tests-for-phpunit.error-output.edge-cases.examples.ArrayWeakComparisonTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class ArrayWeakComparisonTest extends TestCase
+    final class ArrayWeakComparisonTest extends TestCase
     {
-        public function testEquality()
+        public function testEquality(): void
         {
             $this->assertEquals(
                 [1, 2, 3, 4, 5, 6],
@@ -1026,9 +1045,8 @@ Esto solo sucede cuando se usa ``assertEquals()`` u otras funciones de comparaci
             );
         }
     }
-    ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit ArrayWeakComparisonTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
