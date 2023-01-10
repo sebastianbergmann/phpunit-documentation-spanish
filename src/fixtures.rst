@@ -6,26 +6,26 @@
 Ambientes
 =========
 
-Una de las partes que consume más tiempo cuando se hacen pruebas, es la parte
+Una de las tareas que consume más tiempo cuando se escriben pruebas es la parte
 en que se escribe el código que construye un mundo en un estado conocido desde
 donde comenzar y al que se debe regresar cuando la prueba se completa.
-Este estado conocido se llama *ambiente*, en ingles *fixture*, de la prueba.
+Este estado conocido se llama *ambiente* (*fixture*) de la prueba.
 
 En el ejemplo :ref:`writing-tests-for-phpunit.examples.StackTest.php`, el ambiente es
 simplemente un arreglo que se guarda en la variable ``$stack``. Sin embargo,
-la mayoría del tiempo el ambiente será más complejo que un simple arreglo y la
-cantidad de código necesario para construirlo crecerá con su complejidad.
+la mayor parte del tiempo el ambiente será más complejo que un simple arreglo y la
+cantidad de código que se necesita para construir el ambiente crecerá con su complejidad.
 El contenido real de la prueba se pierde entre el ruidoso trajinar de la construcción
 del ambiente. Este problema empeora aún más cuando escribimos varias pruebas con
 ambientes parecidos. Sin la ayuda de un framework de pruebas tendríamos que
 duplicar el código que construye el ambiente para cada prueba que se escribe.
 
 PHPUnit puede compartir el código de configuración. Antes de que se ejecute un
-método de prueba un método modelo llamado ``setUp()`` se invoca. En el método
+método de prueba se invoca un método modelo llamado ``setUp()``. En el método
 ``setUp()`` es donde creamos el objeto contra el que probaremos. Una vez que el
 método de prueba terminó de ejecutarse, tanto si fue exitoso como fallido, otro
 método modelo llamado ``tearDown()`` se invoca. En el método ``tearDown()`` es
-con el que limpiamos los objetos contra los que hemos probado.
+donde limpiamos los objetos contra los que hemos probado.
 
 En el ejemplo :ref:`writing-tests-for-phpunit.examples.StackTest2.php` usamos
 la relación productor-consumidor entre las pruebas para compartir un ambiente.
@@ -44,33 +44,35 @@ recientemente, ``$this->stack``, en lugar de la variable del método local
     :caption: Usar setUp() para crear el ambiente para la clase StackTest
     :name: fixtures.examples.StackTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class StackTest extends TestCase
+    final class StackTest extends TestCase
     {
-        protected $stack;
+        private $stack;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             $this->stack = [];
         }
 
-        public function testEmpty()
+        public function testEmpty(): void
         {
             $this->assertTrue(empty($this->stack));
         }
 
-        public function testPush()
+        public function testPush(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', $this->stack[count($this->stack)-1]);
             $this->assertFalse(empty($this->stack));
         }
 
-        public function testPop()
+        public function testPop(): void
         {
             array_push($this->stack, 'foo');
+
             $this->assertSame('foo', array_pop($this->stack));
             $this->assertTrue(empty($this->stack));
         }
@@ -91,62 +93,61 @@ en la clase de caso de prueba.
     :caption: Ejemplo que muestra todos los métodos modelo disponibles
     :name: fixtures.examples.TemplateMethodsTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class TemplateMethodsTest extends TestCase
+    final class TemplateMethodsTest extends TestCase
     {
-        public static function setUpBeforeClass()
+        public static function setUpBeforeClass(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function setUp()
+        protected function setUp(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function assertPreConditions()
+        protected function assertPreConditions(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        public function testOne()
+        public function testOne(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(true);
         }
 
-        public function testTwo()
+        public function testTwo(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
             $this->assertTrue(false);
         }
 
-        protected function assertPostConditions()
+        protected function assertPostConditions(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function tearDown()
+        protected function tearDown(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        public static function tearDownAfterClass()
+        public static function tearDownAfterClass(): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
         }
 
-        protected function onNotSuccessfulTest(Exception $e)
+        protected function onNotSuccessfulTest(Throwable $t): void
         {
             fwrite(STDOUT, __METHOD__ . "\n");
-            throw $e;
+            throw $t;
         }
     }
-    ?>
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit TemplateMethodsTest
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
@@ -157,7 +158,7 @@ en la clase de caso de prueba.
     TemplateMethodsTest::testOne
     TemplateMethodsTest::assertPostConditions
     TemplateMethodsTest::tearDown
-    .TemplateMethodsTest::setUp
+    TemplateMethodsTest::setUp
     TemplateMethodsTest::assertPreConditions
     TemplateMethodsTest::testTwo
     TemplateMethodsTest::tearDown
@@ -184,18 +185,23 @@ Los métodos ``setUp()`` y ``tearDown()`` son simétricos en la teoría pero
 no en la práctica. En la practica, solo necesitamos implementar ``tearDown()``
 si asignamos recursos externos como archivos o *sockets* en el ``setUp()``.
 Si nuestro ``setUp()`` solo crea objetos de PHP planos, podemos, en la mayoría de
-los casos, ignorar el ``tearDown()``. Sin embargo, si hemos creado muchos
-objetos en el ``setUp()``, podríamos querer usar el método ``unset()`` en el
+los casos, ignorar el ``tearDown()``.
+
+Sin embargo, si hemos creado muchos
+objetos en el ``setUp()`` podríamos usar el método ``unset()`` en el
 ``tearDown()`` para reiniciar las variables que están apuntando a esos objetos
-permitiendo que se puedan recolectar como basura. La recolección de basura de
-los objetos del caso de prueba no es predecible.
+permitiendo que se puedan recolectar como basura. Los objetos creados
+dentro de ``setUp()`` (o dentro de los métodos de prueba) que se guardan
+en las propiedades del objeto de prueba son automáticamente recolectados
+por el colector de basura al final del proceso PHP que esta ejecutando a
+PHPUnit.
 
 .. _fixtures.variations:
 
 Variaciones
 ###########
 
-¿Que paso cuando tenemos dos pruebas con configuraciones ligeramente diferentes?
+¿Qué pasa cuando tenemos dos pruebas con ambientes ligeramente diferentes?
 Existen dos posibilidades:
 
 -
@@ -206,8 +212,8 @@ Existen dos posibilidades:
 -
 
   Si realmente tenemos una configuración, ``setUp()``, diferente necesitamos una
-  clase de caso de prueba diferente. Creamos una nueva clase que tenga la
-  diferencia de configuración.
+  clase de caso de prueba diferente. Luego podemos renombrar la clase tomando en
+  cuenta la diferencia en la configuración del ambiente.
 
 .. _fixtures.sharing-fixture:
 
@@ -221,7 +227,7 @@ radica en un problema de diseño no resuelto.
 Un buen ejemplo de un ambiente que tiene sentido compartir a través de varias
 pruebas es la conexión a la base de datos: iniciamos sesión en la base de datos
 una vez y reusamos la conexión a la base de datos en lugar de crear una nueva
-conexión para cada prueba. Esto hace a las pruebas mucho más rápidas.
+conexión para cada prueba. Esto hace que las pruebas se ejecuten mucho más rápido.
 
 El :numref:`fixtures.sharing-fixture.examples.DatabaseTest.php` usa los métodos
 modelo ``setUpBeforeClass()`` y ``tearDownAfterClass()`` para, respectivamente,
@@ -233,26 +239,26 @@ caso de prueba.
     :caption: Compartir el ambiente de prueba entre el conjunto de pruebas
     :name: fixtures.sharing-fixture.examples.DatabaseTest.php
 
-    <?php
+    <?php declare(strict_types=1);
     use PHPUnit\Framework\TestCase;
 
-    class DatabaseTest extends TestCase
+    final class DatabaseTest extends TestCase
     {
-        protected static $dbh;
+        private static $dbh;
 
-        public static function setUpBeforeClass()
+        public static function setUpBeforeClass(): void
         {
             self::$dbh = new PDO('sqlite::memory:');
         }
 
-        public static function tearDownAfterClass()
+        public static function tearDownAfterClass(): void
         {
             self::$dbh = null;
         }
     }
 
 Nunca es suficiente decir que compartir ambientes entre pruebas
-reduce el costo de las pruebas. El problema subyacente de diseño es que
+reduce su valor. El problema subyacente de diseño es que
 los objetos no están suficientemente desacoplados. Alcanzaremos mejores
 resultados resolviendo el problema de diseño subyacente y luego escribiendo
 pruebas usando esbozos (ver :ref:`test-doubles`), en lugar de crear
@@ -310,8 +316,8 @@ o agregando ``backupGlobals="true"`` en el
 archivo de configuración XML.
 
 Usando la opción ``--static-backup`` o agregando
-``backupStaticAttributes="true"`` en el archivo de configuración, conseguimos
-que este aislamiento se puede extender a los atributos
+``backupStaticAttributes="true"`` en el archivo de configuración conseguimos
+que este aislamiento se extienda a los atributos
 estáticos de clase.
 
 .. admonition:: Nota
@@ -332,9 +338,9 @@ operaciones de respaldo y recuperación de la siguiente manera:
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
-        protected $backupGlobalsBlacklist = ['globalVariable'];
+        protected $backupGlobalsExcludeList = ['globalVariable'];
 
         // ...
     }
@@ -380,9 +386,9 @@ excluidos de las operaciones de respaldo y la restauración:
 
 .. code-block:: php
 
-    class MyTest extends TestCase
+    final class MyTest extends TestCase
     {
-        protected $backupStaticAttributesBlacklist = [
+        protected $backupStaticAttributesExcludeList = [
             'className' => ['attributeName']
         ];
 

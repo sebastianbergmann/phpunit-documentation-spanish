@@ -10,9 +10,9 @@ El ejecutor de pruebas desde línea de comandos de PHPUnit se puede invocar
 con el comando :file:`phpunit`. El siguiente código muestra como ejecutar las
 pruebas con el ejecutor de pruebas desde línea de comandos:
 
-.. code-block:: bash
+.. parsed-literal::
 
-    $ phpunit ArrayTest
+    $ phpunit ArrayTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     ..
@@ -72,66 +72,64 @@ Opciones de la línea de comandos
 Vamos a dar una ojeada a las opciones del ejecutor de pruebas desde línea
 de comandos, veamos el siguiente código:
 
-.. code-block:: bash
+.. parsed-literal::
 
     $ phpunit --help
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
-    Usage: phpunit [options] UnitTest [UnitTest.php]
-           phpunit [options] <directory>
+    Usage:
+      phpunit [options] UnitTest.php
+      phpunit [options] <directory>
 
     Code Coverage Options:
-
       --coverage-clover <file>    Generate code coverage report in Clover XML format
       --coverage-crap4j <file>    Generate code coverage report in Crap4J XML format
       --coverage-html <dir>       Generate code coverage report in HTML format
       --coverage-php <file>       Export PHP_CodeCoverage object to file
-      --coverage-text=<file>      Generate code coverage report in text format
-                                  Default: Standard output
+      --coverage-text=<file>      Generate code coverage report in text format [default: standard output]
       --coverage-xml <dir>        Generate code coverage report in PHPUnit XML format
-      --whitelist <dir>           Whitelist <dir> for code coverage analysis
+      --coverage-cache <dir>      Cache static analysis results
+      --warm-coverage-cache       Warm static analysis cache
+      --coverage-filter <dir>     Include <dir> in code coverage analysis
+      --path-coverage             Perform path coverage analysis
       --disable-coverage-ignore   Disable annotations for ignoring code coverage
       --no-coverage               Ignore code coverage configuration
-      --dump-xdebug-filter <file> Generate script to set Xdebug code coverage filter
 
     Logging Options:
-
       --log-junit <file>          Log test execution in JUnit XML format to file
       --log-teamcity <file>       Log test execution in TeamCity format to file
       --testdox-html <file>       Write agile documentation in HTML format to file
       --testdox-text <file>       Write agile documentation in Text format to file
       --testdox-xml <file>        Write agile documentation in XML format to file
       --reverse-list              Print defects in reverse order
+      --no-logging                Ignore logging configuration
 
     Test Selection Options:
-
       --filter <pattern>          Filter which tests to run
-      --testsuite <name,...>      Filter which testsuite to run
-      --group ...                 Only runs tests from the specified group(s)
-      --exclude-group ...         Exclude tests from the specified group(s)
+      --testsuite <name>          Filter which testsuite to run
+      --group <name>              Only runs tests from the specified group(s)
+      --exclude-group <name>      Exclude tests from the specified group(s)
       --list-groups               List available test groups
       --list-suites               List available test suites
       --list-tests                List available tests
       --list-tests-xml <file>     List available tests in XML format
-      --test-suffix ...           Only search for test in files with specified
-                                  suffix(es). Default: Test.php,.phpt
+      --test-suffix <suffixes>    Only search for test in files with specified suffix(es). Default: Test.php,.phpt
 
     Test Execution Options:
-
       --dont-report-useless-tests Do not report tests that do not test anything
       --strict-coverage           Be strict about @covers annotation usage
       --strict-global-state       Be strict about changes to global state
       --disallow-test-output      Be strict about output during tests
       --disallow-resource-usage   Be strict about resource usage during small tests
       --enforce-time-limit        Enforce time limit based on test size
-      --default-time-limit=<sec>  Timeout in seconds for tests without @small, @medium or @large
+      --default-time-limit <sec>  Timeout in seconds for tests without @small, @medium or @large
       --disallow-todo-tests       Disallow @todo-annotated tests
 
       --process-isolation         Run each test in a separate PHP process
       --globals-backup            Backup and restore $GLOBALS for each test
       --static-backup             Backup and restore static attributes for each test
 
-      --colors=<flag>             Use colors in output ("never", "auto" or "always")
+      --colors <flag>             Use colors in output ("never", "auto" or "always")
       --columns <n>               Number of columns to use for progress output
       --columns max               Use maximum number of columns for progress output
       --stderr                    Write to STDERR instead of STDOUT
@@ -142,110 +140,85 @@ de comandos, veamos el siguiente código:
       --stop-on-risky             Stop execution upon first risky test
       --stop-on-skipped           Stop execution upon first skipped test
       --stop-on-incomplete        Stop execution upon first incomplete test
-      --fail-on-warning           Treat tests with warnings as failures
+      --fail-on-incomplete        Treat incomplete tests as failures
       --fail-on-risky             Treat risky tests as failures
+      --fail-on-skipped           Treat skipped tests as failures
+      --fail-on-warning           Treat tests with warnings as failures
       -v|--verbose                Output more verbose information
       --debug                     Display debugging information
 
-      --loader <loader>           TestSuiteLoader implementation to use
       --repeat <times>            Runs the test(s) repeatedly
       --teamcity                  Report test execution progress in TeamCity format
       --testdox                   Report test execution progress in TestDox format
       --testdox-group             Only include tests from the specified group(s)
       --testdox-exclude-group     Exclude tests from the specified group(s)
+      --no-interaction            Disable TestDox progress animation
       --printer <printer>         TestListener implementation to use
 
-      --resolve-dependencies      Resolve dependencies between tests
-      --order-by=<order>          Run tests in order: default|reverse|random|defects|depends
-      --random-order-seed=<N>     Use a specific random seed <N> for random order
-      --cache-result              Write run result to cache to enable ordering tests defects-first
+      --order-by <order>          Run tests in order: default|defects|duration|no-depends|random|reverse|size
+      --random-order-seed <N>     Use a specific random seed <N> for random order
+      --cache-result              Write test results to cache file
+      --do-not-cache-result       Do not write test results to cache file
 
     Configuration Options:
-
       --prepend <file>            A PHP script that is included as early as possible
       --bootstrap <file>          A PHP script that is included before the tests run
       -c|--configuration <file>   Read configuration from XML file
       --no-configuration          Ignore default configuration file (phpunit.xml)
-      --no-logging                Ignore logging configuration
+      --extensions <extensions>   A comma separated list of PHPUnit extensions to load
       --no-extensions             Do not load PHPUnit extensions
       --include-path <path(s)>    Prepend PHP's include_path with given path(s)
-      -d key[=value]              Sets a php.ini value
+      -d <key[=value]>            Sets a php.ini value
+      --cache-result-file <file>  Specify result cache path and filename
       --generate-configuration    Generate configuration file with suggested settings
-      --cache-result-file==<FILE> Specify result cache path and filename
+      --migrate-configuration     Migrate configuration file to current format
 
     Miscellaneous Options:
-
       -h|--help                   Prints this usage information
       --version                   Prints the version and exits
       --atleast-version <min>     Checks that version is greater than min and exits
       --check-version             Check whether PHPUnit is the latest version
 
-``phpunit UnitTest``
+``phpunit UnitTest.php``
 
     Ejecuta las pruebas que se encuentran en la clase ``UnitTest``. Se espera
     que esta clase este declarada en el archivo fuente :file:`UnitTest.php`.
 
-    ``UnitTest`` debe ser una clase que hereda de ``PHPUnit\Framework\TestCase``
-    o una clase que provee un método ``public static suite()`` que regresa un
-    objeto ``PHPUnit\Framework\Test``, por ejemplo una instancia de la clase
-    ``PHPUnit_Framework_TestSuite``.
-
-``phpunit UnitTest UnitTest.php``
-
-    Ejecuta las pruebas que están en la clase ``UnitTest``. Se espera que esta
-    clase este declarada en el archivo fuente que se especifica.
-
 ``--coverage-clover``
 
-    Genera un archivo de registro en formato XML con la información de la
-    cobertura de código de las pruebas ejecutadas. Ver :ref:`logging` para más
+    Genera un archivo con el registro de sucesos en formato XML con la información de la
+    cobertura de código de las pruebas ejecutadas. Ver :ref:`code-coverage-analysis` para más
     detalles.
-
-    Nótese que esta funcionalidad solo está disponible cuando las extensiones
-    tokenizer y Xdebug están instaladas.
 
 ``--coverage-crap4j``
 
     Genera un reporte de cobertura de código en formato Crap4J. Para más
     detalles se puede ver :ref:`code-coverage-analysis`.
 
-    Nótese que esta funcionalidad solo está disponible cuando las extensiones
-    tokenizer y Xdebug están instaladas.
-
 ``--coverage-html``
 
     Genera un reporte de cobertura de código en formato HTML. Ver
     :ref:`code-coverage-analysis` para más detalles.
-
-    Nótese que esta funcionalidad solo está disponible cuando las extensiones
-    tokenizer y Xdebug están instaladas.
 
 ``--coverage-php``
 
     Genera un objeto PHP_CodeCoverage serializado con la información de
     cobertura de código.
 
-    Nótese que esta funcionalidad solo está disponible cuando las extensiones
-    tokenizer y Xdebug están instaladas.
-
 ``--coverage-text``
 
-    Genera un archivo de registro o una salida en línea de comandos en un formato
-    legible por humanos con la información de cobertura de código de las pruebas
-    ejecutadas. Ver :ref:`logging` para más detalles.
-
-    Nótese que esta funcionalidad solo está disponible cuando las extensiones
-    tokenizer y Xdebug están instaladas.
+    Genera un archivo de registro de sucesos o una salida en línea de comandos en un formato
+    legible por humanos con la información de la cobertura de código de las pruebas
+    ejecutadas.
 
 ``--log-junit``
 
     Genera un archivo de sucesos en formato JUnit XML de las pruebas ejecutadas.
-    Ver :ref:`logging` para más detalles.
 
 ``--testdox-html`` and ``--testdox-text``
 
     Genera un documento ágil en formato HTML o texto plano de las pruebas que
-    se ejecutaron. Ver :ref:`other-uses-for-tests` para más detalles.
+    se ejecutaron (ver :ref:`textui.testdox`).
 
 ``--filter``
 
@@ -279,9 +252,9 @@ de comandos, veamos el siguiente código:
             :name: textui.examples.TestCaseClass.php
 
             <?php
-            use PHPUnit\Framework\TestCase;
-
             namespace TestNamespace;
+
+            use PHPUnit\Framework\TestCase;
 
             class TestCaseClass extends TestCase
             {
@@ -301,14 +274,13 @@ de comandos, veamos el siguiente código:
                     ];
                 }
             }
-            ?>
 
     ``/path/to/my/test.phpt``
 
         El nombre de la prueba para una prueba PHPT es la ruta en el sistema de
         archivos.
 
-    Revisar el ejemplo :numref:`textui.examples.filter-patterns`
+    Podemos revisar el ejemplo :numref:`textui.examples.filter-patterns`
     para ver patrones de filtro validos.
 
     .. code-block:: shell
@@ -318,7 +290,7 @@ de comandos, veamos el siguiente código:
         --filter 'TestNamespace\\TestCaseClass::testMethod'
         --filter 'TestNamespace\\TestCaseClass'
         --filter TestNamespace
-        --filter TestCaseClase
+        --filter TestCaseClass
         --filter testMethod
         --filter '/::testMethod .*"my named data"/'
         --filter '/::testMethod .*#5$/'
@@ -418,7 +390,7 @@ de comandos, veamos el siguiente código:
     -
 
       ``never``: nunca mostrar colores en la salida. Este es el valor por defecto
-      cuando se usa la opción ``--colors``.
+      cuando no se usa la opción ``--colors``.
 
     -
 
@@ -492,7 +464,7 @@ de comandos, veamos el siguiente código:
 ``--testdox``
 
     Reporta el progreso de las pruebas en formato TestDox. Ver
-    :ref:`other-uses-for-tests` para más detalles.
+    :ref:`textui.testdox` para más detalles.
 
 ``--printer``
 
@@ -528,11 +500,11 @@ de comandos, veamos el siguiente código:
 
 ``-d``
 
-    Asigna una valor a la opción de configuración de PHP que se indica.
+    Asigna un valor a la opción de configuración de PHP que se indica.
 
 .. admonition:: Nota
 
-    Nótese que desde la versión 4.8 las opciones se pueden colocar después de los
+    Nótese que las opciones se pueden colocar después de los
     argumentos.
 
 .. _textui.testdox:
@@ -541,19 +513,19 @@ TestDox
 #######
 
 La característica TestDox de PHPUnit busca una clase de prueba y a todos sus
-métodos de prueba para los convierte desde «camel case» o «snake case» a oraciones:
+métodos de prueba y convierte sus nombres desde «camel case» o «snake case» a oraciones:
 los métodos de prueba ``testBalanceIsInitiallyZero()`` or ``test_balance_is_initially_zero()``
 son convertido en «Balance is initially zero». Si hay varios métodos de prueba cuyos
-nombres solo se diferencian en un sufijo de uno o más dígitos, como 
+nombres solo se diferencian en un sufijo de uno o más dígitos, como
 ``testBalanceCannotBecomeNegative()`` y ``testBalanceCannotBecomeNegative2()``,
 las oraciones "Balance cannot become negative" aparecerá solo una vez, todo esto
 suponiendo que todas las pruebas tuvieron éxito.
 
 Veamos que aspecto tiene un documento ágil generado para la clase ``BankAccount``:
 
-.. code-block:: bash
+.. parsed-literal::
 
-    $ phpunit --testdox BankAccountTest
+    $ phpunit --testdox BankAccountTest.php
     PHPUnit |version|.0 by Sebastian Bergmann and contributors.
 
     BankAccount
@@ -561,7 +533,7 @@ Veamos que aspecto tiene un documento ágil generado para la clase ``BankAccount
      ✔ Balance cannot become negative
 
 Alternativamente, la documentación ágil se puede generar en formato HTML o texto
-plano y guardarlo en un archivo, esto se hace usando los argumentos 
+plano y guardarlo en un archivo, esto se hace usando los argumentos
 ``--testdox-html`` y ``--testdox-text``.
 
 La Documentación Ágil se puede usar para documentar los supuestos que hacemos
@@ -570,7 +542,7 @@ Cuando usamos un paquete externo estamos expuesto a que el paquete no se comport
 de la forma esperada y, además, futuras versiones del paquete pueden cambiar de
 una manera sutil y romper nuestro código sin que nos demos cuenta de ello.
 Podemos prevenir estos riesgos escribiendo una prueba cada vez que hagamos
-una suposición. Si nuestra prueba es exitosa nuestra suposición es correcta.
+una suposición. Si nuestra prueba es exitosa entonces nuestra suposición es correcta.
 Si documentamos todas las suposiciones con pruebas, los lanzamientos futuros
 de los paquetes externos no serán causa de preocupación: si la prueba es exitosa,
 nuestro sistema debería seguir funcionando.
